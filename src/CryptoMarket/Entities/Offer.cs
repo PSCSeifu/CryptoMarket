@@ -20,6 +20,15 @@ namespace CryptoMarket.Models
         public int Status { get; set; }
         public string FirstCurrency { get; set; }
         public string SecondCurrency { get; set; }
+        public double MarketRate { get; set; }
+        /// <summary>
+        /// Fast,Medium,Normal,Basic
+        /// </summary>
+        public int MiningSpeed { get; set; }
+        /// <summary>
+        /// System sets the Fee basedon Mining speed + its own Profit requirements
+        /// </summary>
+        public int Fee { get; set; }
 
         public double Rate { get; set; }
         public double Amount { get; set; }

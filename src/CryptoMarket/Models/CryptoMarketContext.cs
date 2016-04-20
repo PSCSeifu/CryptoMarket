@@ -32,7 +32,7 @@ namespace CryptoMarket.Models
 
             optionsBuilder.UseSqlServer(connString);
 
-            base.OnConfiguring(optionsBuilder); 
+             base.OnConfiguring(optionsBuilder); 
         }
     }
 }
