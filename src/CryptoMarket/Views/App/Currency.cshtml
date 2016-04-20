@@ -1,0 +1,22 @@
+@model IEnumerable<CryptoMarket.Models.Currency>
+
+@{
+    ViewBag.Title = "Crypto Currencies";
+}
+
+<div>
+    <div>
+        <h4>List of Crypto Currencies</h4>
+    </div>
+    <ul>
+        @foreach (var curr in Model)
+        {
+            <li>@curr.Name (@curr.BirthDate.ToShortDateString())</li>
+        }
+    </ul>
+
+
+
+    
+
+</div>

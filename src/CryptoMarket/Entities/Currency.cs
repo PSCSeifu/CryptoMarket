@@ -10,7 +10,7 @@ namespace CryptoMarket.Models
     public class Currency
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; }        
         public string Name { get; set; }
         public string CurrencyCode { get; set; }
         public int TypeId { get; set; }
@@ -20,9 +20,13 @@ namespace CryptoMarket.Models
         public double DayChange { get; set; }
         public double Price { get; set; }
         public double  AvailableSupply { get; set; }
+        public int ImageId { get; set; }
 
         public double MarketCap { get; set; }
         public DateTime BirthDate { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
 
 
         public Currency()

@@ -10,6 +10,7 @@ using CryptoMarket.Models;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace CryptoMarket
 {
@@ -36,11 +37,20 @@ namespace CryptoMarket
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<CryptoMarketContext>();
+
+            //Register the seeder here.
+            services.AddScoped<CryptoMarketSeedData>();
+            services.AddScoped<ICryptoMarketRepository, CryptoMarketRepository>();
+            services.AddLogging();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddDebug(LogLevel.Warning);
+
             app.UseStaticFiles();
 
             //listen and expect requests in the style of Mvc
@@ -52,9 +62,15 @@ namespace CryptoMarket
                   defaults: new { controller = "App", action = "Index" }
                   );
           });
+
+            //Configure/Add  the seeding service here.
+            seeder.EnsureClientSeedData();
+            seeder.EnsureCurrencySeedData();
+            seeder.EnsureWalletSeedData();
+            seeder.EnsureImageSeedData();
         }
 
-        // Entry point for the application.
+                // Entry point for the application.
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

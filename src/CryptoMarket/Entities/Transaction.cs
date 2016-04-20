@@ -20,12 +20,19 @@ namespace CryptoMarket.Models
         public int VendorWalletId { get; set; }
         public int CustomerId { get; set; }
         public int CustomerWalletId { get; set; }
-        public int OfferId { get; set; }       
-        public DateTime Date { get; set; }
+        public int StatusId { get; set; }
+        public double StatusLevel { get; set; }
+
+        public int OfferHistoryId { get; set; }               
         public double Amount { get; set; }
         public double Marigin { get; set; }
         public double Fee { get; set; }
         public double MarketRate { get; set; }
+
+   
+
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
 
         public Transaction()
         {

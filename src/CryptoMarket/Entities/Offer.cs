@@ -20,12 +20,32 @@ namespace CryptoMarket.Models
         public int Status { get; set; }
         public string FirstCurrency { get; set; }
         public string SecondCurrency { get; set; }
+
         public double Rate { get; set; }
         public double Amount { get; set; }
         public double MinLimit { get; set; }
         public double MaxLimit { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
+        /// <summary>
+        /// Number of counter offers a customer can make on this offer.
+        /// </summary>
+        public int CounterOfferLimit { get; set; }
+
+
+        /// <summary>
+        /// If 0, then this is an original offer, not a counter offer
+        /// </summary>
+        public int ParentId { get; set; }
+
+        /// <summary>
+        /// Time in seconds from DateCreated, after which a counter offer expires.
+        /// </summary>
+        public int TtlSeconds { get; set; }
+
+
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+
+        public Image Image { get; set; }
 
         public Offer()
         {

@@ -11,17 +11,17 @@ namespace CryptoMarket.Controllers.Web
 {
     public class AppController : Controller
     {
-        private CryptoMarketContext _context;
+        private ICryptoMarketRepository _repository;
 
-        public AppController(CryptoMarketContext context)
+        public AppController(ICryptoMarketRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var wallets = _context.Wallets.ToList();
-            return View();
+            var wallets = _repository.GetAllWallets();
+            return View(wallets);
         }
 
         // GET: /<controller>/
@@ -40,6 +40,13 @@ namespace CryptoMarket.Controllers.Web
         public IActionResult Register()
         {
             return View();
+        }
+
+        // GET: /<controller>/
+        public IActionResult Currency()
+        {
+            var currencyList = _repository.GetAllCurrencies();
+            return View(currencyList);
         }
 
         // GET: /<controller>/

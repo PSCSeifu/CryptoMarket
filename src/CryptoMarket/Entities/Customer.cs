@@ -16,7 +16,7 @@ namespace CryptoMarket.Models
         public string Address3 { get; set; }
         public string MailCode { get; set; }
         public string Country { get; set; }
-
+    
         public int CustomerTypeId { get; set; }
 
         public Customer()
