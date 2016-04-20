@@ -1,0 +1,6 @@
+{
+  "Data": {
+    "CryptoMarketContextConnection": "Server=(localdb)\\ProjectsV13;Database=CryptoMarketDB;Trusted_Connection=true;MultipleActiveResultSets=true;"
+
+  }
+}
