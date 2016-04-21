@@ -16,6 +16,28 @@ namespace CryptoMarket.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CryptoMarket.Models.BaseCurrency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApiCode");
+
+                    b.Property<int?>("CurrencyId");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("Description");
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("PublicCode");
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("CryptoMarket.Models.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -68,6 +90,8 @@ namespace CryptoMarket.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<double>("HourChange");
+
                     b.Property<int>("ImageId");
 
                     b.Property<int>("LinkId");
@@ -75,8 +99,6 @@ namespace CryptoMarket.Migrations
                     b.Property<double>("MarketCap");
 
                     b.Property<string>("Name");
-
-                    b.Property<double>("Price");
 
                     b.Property<int>("TypeId");
 
@@ -301,6 +323,13 @@ namespace CryptoMarket.Migrations
                     b.Property<int>("VendorTypeId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "Vendor");
+                });
+
+            modelBuilder.Entity("CryptoMarket.Models.BaseCurrency", b =>
+                {
+                    b.HasOne("CryptoMarket.Models.Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
                 });
 
             modelBuilder.Entity("CryptoMarket.Models.Offer", b =>

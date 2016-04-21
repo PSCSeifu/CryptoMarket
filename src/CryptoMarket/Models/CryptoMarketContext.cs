@@ -25,6 +25,7 @@ namespace CryptoMarket.Models
         public DbSet<Image> Images { get; set; }
         public DbSet<FiatAccount> FiatAccounts { get; set; }        
         public DbSet<Relationship> Relationships { get; set; }
+        public DbSet<BaseCurrency> BaseCurrency { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,8 +1,12 @@
+using AutoMapper;
 using CryptoMarket.Models;
+using CryptoMarket.ViewModels;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,23 +16,63 @@ namespace CryptoMarket.Controllers.Api
     public class ClientController : Controller
     {
         private ICryptoMarketRepository _repository;
-        
-        public ClientController(ICryptoMarketRepository repository)
+        private ILogger<ClientController> _logger;
+
+        public ClientController(ICryptoMarketRepository repository,ILogger<ClientController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         [HttpGet("")]
         public JsonResult Get()
         {
-            var results = _repository.GetAllClients();
-            return Json(results);
+            try
+            {
+                var results = Mapper.Map<IEnumerable<ClientViewModel>>(_repository.GetAllClientsWithWallets());
+                if(results == null)
+                {
+                    return Json(null);
+                }
+                return Json(Mapper.Map<IEnumerable<ClientViewModel>>(results.OrderBy(c => c.DateCreated)));
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                _logger.LogError("Failed to get Clients from database.", ex);
+                return Json("Error occured finding Clients");
+            }            
         }              
 
         [HttpPost("")]
-        public JsonResult Post([FromBody]Client newClient)
+        public JsonResult Post([FromBody]ClientViewModel vm)
         {
-            return Json(true);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newClient = Mapper.Map<Client>(vm);
+
+                    //Save to the data base 
+                    _logger.LogInformation("Attempting to save a new Client");
+                    _repository.AddClient(newClient);
+
+                    if (_repository.SaveAll())
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                        return Json(Mapper.Map<ClientViewModel>(newClient));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to save new Client", ex);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = ex.Message});
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         }
 
         [HttpGet("api/Client/{id?}")]

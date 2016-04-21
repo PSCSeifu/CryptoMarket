@@ -16,9 +16,9 @@ namespace CryptoMarket.Models
         public int TypeId { get; set; }
         public string Description { get; set; }
         public int LinkId { get; set; }
-        public double DayVolume { get; set; }
+        public double DayVolume { get; set; }        
         public double DayChange { get; set; }
-        public double Price { get; set; }
+        public double HourChange { get; set; }        
         public double  AvailableSupply { get; set; }
         public int ImageId { get; set; }
 
@@ -28,6 +28,7 @@ namespace CryptoMarket.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
 
+        public ICollection<BaseCurrency> BaseCurrencies { get; set; }
 
         public Currency()
         {

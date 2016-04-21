@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using CryptoMarket.ViewModels;
+using CryptoMarket.Services;
 
 namespace CryptoMarket
 {
@@ -41,16 +44,17 @@ namespace CryptoMarket
                { 
                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                });
+
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<CryptoMarketContext>();
+
+            services.AddScoped<PriceService>();
 
             //Register the seeder here.
             services.AddScoped<CryptoMarketSeedData>();
             services.AddScoped<ICryptoMarketRepository, CryptoMarketRepository>();
             services.AddLogging();
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +63,15 @@ namespace CryptoMarket
             loggerFactory.AddDebug(LogLevel.Warning);
 
             app.UseStaticFiles();
+
+            /*this allows us to specify all the configuration between the different types */
+            Mapper.Initialize(config =>
+           {
+               config.CreateMap<Client, ClientViewModel>().ReverseMap();
+               config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
+               config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
+               config.CreateMap<BaseCurrency, PriceServicesResult>().ReverseMap();
+           });
 
             //listen and expect requests in the style of Mvc
             app.UseMvc(routes =>
@@ -75,6 +88,7 @@ namespace CryptoMarket
             seeder.EnsureCurrencySeedData();
             seeder.EnsureWalletSeedData();
             seeder.EnsureImageSeedData();
+            seeder.EnsureBaseCurrencySeedData();
         }
 
                 // Entry point for the application.

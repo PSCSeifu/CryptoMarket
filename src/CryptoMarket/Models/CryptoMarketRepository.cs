@@ -80,7 +80,10 @@ namespace CryptoMarket.Models
         {
             try
             {
-                return _context.Currencies.OrderBy(c => c.Price).ToList();
+                //needs linq to order currency by default base currency price.
+                // return _context.Currencies.OrderBy(c => c.BaseCurrencies.Max(b =>b.Price)).ToList();
+                return _context.Currencies;
+
             }
             catch (Exception ex)
             {
@@ -107,6 +110,64 @@ namespace CryptoMarket.Models
         public Client GetClient()
         {
             throw new NotImplementedException();
+        }
+
+        public void AddClient(Client newClient)
+        {           
+            _context.Add(newClient);
+        }
+
+        public bool SaveAll()
+        {
+            return _context.SaveChanges() > 0;
+        }
+
+        public Client GetClientById(int clientId)
+        {
+            try
+            {                
+                return _context.Clients
+                    .Include( w => w.Wallets)
+                     .Where(c => c.Id == clientId)
+                     .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Could not get Client with Id {clientId}", ex);
+                return null;
+            }
+        }
+
+        public void AddWallet(int clientId,Wallet newWallet)
+        {
+            //Add ordering information
+            //E.g. if there was an int order property, 
+            //var theClient = GetClientByClientId(clientId);
+            //newWallet.Order = theClient.Wallets.Max( s => s.order) + 1;
+            _context.Wallets.Add(newWallet);
+        }
+
+        
+        public void AddCurrency(Currency newCurrency)
+        {
+            _context.Currencies.Add(newCurrency);
+        }
+     
+
+        public BaseCurrency AddBaseCurrency(BaseCurrency newBaseCurrency)
+        {
+            _context.BaseCurrency.Add(newBaseCurrency);
+            try
+            {
+                return _context.BaseCurrency
+                    .Where(b => b.ApiCode == newBaseCurrency.ApiCode)                   
+                    .FirstOrDefault();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Could not get Base currency with ApiCode : {newBaseCurrency.ApiCode}", ex);
+                return null;
+            }
         }
     }
 }

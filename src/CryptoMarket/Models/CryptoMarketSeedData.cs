@@ -64,7 +64,7 @@ namespace CryptoMarket.Models
                     LinkId = 0,
                     MarketCap = 6620684066,
                     Name = "BitCoin",
-                    Price = 438.52,
+                    //Price = 438.52,
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -82,7 +82,7 @@ namespace CryptoMarket.Models
                     LinkId = 0,
                     MarketCap = 726788951,
                     Name = "Ethereum",
-                    Price = 9.17,
+                    //Price = 9.17,
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -100,7 +100,7 @@ namespace CryptoMarket.Models
                     LinkId = 0,
                     MarketCap = 245540010,
                     Name = "Ripple",
-                    Price = 0.007042,
+                    //Price = 0.007042,
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -118,7 +118,7 @@ namespace CryptoMarket.Models
                     LinkId = 0,
                     MarketCap = 148703304,
                     Name = "LiteCoin",
-                    Price = 3.27,
+                    //Price = 3.27,
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -136,7 +136,7 @@ namespace CryptoMarket.Models
                     LinkId = 0,
                     MarketCap = 40995327,
                     Name = "Dash",
-                    Price = 6.42,
+                    //Price = 6.42,
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -146,6 +146,48 @@ namespace CryptoMarket.Models
                 _context.Currencies.Add(ripple);
                 _context.Currencies.Add(liteCoin);
                 _context.Currencies.Add(dash);
+
+                _context.SaveChanges();
+            }
+        }
+
+        public  void EnsureBaseCurrencySeedData()
+        {
+            //Add new Base Currency data
+            if (!_context.BaseCurrency.Any())
+            {
+                var usd = new BaseCurrency() {
+                    PublicCode = "USD",
+                    ApiCode ="usd",
+                    Price =0,
+                    Description ="United States of America Dollars",
+                      DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow
+                };
+
+                var gbp = new BaseCurrency()
+                {
+                    PublicCode = "GBP",
+                    ApiCode = "gbp",
+                    Price = 0,
+                    Description = "United Kingdom Pound Sterling",
+                    DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow
+                };
+
+                var eur = new BaseCurrency()
+                {
+                    PublicCode = "EUR",
+                    ApiCode = "eur",
+                    Price = 0,
+                    Description = "European Union Euro",
+                    DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow
+                };
+
+                _context.BaseCurrency.Add(usd);
+                _context.BaseCurrency.Add(gbp);
+                _context.BaseCurrency.Add(eur);
 
                 _context.SaveChanges();
             }

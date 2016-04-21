@@ -58,11 +58,11 @@ namespace CryptoMarket.Migrations
                     DayChange = table.Column<double>(nullable: false),
                     DayVolume = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: true),
+                    HourChange = table.Column<double>(nullable: false),
                     ImageId = table.Column<int>(nullable: false),
                     LinkId = table.Column<int>(nullable: false),
                     MarketCap = table.Column<double>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
                     TypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -189,6 +189,30 @@ namespace CryptoMarket.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
+                name: "BaseCurrency",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApiCode = table.Column<string>(nullable: true),
+                    CurrencyId = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    PublicCode = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BaseCurrency", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BaseCurrency_Currency_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currency",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
                 name: "Offer",
                 columns: table => new
                 {
@@ -233,12 +257,13 @@ namespace CryptoMarket.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable("Currency");
+            migrationBuilder.DropTable("BaseCurrency");
             migrationBuilder.DropTable("FiatAccount");
             migrationBuilder.DropTable("Offer");
             migrationBuilder.DropTable("Relationship");
             migrationBuilder.DropTable("Transaction");
             migrationBuilder.DropTable("Wallet");
+            migrationBuilder.DropTable("Currency");
             migrationBuilder.DropTable("Image");
             migrationBuilder.DropTable("Client");
         }

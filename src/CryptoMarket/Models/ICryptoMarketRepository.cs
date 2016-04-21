@@ -10,5 +10,11 @@ namespace CryptoMarket.Models
         IEnumerable<Client> GetAllClientsWithWallets();
         IEnumerable<Currency> GetAllCurrencies();
         IEnumerable<Wallet> GetAllWallets();
+        void AddClient(Client newClient);
+        bool SaveAll();
+        Client GetClientById(int clientId);
+        void AddWallet(int clientId,Wallet newWallet);
+        void AddCurrency(Currency newCurrency);
+        BaseCurrency AddBaseCurrency( BaseCurrency newBaseCurrency);
     }
 }
