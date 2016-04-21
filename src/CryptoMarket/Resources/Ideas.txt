@@ -1,0 +1,20 @@
+
+Affliatesthese are clients - customers
+
+Vendors can have Affliates
+Affliates - are like clients bu don't have access to the site out side of the Vendor
+		- they are crated,edited,deleted by Vendors
+		- Vendors can give them differne status and previlege to perform services
+		- aflfiates can buy,sell,exchange depending on the vendors permission
+		- Affliates can get perks like loss wallets
+		- Vendors would set differnet profit sharing schems and let them use automated services like 
+		  haggling AI's etc
+The rational for Affliates is creative offer schemes, more obeservant and very transient offers can be
+made by indiviuals than large vendors.
+
+
+Affliates would need a separe login  with {VendorName, Affliateusername, affliate password}
+Vendors can become affliates but a certain limit would be set on their membership
+depding on their vendor status with the website (i.e. they must pay the site more for previelges)
+
+==================================================

@@ -32,6 +32,34 @@ namespace CryptoMarket.Models
             }
         }
 
+        public Client GetClient(int clientId)
+        {
+            try
+            {
+                return _context.Clients
+                                .Where(c => c.Id == clientId)
+                                .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not find the Clinet in data base", ex);
+                return null;
+            }
+        }
+
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            try
+            {
+                return _context.Customers.OrderBy(c => c.LastName).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get Customers from data base.", ex);
+                return null;
+            }
+        }
+
         public IEnumerable<Client> GetAllClientsWithWallets()
         {
             try
@@ -76,6 +104,9 @@ namespace CryptoMarket.Models
             
         }
 
-       
+        public Client GetClient()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

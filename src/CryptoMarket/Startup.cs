@@ -11,6 +11,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace CryptoMarket
 {
@@ -33,7 +34,13 @@ namespace CryptoMarket
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                /*Results of api, property names are  camelcase,can be consumed by javascript 
+                they would have the Entity property names with a first capital letter  .*/
+                .AddJsonOptions(opt =>
+               { 
+                   opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+               });
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<CryptoMarketContext>();

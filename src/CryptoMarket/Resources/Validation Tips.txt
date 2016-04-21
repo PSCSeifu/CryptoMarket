@@ -1,0 +1,12 @@
+
+1. Currenct - Birth date
+ Add custom validation error on the model state error to prevent adding of Crypto-Currencies before
+ the advent of Bitcoing ( circa 2010).
+ 
+ var age = Model.Birthdate.calcuateAge();
+ if(age < 01/01/2010)
+ {
+ Modelstate.adderror {"BirthDate", "No CryptoCurrency existed  before 01/01/2010"}
+ 
+ }
+ 

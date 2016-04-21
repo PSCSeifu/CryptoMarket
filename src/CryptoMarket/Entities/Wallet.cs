@@ -13,9 +13,7 @@ namespace CryptoMarket.Models
         [Key]
         public int Id { get; set; }
         public int ClientId { get; set; }
-
-        [ForeignKey("ClientId")]
-        public virtual Client Client { get; set; }
+        public string Password { get; set; }
         public int CurrencyId { get; set; }
         public int ImageId { get; set; }
         public int TypeId { get; set; }//Main,Fee,Charity,Buy,Sell,Normal

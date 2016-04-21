@@ -161,9 +161,10 @@ namespace CryptoMarket.Models
                     ClientId = 1,
                     CurrencyId = 1,
                     Description = "My default Bitcoin wallet",
-                    FiatAccountId= 1,
+                    FiatAccountId = 1,
                     Name = "BitCoinMain",
-                    PublicKey= "044322e2d4493111d73244c9c0ba8868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    PublicKey = "044322e2d4493111d73244c9c0ba8868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "",
                     TypeId=0   ,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -178,6 +179,7 @@ namespace CryptoMarket.Models
                     FiatAccountId = 1,
                     Name = "BitLong",
                     PublicKey = "03111d73244c9c0ba844322e2d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "",
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -192,6 +194,7 @@ namespace CryptoMarket.Models
                     FiatAccountId = 1,
                     Name = "ETH_Main",
                     PublicKey = "02e2111d73244d4493c9c0ba844328683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "",
                     TypeId = 0
                 };
 
@@ -204,6 +207,7 @@ namespace CryptoMarket.Models
                     FiatAccountId = 1,
                     Name = "Trading-1-BitCoin",
                     PublicKey = "03c9c0ba844322e2111d73244d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "",
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
@@ -216,8 +220,9 @@ namespace CryptoMarket.Models
                     CurrencyId = 1,
                     Description = "Company wallet One - Ethereum",
                     FiatAccountId = 1,
-                    Name = "Trading-1-Ethereum",
+                    Name = "Trading-1-Ethereum",                    
                     PublicKey = "03c9c0ba844322e2111d73244d4498683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "",
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
