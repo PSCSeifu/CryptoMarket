@@ -55,7 +55,7 @@ namespace CryptoMarket.Controllers.Api
         }
 
         [HttpPost("")]
-        public JsonResult Post(string currencyCode, [FromBody]CurrencyViewModel vm, string baseCurrency = null)
+        public JsonResult Post([FromBody]CurrencyViewModel vm)
         {
             try
             {
@@ -64,28 +64,32 @@ namespace CryptoMarket.Controllers.Api
                     //Map to Entity
                     var newCurrency = Mapper.Map<Currency>(vm);
 
-                    
-
                     //Add the base currency to the repository
-                    foreach (var b in Enum.GetValues(typeof(Enums.Enums.BaseCurrency)))
-                    {
-                        //Looking up PriceService
-                        var serviceResult = _priceService.Lookup(currencyCode, baseCurrency);
+                    //foreach (var baseCurr in Enum.GetValues(typeof(Enums.Enums.BaseCurrency)))
+                    //{
+                    //    //Looking up PriceService
+                    //    var serviceResult = await _priceService.Lookup(newCurrency.CurrencyCode, baseCurr.ToString());
 
-                        if(!serviceResult.Success)
-                        {                       
-                            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                            Json(serviceResult.Error);
-                        }
+                    //    if (!serviceResult.Success)
+                    //    {
+                    //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    //        Json(serviceResult.Error);
+                    //    }
 
-                        //Add new base currency to database,get its unique id.
-                        var newBaseCurrency = Mapper.Map<BaseCurrency>(serviceResult);
-                        var addedBaseCurrencyID = _repository.AddBaseCurrency(newBaseCurrency);
+                    //    //Add new base currency to database,get its unique id.
+                    //    var newCurrencyData = Mapper.Map<CurrencyData>(serviceResult);
+                    //    _repository.AddCurrencyData(newCurrencyData);
 
-                        //Add the base currency to the new Currency
-                        newCurrency.BaseCurrencies.Add(addedBaseCurrencyID);
-                    }
-                   
+                    //    int addedCurrencydDataID = _repository.CurrencyData(newCurrencyData);
+
+                    //    if (addedCurrencydDataID != 0)
+                    //    {
+                    //        newCurrencyData.Id = addedCurrencydDataID;
+                    //        //Add the base currency to the new Currency
+                    //        newCurrency.CurrencyDataCollection.Add(newCurrencyData);
+                    //    }
+                    //}
+
 
                     //Save the currency to DataBase
                     _repository.AddCurrency(newCurrency);

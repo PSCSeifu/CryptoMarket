@@ -15,6 +15,7 @@ namespace CryptoMarket.Models
         Client GetClientById(int clientId);
         void AddWallet(int clientId,Wallet newWallet);
         void AddCurrency(Currency newCurrency);
-        BaseCurrency AddBaseCurrency( BaseCurrency newBaseCurrency);
+        int CurrencyData( CurrencyData newBaseCurrency);
+        void AddCurrencyData(CurrencyData newCurrencyData);
     }
 }

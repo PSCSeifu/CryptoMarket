@@ -1,3 +1,4 @@
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,26 @@ namespace CryptoMarket.Models
     public class CryptoMarketSeedData
     {
         private CryptoMarketContext _context;
+        private UserManager<CryptoMarketUser> _userManager;
 
-        public CryptoMarketSeedData(CryptoMarketContext context)
+        public CryptoMarketSeedData(CryptoMarketContext context,UserManager<CryptoMarketUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        public async Task EnsureUserManagerSeedData()
+        {
+            if (await _userManager.FindByEmailAsync("customer1@gmail.com") == null)
+            {
+                //Add the user.
+                var newUser = new CryptoMarketUser()
+                {
+                    UserName = "xUser234",
+                    Email = "customer1@gmail.com"
+                };
+                await _userManager.CreateAsync(newUser, "password1");
+            }
         }
 
         public void EnsureClientSeedData()
@@ -151,43 +168,43 @@ namespace CryptoMarket.Models
             }
         }
 
-        public  void EnsureBaseCurrencySeedData()
+        public  void EnsureCurrencyDataSeedData()
         {
             //Add new Base Currency data
-            if (!_context.BaseCurrency.Any())
+            if (!_context.CurrencyData.Any())
             {
-                var usd = new BaseCurrency() {
-                    PublicCode = "USD",
-                    ApiCode ="usd",
+                var usd = new CurrencyData() {
+                    FiatPublicCode = "USD",
+                    FiatCode = "usd",
                     Price =0,
-                    Description ="United States of America Dollars",
+                    FiatDescription = "United States of America Dollars",
                       DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
 
-                var gbp = new BaseCurrency()
+                var gbp = new CurrencyData()
                 {
-                    PublicCode = "GBP",
-                    ApiCode = "gbp",
+                    FiatPublicCode = "GBP",
+                    FiatCode = "gbp",
                     Price = 0,
-                    Description = "United Kingdom Pound Sterling",
+                    FiatDescription = "United Kingdom Pound Sterling",
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
 
-                var eur = new BaseCurrency()
+                var eur = new CurrencyData()
                 {
-                    PublicCode = "EUR",
-                    ApiCode = "eur",
+                    FiatPublicCode = "EUR",
+                    FiatCode = "eur",
                     Price = 0,
-                    Description = "European Union Euro",
+                    FiatDescription = "European Union Euro",
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
 
-                _context.BaseCurrency.Add(usd);
-                _context.BaseCurrency.Add(gbp);
-                _context.BaseCurrency.Add(eur);
+                _context.CurrencyData.Add(usd);
+                _context.CurrencyData.Add(gbp);
+                _context.CurrencyData.Add(eur);
 
                 _context.SaveChanges();
             }

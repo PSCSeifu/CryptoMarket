@@ -1,0 +1,24 @@
+@model IEnumerable<CryptoMarket.Models.Client>
+
+@{
+    ViewBag.Title = "Crypto Currencies";
+}
+
+<div>
+    <div>
+        <h4>Client DashBoard</h4>
+    </div>
+    <ul>
+        @foreach (var curr in Model)
+        {
+            <li>@curr.UserName (@curr.DateCreated.ToShortDateString())</li>
+            
+            <li>
+                @foreach (var wallet in @curr.Wallets)
+                {
+                <li> @wallet.Name ... (@wallet.Balance)</li>
+                }
+            </li>
+        }
+    </ul>
+</div>

@@ -15,6 +15,8 @@ using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using CryptoMarket.ViewModels;
 using CryptoMarket.Services;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Mvc;
 
 namespace CryptoMarket
 {
@@ -37,13 +39,26 @@ namespace CryptoMarket
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                /*Results of api, property names are  camelcase,can be consumed by javascript 
-                they would have the Entity property names with a first capital letter  .*/
-                .AddJsonOptions(opt =>
-               { 
-                   opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-               });
+            services.AddMvc(config => 
+            {
+#if !DEBUG
+                config.Filters.Add(new RequireHttpsAttribute()); //Authentication
+#endif
+            })                
+            .AddJsonOptions(opt =>
+            { /*Results of api, property names are  camelcase,can be consumed by javascript 
+            they would have the Entity property names with a first capital letter  .*/
+                opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddIdentity<CryptoMarketUser, IdentityRole>(config =>
+                {
+                    config.User.RequireUniqueEmail = true;
+                    config.Password.RequiredLength = 8;
+                    //The redirect when users are not authenticated.
+                    config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                })
+                .AddEntityFrameworkStores<CryptoMarketContext>();
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -58,11 +73,13 @@ namespace CryptoMarket
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory)
         {
             loggerFactory.AddDebug(LogLevel.Warning);
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(); //1. First check for static files
+
+            app.UseIdentity(); //Second use identity before the MVC to ensure cookies,401 errors are processed.
 
             /*this allows us to specify all the configuration between the different types */
             Mapper.Initialize(config =>
@@ -70,9 +87,14 @@ namespace CryptoMarket
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
                config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
-               config.CreateMap<BaseCurrency, PriceServicesResult>().ReverseMap();
-           });
+               config.CreateMap<PriceServicesResult, CurrencyData>()
+                .ForMember(dest => dest.Volume, opt => opt.MapFrom(src => src.Volume))
+               .ForMember(dest => dest.CryptoCode, opt => opt.MapFrom(src => src.CryptoCode))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+                .ForMember(dest => dest.Volume, opt => opt.MapFrom(src => src.Volume))
+                .ForMember(dest => dest.OneHourChange, opt => opt.MapFrom(src => src.OneHourChange));
 
+           });
             //listen and expect requests in the style of Mvc
             app.UseMvc(routes =>
           {
@@ -88,7 +110,8 @@ namespace CryptoMarket
             seeder.EnsureCurrencySeedData();
             seeder.EnsureWalletSeedData();
             seeder.EnsureImageSeedData();
-            seeder.EnsureBaseCurrencySeedData();
+            seeder.EnsureCurrencyDataSeedData();
+            await seeder.EnsureUserManagerSeedData();
         }
 
                 // Entry point for the application.

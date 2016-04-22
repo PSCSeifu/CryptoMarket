@@ -14,6 +14,6 @@ namespace CryptoMarket.ViewModels
         public double HourChange { get; set; }
 
 
-        public IEnumerable<BaseCurrency> BaseCurrecies { get; set; }
+        public IEnumerable<CurrencyData> CurrencyData { get; set; }
     }
 }

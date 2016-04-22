@@ -154,20 +154,25 @@ namespace CryptoMarket.Models
         }
      
 
-        public BaseCurrency AddBaseCurrency(BaseCurrency newBaseCurrency)
+        public int CurrencyData(CurrencyData newBaseCurrency)
         {
-            _context.BaseCurrency.Add(newBaseCurrency);
             try
             {
-                return _context.BaseCurrency
-                    .Where(b => b.ApiCode == newBaseCurrency.ApiCode)                   
+                return _context.CurrencyData
+                    .Where(b => b.FiatCode == newBaseCurrency.FiatCode)   
+                    .Select( b => b.Id)                
                     .FirstOrDefault();
             }
             catch(Exception ex)
             {
-                _logger.LogError($"Could not get Base currency with ApiCode : {newBaseCurrency.ApiCode}", ex);
-                return null;
+                _logger.LogError($"Could not get Base Fiat currency with ApiCode : {newBaseCurrency.FiatCode}", ex);
+                return 0;
             }
+        }
+
+        public void AddCurrencyData(CurrencyData newCurrencyData)
+        {
+            _context.CurrencyData.Add(newCurrencyData);
         }
     }
 }
