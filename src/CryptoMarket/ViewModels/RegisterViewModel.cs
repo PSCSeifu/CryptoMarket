@@ -9,7 +9,7 @@ namespace CryptoMarket.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required,MaxLength(256)]
         public string Username { get; set; }
 
         [Required, DataType(DataType.Password)]

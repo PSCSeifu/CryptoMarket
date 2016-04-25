@@ -45,11 +45,7 @@ namespace CryptoMarket.Controllers.Web
             return View(wallets);            
         }
 
-        // GET: /<controller>/
-        public IActionResult Register()
-        {
-            return View();
-        }
+       
 
         // GET: /<controller>/
         

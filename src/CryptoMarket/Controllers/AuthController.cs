@@ -1,3 +1,5 @@
+using CryptoMarket.Controllers.Api;
+using CryptoMarket.Controllers.Web;
 using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -23,6 +25,12 @@ namespace CryptoMarket.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -39,7 +47,7 @@ namespace CryptoMarket.Controllers
             {
                 var signInResult = await _signInManager.PasswordSignInAsync(vm.Username,
                     vm.Password,
-                    true, false);
+                    false, false);
 
                 if (signInResult.Succeeded)
                 {
@@ -68,12 +76,13 @@ namespace CryptoMarket.Controllers
             if (ModelState.IsValid)
             {
                 var user = new CryptoMarketUser { UserName = model.Username };
-             var result =    await _userManager.CreateAsync(user, model.Password);
+
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Client", "App");
+                    return RedirectToAction(nameof(AppController.Index),"App");
                 }
                 else
                 {
@@ -86,6 +95,14 @@ namespace CryptoMarket.Controllers
 
             return View();                
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "App");
+        }
+
+
     }
 }

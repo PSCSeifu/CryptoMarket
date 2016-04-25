@@ -37,6 +37,7 @@ namespace CryptoMarket
 
             Configuration = builder.Build();
         }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(config => 
@@ -52,13 +53,13 @@ namespace CryptoMarket
             });
 
             services.AddIdentity<CryptoMarketUser, IdentityRole>(config =>
-                {
-                    config.User.RequireUniqueEmail = true;
-                    config.Password.RequiredLength = 8;
-                    //The redirect when users are not authenticated.
-                    config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
-                })
-                .AddEntityFrameworkStores<CryptoMarketContext>();
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                //The redirect when users are not authenticated.
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+            })
+            .AddEntityFrameworkStores<CryptoMarketContext>();
 
             services.AddEntityFramework()
                 .AddSqlServer()
