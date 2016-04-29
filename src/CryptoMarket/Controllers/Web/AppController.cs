@@ -32,6 +32,12 @@ namespace CryptoMarket.Controllers.Web
         }
 
         // GET: /<controller>/
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // GET: /<controller>/
         public IActionResult Contact()
         {
             return View();

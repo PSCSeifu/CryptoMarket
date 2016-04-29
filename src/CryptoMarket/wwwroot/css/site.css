@@ -28,3 +28,31 @@ bottom:0;
     border: 1px solid #222;
     padding: 3px;
 }
+
+ #shadedlist div:nth-of-type(2n){
+     background-color: #beb7b7;
+     color : #000000;
+     border-radius  : 30px;
+ }
+ #shadedlist div:nth-of-type(2n + 1){
+     background-color: #548198;
+     color : #000000;
+ }
+
+ .productarticlewidename {
+     font-size : 14px;
+     font-weight : 600;
+     position :fixed;
+    
+ }
+
+ .productarticlewidebirthdate {
+     font-size : 14px;
+     font-weight : 600;
+    
+ }
+
+ .productarticlewidedescription{
+     float : none;
+
+ }

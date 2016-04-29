@@ -87,7 +87,7 @@ namespace CryptoMarket
            {
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
-               config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
+               config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();               
                config.CreateMap<PriceServicesResult, CurrencyData>()
                 .ForMember(dest => dest.Volume, opt => opt.MapFrom(src => src.Volume))
                .ForMember(dest => dest.CryptoCode, opt => opt.MapFrom(src => src.CryptoCode))

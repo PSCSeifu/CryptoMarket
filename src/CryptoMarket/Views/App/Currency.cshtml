@@ -8,15 +8,29 @@
     <div>
         <h4>List of Crypto Currencies</h4>
     </div>
-    <ul>
-        @foreach (var curr in Model)
-        {
-            <li>@curr.Name (@curr.BirthDate.ToShortDateString())</li>
-        }
-    </ul>
-
-
-
+    <div>
+        <div>
+             
+        </div>
+        <section id="shadedlist">
+            <header>Crypto Market's list</header>
+            @foreach (var curr in Model)
+            {
+                <article>
+                    <img id="curr" class="currenctarticlewidethumbnail" src="~/img/" />
+                    <div id="productarticlewidecontent">
+                        <header>
+                            <span class="productarticlewidename">@curr.Name</span>
+                        </header>
+                        <p class="productarticlewidedescription">@curr.Description </p>
+                        <p class="productarticlewidebirthdate">@curr.BirthDate.ToShortDateString()</p>
+                    </div>
+                </article>
+            }
+            <div>
+                <input type="button" value="Add New" />
+            </div>
+        </section>
+    </div>
     
-
 </div>

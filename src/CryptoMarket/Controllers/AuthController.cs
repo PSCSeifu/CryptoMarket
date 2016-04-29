@@ -17,7 +17,7 @@ namespace CryptoMarket.Controllers
         private SignInManager<CryptoMarketUser> _signInManager;
         private UserManager<CryptoMarketUser> _userManager;
 
-        //Injection of SinginManager
+        //Injection of SigninManager
         public AuthController(UserManager<CryptoMarketUser> userManager,
                             SignInManager<CryptoMarketUser> signInManager)
         {
@@ -25,9 +25,12 @@ namespace CryptoMarket.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
         public IActionResult Register()
         {
+             if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Client", "App");
+            }
             return View();
         }
 
@@ -75,13 +78,13 @@ namespace CryptoMarket.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CryptoMarketUser { UserName = model.Username };
+                var user = new CryptoMarketUser { UserName = model.Email, Email = model.Email };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
+                    await _signInManager.SignInAsync(user, isPersistent : false);
                     return RedirectToAction(nameof(AppController.Index),"App");
                 }
                 else
@@ -93,7 +96,7 @@ namespace CryptoMarket.Controllers
                 }
             }
 
-            return View();                
+            return View(model);                
         }
 
         [HttpPost]
