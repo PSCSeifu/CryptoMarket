@@ -150,7 +150,9 @@ namespace CryptoMarket.Models
         
         public void AddCurrency(Currency newCurrency)
         {
+           // newCurrency.Id = _context.Currencies.Max(c => c.Id) + 1;
             _context.Currencies.Add(newCurrency);
+            _context.SaveChanges();
         }
      
 
@@ -174,5 +176,43 @@ namespace CryptoMarket.Models
         {
             _context.CurrencyData.Add(newCurrencyData);
         }
+
+        public Currency GetCurrency(int currencyId)
+        {
+            try
+            {
+                return _context.Currencies
+                    .Where(c => c.Id == currencyId)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Could not get currency  with Code : {currencyId}", ex);
+                return null;
+            }
+        }
+
+        public IEnumerable<CurrencyData> GetCurrencyDataList(int? currencyId)
+        {
+            try
+            {
+                string cryptoCode = _context.Currencies.Where(c => c.Id == currencyId).Select( c => c.CurrencyCode).SingleOrDefault();
+
+                if(currencyId == 0)
+                {
+                    return _context.CurrencyData;
+                }
+                return _context.CurrencyData
+                    .Where(cd => cd.CryptoCode == cryptoCode)
+                    .ToList();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Could not get currency data for currecy with Id : {currencyId}", ex);
+                return null;
+            }
+        }
+
+       
     }
 }

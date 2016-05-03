@@ -1,0 +1,28 @@
+@model CryptoMarket.ViewModels.CurrencyViewModel
+@{
+    ViewBag.Title = Model.Currency.Name;
+}
+
+<div>
+    <section class="currencyDetail">
+        <div id="currency">
+            <div >NAME : @Model.Currency.Name</div>
+            <div>DESCRIPTION : @Model.Currency.Description </div>
+            <div>BIRTHDATE : @Model.Currency.BirthDate.ToString("MMM yyy") </div>
+            <div>MARKET CAP : @Model.Currency.MarketCap.ToString("N0")</div>
+        </div>
+        @foreach (var data in Model.CurrencyData)
+        {
+            <div id="data">
+                <div> <b>FIAT CODE :  @data.FiatCode.ToUpper()</b></div>
+                <div id="currrencydataprice">PRICE : @data.Price</div>
+                <div>VOLUME : @data.Volume</div>
+                <div>DAY CHANGE : @data.DayChange </div>
+                <div>HOUR CHANGE : @data.OneHourChange</div>
+            </div>
+        }
+        <div class="btn btn-default">
+            @Html.ActionLink("BACK", "Currency");
+        </div>
+    </section>
+</div>

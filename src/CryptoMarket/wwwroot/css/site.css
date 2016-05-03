@@ -54,5 +54,45 @@ bottom:0;
 
  .productarticlewidedescription{
      float : none;
-
  }
+
+ #productlist  {
+background-color:#a5b17a;
+border-radius:5px;
+padding: 5px;
+margin:5px;
+width:75%;
+height:80%;
+ }
+
+ .listcontrol{
+      display:inline-block;    
+ }
+ .listcrudcontrol{    
+     border-radius:6px;
+   width:75%;
+ }
+ .listsearchcontrol{
+    margin:10px
+ }
+ .listsortcontrol{
+margin:10px;
+ }
+
+ .currencyDetail{
+     background-color:#7d94c4;
+     margin:10px;
+     border-radius :10px;
+ }
+
+ .currencyDetail > #data {
+     background-color: #beb7b7;
+     padding: 2px;
+     margin:9px;
+     display:inline-block;
+ }
+ #currrencydataprice{
+     background-color:#e8c936;
+     font-size: large;
+ }
+ 

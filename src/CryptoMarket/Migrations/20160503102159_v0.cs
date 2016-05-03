@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace CryptoMarket.Migrations
 {
-    public partial class InitialDatabase : Migration
+    public partial class v0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -85,6 +85,7 @@ namespace CryptoMarket.Migrations
                     Description = table.Column<string>(nullable: true),
                     HourChange = table.Column<double>(nullable: false),
                     ImageId = table.Column<int>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     LinkId = table.Column<int>(nullable: false),
                     MarketCap = table.Column<double>(nullable: false),
                     Name = table.Column<string>(nullable: true),

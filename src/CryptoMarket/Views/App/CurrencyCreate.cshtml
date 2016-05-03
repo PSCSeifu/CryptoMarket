@@ -1,0 +1,44 @@
+﻿@model CryptoMarket.Models.Currency
+
+<div class="container-fluid">
+    <form method="post" asp-controller="App" asp-action="CurrencyCreate" class="form-horizontal">
+        <div as-validation-summary="ValidationSummary.ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="Name" name="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name"></span>
+
+            <label asp-for="CurrencyCode" class="col-sm-2 control-label">Currency Code</label>
+            <div class="col-sm-10">
+                <input type="text" id="CurrencyCode" name="CurrencyCode" class="form-control" />
+            </div>
+            <span asp-validation-for="CurrencyCode"></span>
+
+            <label asp-for="Description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+                <input type="text" id="Description" name="Description" class="form-control" />
+            </div>
+            <span asp-validation-for="Description"></span>
+
+            <label asp-for="DayVolume" class="col-sm-2 control-label">DayVolume</label>
+            <div class="col-sm-10">
+                <input type="text" id="DayVolume" name="DayVolume" class="form-control" />
+            </div>
+            <span asp-validation-for="DayVolume"></span>
+
+            <label asp-for="DayChange" class="col-sm-2 control-label">DayChange</label>
+            <div class="col-sm-10">
+                <input type="text" id="DayChange" name="DayChange" class="form-control" />
+            </div>
+            <span asp-validation-for="DayChange"></span>
+
+        
+
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -12,9 +12,39 @@
         <div>
              
         </div>
-        <section id="shadedlist">
+        <section>
             <header>Crypto Market's list</header>
+            <div class=listcrudcontrol>
+                <a asp-controller="App" asp-action="CurrencyCreate" class="btn btn-success">Add</a>
+            </div>
+            <div class="listcontrol">
+                <div class=listsortcontrol>
+                    <label value="">Sort By : </label>
+                    @Html.ActionLink("Name     |", "Currency", new { sortOrder = ViewBag.NameSortParam })
+                    @Html.ActionLink("Code      |", "Currency", new { sortOrder = ViewBag.NameSortParam })
+                    @Html.ActionLink("Price     |", "Currency", new { sortOrder = ViewBag.NameSortParam })
+                    @Html.ActionLink("Volume |", "Currency", new { sortOrder = ViewBag.NameSortParam })
+                    @Html.ActionLink("Birthdate |", "Currency", new { sortOrder = ViewBag.DateSortParam })
+                </div>
+                <div class="listsearchcontrol">
+                    @using (Html.BeginForm())
+                    {
+                        <p>
+                            Find By Name @Html.TextBox("SearchString")
+                            <input type="submit" value="Search" />
+                        </p>
+                        @*<label>Find By Name : </label>
+                       @Html.TextBox("Search by Name")
+                        <input type="submit" value="Search" />*@
+                    }
+                </div>
+            </div>
             @foreach (var curr in Model)
+            {
+                @Html.Partial("_currencySummary", curr)
+            }
+
+            @*@foreach (var curr in Model)
             {
                 <article>
                     <img id="curr" class="currenctarticlewidethumbnail" src="~/img/" />
@@ -26,11 +56,11 @@
                         <p class="productarticlewidebirthdate">@curr.BirthDate.ToShortDateString()</p>
                     </div>
                 </article>
-            }
-            <div>
-                <input type="button" value="Add New" />
-            </div>
+            }*@
+
         </section>
+
     </div>
     
 </div>
+<option>BirthDay</option>

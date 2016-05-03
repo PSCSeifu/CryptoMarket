@@ -40,12 +40,11 @@
                 @if (User.Identity.IsAuthenticated)
                     {
                         <span id="Username">@User.Identity.Name</span>
-                    }
-               
+                    }               
             </div>
             <div>
-                @RenderBody()
-            </div>
+                @RenderBody()             
+            </div>            
         </div>
 
         <div id="footer">

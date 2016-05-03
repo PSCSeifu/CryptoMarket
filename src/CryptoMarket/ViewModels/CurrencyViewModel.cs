@@ -9,11 +9,7 @@ namespace CryptoMarket.ViewModels
 {
     public class CurrencyViewModel
     {
-        public string Name { get; set; }
-        public string CurrencyCode { get; set; }
-        public double HourChange { get; set; }
-
-
-        public IEnumerable<CurrencyData> CurrencyData { get; set; }
+       public Currency Currency { get; set; }
+       public IEnumerable<CurrencyData> CurrencyData { get; set; }
     }
 }

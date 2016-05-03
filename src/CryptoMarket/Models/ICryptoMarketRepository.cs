@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CryptoMarket.ViewModels;
+using System.Collections.Generic;
 
 namespace CryptoMarket.Models
 {
@@ -17,5 +18,7 @@ namespace CryptoMarket.Models
         void AddCurrency(Currency newCurrency);
         int CurrencyData( CurrencyData newBaseCurrency);
         void AddCurrencyData(CurrencyData newCurrencyData);
+        Currency GetCurrency(int currencyId);
+        IEnumerable<CurrencyData> GetCurrencyDataList(int? currencyId);        
     }
 }

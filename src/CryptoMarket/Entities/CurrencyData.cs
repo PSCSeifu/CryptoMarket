@@ -11,6 +11,7 @@ namespace CryptoMarket.Models
     {
         public int Id { get; set; } = 0;
 
+      
         public string CryptoCode { get; set; } = "";
         public string FiatCode { get; set; } = "";
         public double Price { get; set; } = 0;

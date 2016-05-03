@@ -8,8 +8,8 @@ using CryptoMarket.Models;
 namespace CryptoMarket.Migrations
 {
     [DbContext(typeof(CryptoMarketContext))]
-    [Migration("20160422141444_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20160503102159_v0")]
+    partial class v0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,6 +122,8 @@ namespace CryptoMarket.Migrations
                     b.Property<double>("HourChange");
 
                     b.Property<int>("ImageId");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<int>("LinkId");
 

@@ -69,7 +69,7 @@ namespace CryptoMarket.Models
             if (!_context.Currencies.Any())
             {
                 //Add New Currecy record.
-                var bitCoin = new Currency()
+                _context.Currencies.Add(new Currency()
                 {
                     AvailableSupply = 15450225,
                     BirthDate = new DateTime(2010, 01, 01),
@@ -77,17 +77,17 @@ namespace CryptoMarket.Models
                     DayChange = 0.0183,
                     DayVolume = 41297.4,
                     Description = "The first and maket leader Crypto-currency. Based on Proof of work. Created by an unkown inventor by the alias Satoshi",
-                    ImageId =1,
+                    ImageId = 1,
+                    ImageUrl = @"btc.jpg",
                     LinkId = 0,
                     MarketCap = 6620684066,
-                    Name = "BitCoin",
-                    //Price = 438.52,
+                    Name = "BitCoin",/*Price = 438.52,*/
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
-                };
+                });
 
-                var ethereum = new Currency()
+                _context.Currencies.Add(new Currency()
                 {
                     AvailableSupply = 79226489,
                     BirthDate = new DateTime( 2014,01,01),
@@ -95,7 +95,8 @@ namespace CryptoMarket.Models
                     DayChange = -0.0455,
                     DayVolume = 11132.5,
                     Description = "The leading Crypto-currency with built in smart contract capabilites. Based on Proof of work as of early 2016.",
-                    ImageId = 1,
+                    ImageId = 2,
+                    ImageUrl = @"eth.png",
                     LinkId = 0,
                     MarketCap = 726788951,
                     Name = "Ethereum",
@@ -103,9 +104,9 @@ namespace CryptoMarket.Models
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
-                };
+                });
 
-                var ripple = new Currency()
+                _context.Currencies.Add(new Currency()
                 {
                     AvailableSupply = 34868679462,
                     BirthDate = new DateTime(2013,01, 01),
@@ -113,7 +114,7 @@ namespace CryptoMarket.Models
                     DayChange = 0.0009,
                     DayVolume = 631567,
                     Description = "Private block chain",
-                    ImageId = 1,
+                    ImageId = 3,
                     LinkId = 0,
                     MarketCap = 245540010,
                     Name = "Ripple",
@@ -121,9 +122,9 @@ namespace CryptoMarket.Models
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
-                };
+                });
 
-                var liteCoin = new Currency()
+                _context.Currencies.Add(new Currency()
                 {
                     AvailableSupply = 45433751,
                     BirthDate = new DateTime( 2013,01,01),
@@ -131,7 +132,7 @@ namespace CryptoMarket.Models
                     DayChange = -0.0079,
                     DayVolume = 898997,
                     Description = "The second oldest and popular crypto currency.",
-                    ImageId = 1,
+                    ImageId = 4,
                     LinkId = 0,
                     MarketCap = 148703304,
                     Name = "LiteCoin",
@@ -139,17 +140,17 @@ namespace CryptoMarket.Models
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
-                };
+                });
 
-                var dash = new Currency()
+                _context.Currencies.Add(new Currency()
                 {
-                    AvailableSupply = 6387953,
+                    AvailableSupply = 6416736,
                     BirthDate = new DateTime(2013,01, 01),
                     CurrencyCode = "DASH",
                     DayChange = 0.0221,
                     DayVolume = 252145,
                     Description = "The popular crypto currency based on proof of stake and delegated moderation.",
-                    ImageId = 1,
+                    ImageId = 5,
                     LinkId = 0,
                     MarketCap = 40995327,
                     Name = "Dash",
@@ -157,12 +158,44 @@ namespace CryptoMarket.Models
                     TypeId = 0,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
-                };
-                _context.Currencies.Add(bitCoin);
-                _context.Currencies.Add(ethereum);
-                _context.Currencies.Add(ripple);
-                _context.Currencies.Add(liteCoin);
-                _context.Currencies.Add(dash);
+                });
+
+                _context.Currencies.Add(new Currency()
+                {
+                    AvailableSupply = 452552412,
+                    BirthDate = new DateTime(2014, 05, 01),
+                    CurrencyCode = "MAID",
+                    DayChange = 0.0221,
+                    DayVolume = 252145,
+                    Description = "",
+                    ImageId = 6,
+                    LinkId = 0,
+                    MarketCap = 288220438,
+                    Name = "MaiSafecoin",
+                    //Price = 6.42,
+                    TypeId = 0,
+                    DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow
+                });
+
+                _context.Currencies.Add(new Currency()
+                {
+                    AvailableSupply = 104172336817,
+                    BirthDate = new DateTime(2014, 05, 01),
+                    CurrencyCode = "DOGE",
+                    DayChange = 0.0221,
+                    DayVolume = 252145,
+                    Description = "",
+                    ImageId = 7,
+                    LinkId = 0,
+                    MarketCap = 235528051,
+                    Name = "DogeCoin",
+                    //Price = 6.42,
+                    TypeId = 0,
+                    DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow
+                });
+
 
                 _context.SaveChanges();
             }
@@ -173,38 +206,32 @@ namespace CryptoMarket.Models
             //Add new Base Currency data
             if (!_context.CurrencyData.Any())
             {
-                var usd = new CurrencyData() {
-                    FiatPublicCode = "USD",
-                    FiatCode = "usd",
-                    Price =0,
-                    FiatDescription = "United States of America Dollars",
-                      DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                var gbp = new CurrencyData()
-                {
-                    FiatPublicCode = "GBP",
-                    FiatCode = "gbp",
-                    Price = 0,
-                    FiatDescription = "United Kingdom Pound Sterling",
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                var eur = new CurrencyData()
-                {
-                    FiatPublicCode = "EUR",
-                    FiatCode = "eur",
-                    Price = 0,
-                    FiatDescription = "European Union Euro",
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(usd);
-                _context.CurrencyData.Add(gbp);
-                _context.CurrencyData.Add(eur);
+
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "LTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+
 
                 _context.SaveChanges();
             }

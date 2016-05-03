@@ -66,9 +66,6 @@ namespace CryptoMarket.Services
             }
         }
 
-        private object JsonResult(JToken jToken)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

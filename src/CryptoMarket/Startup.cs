@@ -87,7 +87,8 @@ namespace CryptoMarket
            {
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
-               config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();               
+               config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
+               config.CreateMap<Currency, CurrencyCreateViewModel>().ReverseMap();
                config.CreateMap<PriceServicesResult, CurrencyData>()
                 .ForMember(dest => dest.Volume, opt => opt.MapFrom(src => src.Volume))
                .ForMember(dest => dest.CryptoCode, opt => opt.MapFrom(src => src.CryptoCode))
@@ -102,7 +103,7 @@ namespace CryptoMarket
               routes.MapRoute(
                   name: "Default",
                   template: "{controller}/{action}/{id?}",
-                  defaults: new { controller = "App", action = "Index" }
+                  defaults: new { controller = "App", action = "Index" ,startIndex = 0, pageSize=5}
                   );
           });
 

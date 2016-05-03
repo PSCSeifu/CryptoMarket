@@ -122,6 +122,8 @@ namespace CryptoMarket.Migrations
 
                     b.Property<int>("ImageId");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<int>("LinkId");
 
                     b.Property<double>("MarketCap");
