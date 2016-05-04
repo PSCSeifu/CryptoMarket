@@ -13,23 +13,23 @@ namespace CryptoMarket.Models
         public int Id { get; set; }      
         [Required,MaxLength(50)]  
         public string Name { get; set; }
-        [Required,RegularExpression("[A-Z)]"),MaxLength(6)]
+        [Required,RegularExpression("([A-Z)]"),MaxLength(6)]
         public string CurrencyCode { get; set; }
         public int TypeId { get; set; }
         [MaxLength(1000)]
         public string Description { get; set; }
         public int LinkId { get; set; }
-        [ RegularExpression("[0-9)]")]
+        [ RegularExpression("[(0-9)]")]
         public double DayVolume { get; set; }
-        [ RegularExpression("[0-9)]")]
+        [RegularExpression("[(0-9)]")]
         public double DayChange { get; set; }
         public double HourChange { get; set; }
-        [RegularExpression("[0-9)]")]
+        [RegularExpression("[(0-9)]")]
         public double  AvailableSupply { get; set; }
         public int ImageId { get; set; }
         public string ImageUrl { get; set; }
 
-        [RegularExpression("[0-9)]")]
+        [RegularExpression("[(0-9)]")]
         public double MarketCap { get; set; }
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
@@ -41,6 +41,18 @@ namespace CryptoMarket.Models
 
         public Currency()
         {
+
+        }
+
+        public void Update(Currency input)
+        {
+            this.Name = input.Name;
+            this.CurrencyCode = input.CurrencyCode;
+            this.Description = input.Description;
+            this.DayVolume = input.DayVolume;
+            this.DayChange = input.DayChange;
+            this.AvailableSupply = input.AvailableSupply;
+            this.MarketCap = input.MarketCap;
 
         }
     }

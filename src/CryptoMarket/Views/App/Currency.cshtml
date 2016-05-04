@@ -1,8 +1,14 @@
-@model IEnumerable<CryptoMarket.Models.Currency>
+@model PagedList.IPagedList<CryptoMarket.Models.Currency>
 
 @{
     ViewBag.Title = "Crypto Currencies";
 }
+
+@using PagedList.Mvc 
+@using PagedList
+<link href="~/css/PagedList.css" rel="stylesheet" />
+
+
 
 <div>
     <div>
@@ -13,54 +19,44 @@
              
         </div>
         <section>
-            <header>Crypto Market's list</header>
+           
             <div class=listcrudcontrol>
                 <a asp-controller="App" asp-action="CurrencyCreate" class="btn btn-success">Add</a>
             </div>
             <div class="listcontrol">
                 <div class=listsortcontrol>
                     <label value="">Sort By : </label>
-                    @Html.ActionLink("Name     |", "Currency", new { sortOrder = ViewBag.NameSortParam })
-                    @Html.ActionLink("Code      |", "Currency", new { sortOrder = ViewBag.NameSortParam })
-                    @Html.ActionLink("Price     |", "Currency", new { sortOrder = ViewBag.NameSortParam })
-                    @Html.ActionLink("Volume |", "Currency", new { sortOrder = ViewBag.NameSortParam })
-                    @Html.ActionLink("Birthdate |", "Currency", new { sortOrder = ViewBag.DateSortParam })
+                    @Html.ActionLink("Name     |", "Currency", new { sortOrder = ViewBag.NameSortParam ,searchString = ViewBag.Currentsearch})
+                    @Html.ActionLink("Code      |", "Currency", new { sortOrder = ViewBag.CodeSortParam, searchString = ViewBag.Currentsearch })
+                    @Html.ActionLink("Price     |", "Currency", new { sortOrder = ViewBag.PriceSortParam, searchString = ViewBag.Currentsearch })
+                    @Html.ActionLink("Volume |", "Currency", new { sortOrder = ViewBag.VolumeSortParam, searchString = ViewBag.Currentsearch })
+                    @Html.ActionLink("Birthdate |", "Currency", new { sortOrder = ViewBag.DateSortParam, searchString = ViewBag.Currentsearch })
                 </div>
                 <div class="listsearchcontrol">
-                    @using (Html.BeginForm())
+                    @*@using (Html.BeginForm())
                     {
                         <p>
                             Find By Name @Html.TextBox("SearchString")
                             <input type="submit" value="Search" />
-                        </p>
-                        @*<label>Find By Name : </label>
-                       @Html.TextBox("Search by Name")
-                        <input type="submit" value="Search" />*@
+                        </p>                     
+                    }*@                   
+                    @using (Html.BeginForm("Currency", "App", FormMethod.Get, new { @class = "form-inline" }))
+                    {
+                        @Html.Label("searchString", "Currency Name or Code : ", new { @class = "control-label"})
+                        @Html.TextBox("searchString", ViewBag.searchString as string , new { @class = "form-control"})
+                        <input type="submit" value="Search" class="btn btn-default"/>
                     }
-                </div>
-            </div>
-            @foreach (var curr in Model)
+                </div >
+            </div >
+            @foreach(var curr in Model)
             {
-                @Html.Partial("_currencySummary", curr)
+               @Html.Partial("_currencySummary", curr)
             }
-
-            @*@foreach (var curr in Model)
-            {
-                <article>
-                    <img id="curr" class="currenctarticlewidethumbnail" src="~/img/" />
-                    <div id="productarticlewidecontent">
-                        <header>
-                            <span class="productarticlewidename">@curr.Name</span>
-                        </header>
-                        <p class="productarticlewidedescription">@curr.Description </p>
-                        <p class="productarticlewidebirthdate">@curr.BirthDate.ToShortDateString()</p>
-                    </div>
-                </article>
-            }*@
-
         </section>
-
-    </div>
-    
+    </div>    
 </div>
-<option>BirthDay</option>
+@*Show which page currently on out of total pages*@
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+@*Next the paging control: Takes Model as the first argument and the function that generate the Url as the second argument*@
+@*@Html.PagedListPager(Model,  PagedList => Url.Action("Currency", new { page, sortOrder = ViewBag.CurrentSort, seasrchString = ViewBag.CurrentSearch }))*@

@@ -1,40 +1,83 @@
 ﻿@model CryptoMarket.Models.Currency
 
+@{
+    ViewBag.Title = "AddCurrency";
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}
 <div class="container-fluid">
     <form method="post" asp-controller="App" asp-action="CurrencyCreate" class="form-horizontal">
         <div as-validation-summary="ValidationSummary.ModelOnly"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
-                <input type="text" id="Name" name="Name" class="form-control" />
-            </div>
-            <span asp-validation-for="Name"></span>
-
-            <label asp-for="CurrencyCode" class="col-sm-2 control-label">Currency Code</label>
-            <div class="col-sm-10">
-                <input type="text" id="CurrencyCode" name="CurrencyCode" class="form-control" />
-            </div>
-            <span asp-validation-for="CurrencyCode"></span>
-
-            <label asp-for="Description" class="col-sm-2 control-label">Description</label>
-            <div class="col-sm-10">
-                <input type="text" id="Description" name="Description" class="form-control" />
-            </div>
-            <span asp-validation-for="Description"></span>
-
-            <label asp-for="DayVolume" class="col-sm-2 control-label">DayVolume</label>
-            <div class="col-sm-10">
-                <input type="text" id="DayVolume" name="DayVolume" class="form-control" />
-            </div>
-            <span asp-validation-for="DayVolume"></span>
-
-            <label asp-for="DayChange" class="col-sm-2 control-label">DayChange</label>
-            <div class="col-sm-10">
-                <input type="text" id="DayChange" name="DayChange" class="form-control" />
-            </div>
-            <span asp-validation-for="DayChange"></span>
-
         
+        <div class="form-group">
+            <div>
+                <label asp-for="Name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" id="Name" name="Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Name"></span>
+            </div>
+
+            <div>
+                <label asp-for="CurrencyCode" class="col-sm-2 control-label">Currency Code</label>
+                <div class="col-sm-10">
+                    <input type="text" id="CurrencyCode" name="CurrencyCode" class="form-control" />
+                </div>
+                <span asp-validation-for="CurrencyCode"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description" class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" id="Description" name="Description" class="form-control" />
+                </div>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <div>
+                <label asp-for="DayVolume" class="col-sm-2 control-label">DayVolume</label>
+                <div class="col-sm-10">
+                    <input type="text" id="DayVolume" name="DayVolume" class="form-control" />
+                </div>
+                <span asp-validation-for="DayVolume"></span>
+            </div>
+
+            <div>
+                <label asp-for="DayChange" class="col-sm-2 control-label">DayChange</label>
+                <div class="col-sm-10">
+                    <input type="text" id="DayChange" name="DayChange" class="form-control" />
+                </div>
+                <span asp-validation-for="DayChange"></span>
+            </div>
+
+            <div>
+                <label asp-for="HourChange" class="col-sm-2 control-label">HourChange</label>
+                <div class="col-sm-10">
+                    <input type="text" id="HourChange" name="HourChange" class="form-control" />
+                </div>
+                <span asp-validation-for="HourChange"></span>
+            </div>
+
+            <div>
+                <label asp-for="AvailableSupply" class="col-sm-2 control-label">AvailableSupply</label>
+                <div class="col-sm-10">
+                    <input type="text" id="AvailableSupply" name="AvailableSupply" class="form-control" />
+                </div>
+                <span asp-validation-for="AvailableSupply"></span>
+            </div>
+
+            <div>
+                <label asp-for="ImageUrl" class="col-sm-2 control-label">ImageUrl</label>
+                <div class="col-sm-10">
+                    <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" />
+                </div>
+                <span asp-validation-for="ImageUrl"></span>
+            </div>
+
 
             <div>
                 <input type="submit" value="Save" />

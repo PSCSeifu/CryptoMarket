@@ -5,6 +5,7 @@ namespace CryptoMarket.Models
 {
     public interface ICryptoMarketRepository
     {
+        int Commit();
         IEnumerable<Client> GetAllClients();
         Client GetClient();
         IEnumerable<Customer> GetAllCustomers();
@@ -19,6 +20,7 @@ namespace CryptoMarket.Models
         int CurrencyData( CurrencyData newBaseCurrency);
         void AddCurrencyData(CurrencyData newCurrencyData);
         Currency GetCurrency(int currencyId);
-        IEnumerable<CurrencyData> GetCurrencyDataList(int? currencyId);        
+        IEnumerable<CurrencyData> GetCurrencyDataList(int? currencyId);
+        void DeleteCurrency(int id);
     }
 }

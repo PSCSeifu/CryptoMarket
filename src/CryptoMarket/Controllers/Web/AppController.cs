@@ -7,6 +7,7 @@ using CryptoMarket.Models;
 using Microsoft.AspNet.Authorization;
 using CryptoMarket.ViewModels;
 using AutoMapper;
+using PagedList;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,13 +55,19 @@ namespace CryptoMarket.Controllers.Web
         }
 
 
-
+        #region " CURRENCY "
         // GET: /<controller>/
 
-        public IActionResult Currency(string sortOrder,string searchString)
+        public IActionResult Currency(string sortOrder,string searchString, int?page )
         {
-            ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            ViewBag.DateSortParam = sortOrder == "Date" ? "BirthDate" : "Date";
+            ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.DateSortParam = sortOrder == "Date" ? "BirthDate_desc" : "BirthDate";
+            ViewBag.CodeSortParam = sortOrder == "Code" ? "Code_desc" : "Code";
+            ViewBag.VolumeSortParam = sortOrder == "Volume_desc" ? "Volume_desc" : "Volume";
+            ViewBag.PriceSortParam = sortOrder == "Price" ? "Price_desc" : "Price";
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CurrentSearch = searchString;
 
             var currencyList = from c in _repository.GetAllCurrencies() select c;
 
@@ -72,26 +79,46 @@ namespace CryptoMarket.Controllers.Web
             switch (sortOrder)
             {
                 case "Name":
-                    currencyList = currencyList.OrderByDescending(c => c.Name);
+                    currencyList = currencyList.OrderBy(c => c.Name).ThenBy( c => c.Name);
+                    break;
+                case "Name_desc":
+                    currencyList = currencyList.OrderByDescending(c => c.Name).ThenBy(c => c.Name);
                     break;
                 case "Date":
-                    currencyList = currencyList.OrderByDescending(c => c.BirthDate);
+                    currencyList = currencyList.OrderBy(c => c.BirthDate).ThenBy(c => c.Name); ;
+                    break;
+                case "Date_desc":
+                    currencyList = currencyList.OrderByDescending(c => c.BirthDate).ThenBy(c => c.Name); ;
                     break;
                 case "Code":
-                    currencyList = currencyList.OrderByDescending(c => c.CurrencyCode);
+                    currencyList = currencyList.OrderBy(c => c.CurrencyCode).ThenBy(c => c.Name); ;
+                    break;
+                case "Code_desc":
+                    currencyList = currencyList.OrderByDescending(c => c.CurrencyCode).ThenBy(c => c.Name); ;
                     break;
                 case "Volume":
-                    currencyList = currencyList.OrderByDescending(c => c.DayVolume);
+                    currencyList = currencyList.OrderBy(c => c.DayVolume).ThenBy(c => c.Name); ;
+                    break;
+                case "Volume_desc":
+                    currencyList = currencyList.OrderByDescending(c => c.DayVolume).ThenBy(c => c.Name); ;
                     break;
                 case "Price":
-                    currencyList = currencyList.OrderByDescending(c => c.CurrencyDataCollection.Max( d => d.Price));
+                    currencyList = currencyList.OrderBy(c => c.CurrencyDataCollection.Max( d => d.Price)).ThenBy(c => c.Name); ;
+                    break;
+                case "Price_desc":
+                    currencyList = currencyList.OrderByDescending(c => c.CurrencyDataCollection.Max(d => d.Price)).ThenBy(c => c.Name); ;
                     break;
                 default:
-                    currencyList = currencyList.OrderByDescending(c => c.Name);                    
+                    currencyList = currencyList.OrderByDescending(c => c.Name).ThenBy(c => c.Name); ;                    
                     break;
             }
 
-            return View(currencyList.ToList());
+            //Alternative paginiation uses linq .Take & .Skip methods.
+
+            int pageSize = currencyList.Count();
+            int pageNumber = page ?? 1;
+
+            return View(currencyList.ToPagedList(pageNumber,pageSize));
         }
 
         public IActionResult CurrencyDetail(int id)
@@ -104,6 +131,41 @@ namespace CryptoMarket.Controllers.Web
                 return RedirectToAction("Currency", "App");
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult CurrencyEdit(int id)
+        {
+            var model  = _repository.GetCurrency(id);
+            var vm = Mapper.Map<Currency, CurrencyCreateViewModel>(model);
+           
+            if (vm == null)
+            {
+                return RedirectToAction("Currency", "App");
+            }
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult CurrencyEdit(int id, CurrencyCreateViewModel vm)
+        {
+            var currency = _repository.GetCurrency(id);
+                        
+            if (currency != null && ModelState.IsValid)
+            {
+                var model = Mapper.Map<CurrencyCreateViewModel, Currency>(vm);
+                currency.Update(model);
+                if (currency == null)
+                {
+                    return RedirectToAction("CurrencyCreate", "App");
+                }
+                _repository.Commit();
+
+                //Implementing the POST-REDIRECT-GET Pattern.
+                return RedirectToAction("CurrencyDetail", "App", new { id = currency.Id });
+            }
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -123,12 +185,29 @@ namespace CryptoMarket.Controllers.Web
                     return RedirectToAction("CurrencyCreate", "App");
                 }
                 _repository.AddCurrency(model);
-                return View(model);
+
+                //Implementing the POST-REDIRECT-GET Pattern.
+                return RedirectToAction("CurrencyDetail", "App", new { id = model.Id });
+               
             }
-            return   RedirectToAction("CurrencyCreate", "App");
-            //var model = new CurrencyCreateViewModel();
-            //return View(model);
+            return   RedirectToAction("CurrencyCreate","App");          
         }
+         
+    
+        public IActionResult CurrencyDelete(CurrencyCreateViewModel vm)
+        {
+            var currency = _repository.GetCurrency(id);
+
+            if (currency == null)
+            {
+                //A way to notify the use the record doesn't exist, in con-currency cases.
+                return RedirectToAction("Currency", "App");
+            }
+
+            _repository.DeleteCurrency(id);
+            return   RedirectToAction("Currency", "App");
+        }
+        #endregion " CURRENCY "
 
         // GET: /<controller>/
         public IActionResult UserProfile()

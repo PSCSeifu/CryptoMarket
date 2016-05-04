@@ -82,6 +82,11 @@ namespace CryptoMarket.Models
             {
                 //needs linq to order currency by default base currency price.
                 // return _context.Currencies.OrderBy(c => c.BaseCurrencies.Max(b =>b.Price)).ToList();
+                var result = _context.Currencies;
+                foreach (var currency in result)
+                {
+                    currency.CurrencyDataCollection = GetCurrencyDataList(currency.Id).ToList();
+                }
                 return _context.Currencies;
 
             }
@@ -154,7 +159,11 @@ namespace CryptoMarket.Models
             _context.Currencies.Add(newCurrency);
             _context.SaveChanges();
         }
-     
+
+        public int Commit()
+        {
+            return _context.SaveChanges();
+        }
 
         public int CurrencyData(CurrencyData newBaseCurrency)
         {
@@ -213,6 +222,12 @@ namespace CryptoMarket.Models
             }
         }
 
-       
+        public void DeleteCurrency(int id)
+        {
+            var entity = _context.Currencies.Where(c => c.Id == id).SingleOrDefault();
+            _context.Currencies.Remove(entity);
+            _context.SaveChanges();
+
+        }
     }
 }
