@@ -8,7 +8,7 @@ using CryptoMarket.Models;
 namespace CryptoMarket.Migrations
 {
     [DbContext(typeof(CryptoMarketContext))]
-    [Migration("20160503102159_v0")]
+    [Migration("20160505150854_v0")]
     partial class v0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,38 +17,7 @@ namespace CryptoMarket.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CryptoMarket.Models.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClientType");
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<DateTime>("DateModified");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email");
-
-                    b.Property<int>("ImageId");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "Client");
-                });
-
-            modelBuilder.Entity("CryptoMarket.Models.CryptoMarketUser", b =>
+            modelBuilder.Entity("CryptoMarket.Entities.User", b =>
                 {
                     b.Property<string>("Id");
 
@@ -61,8 +30,6 @@ namespace CryptoMarket.Migrations
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<DateTime>("FirstWallet");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -98,6 +65,37 @@ namespace CryptoMarket.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("CryptoMarket.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClientType");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Email");
+
+                    b.Property<int>("ImageId");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "Client");
+                });
+
             modelBuilder.Entity("CryptoMarket.Models.Currency", b =>
                 {
                     b.Property<int>("Id")
@@ -107,7 +105,9 @@ namespace CryptoMarket.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<string>("CurrencyCode");
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 6);
 
                     b.Property<DateTime>("DateCreated");
 
@@ -117,7 +117,8 @@ namespace CryptoMarket.Migrations
 
                     b.Property<double>("DayVolume");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasAnnotation("MaxLength", 1000);
 
                     b.Property<double>("HourChange");
 
@@ -129,7 +130,9 @@ namespace CryptoMarket.Migrations
 
                     b.Property<double>("MarketCap");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 50);
 
                     b.Property<int>("TypeId");
 
@@ -516,14 +519,14 @@ namespace CryptoMarket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CryptoMarket.Models.CryptoMarketUser")
+                    b.HasOne("CryptoMarket.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CryptoMarket.Models.CryptoMarketUser")
+                    b.HasOne("CryptoMarket.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -534,7 +537,7 @@ namespace CryptoMarket.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId");
 
-                    b.HasOne("CryptoMarket.Models.CryptoMarketUser")
+                    b.HasOne("CryptoMarket.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CryptoMarket.Models.Currency>
+
+@foreach (var item in Model)
+{
+    <div>@item.Name</div>
+    <div>@item.MarketCap</div>
+
+}
+    

@@ -17,6 +17,7 @@ using CryptoMarket.ViewModels;
 using CryptoMarket.Services;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Mvc;
+using CryptoMarket.Entities;
 
 namespace CryptoMarket
 {
@@ -52,11 +53,11 @@ namespace CryptoMarket
                 opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddIdentity<CryptoMarketUser, IdentityRole>(config =>
+            services.AddIdentity<User, IdentityRole>(config =>
             {
                 config.User.RequireUniqueEmail = true;
                 config.Password.RequiredLength = 8;
-                //The redirect when users are not authenticated.
+                /*The redirect when users are not authenticated.*/
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
             })
             .AddEntityFrameworkStores<CryptoMarketContext>();

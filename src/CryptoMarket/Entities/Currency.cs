@@ -53,7 +53,7 @@ namespace CryptoMarket.Models
             this.DayChange = input.DayChange;
             this.AvailableSupply = input.AvailableSupply;
             this.MarketCap = input.MarketCap;
-
+            this.ImageUrl = input.ImageUrl;
         }
     }
 }

@@ -1,15 +1,17 @@
+using CryptoMarket.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 
 namespace CryptoMarket.Models
 {
 
-    public class CryptoMarketContext : IdentityDbContext<CryptoMarketUser>
+    public class CryptoMarketContext : IdentityDbContext<User>
     {
         public CryptoMarketContext()
         {
             Database.EnsureCreated();
         }
+        
 
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Client> Clients { get; set; }

@@ -2,7 +2,7 @@
 
 <section id="productlist">
     <div>
-        @*<img src= @Model.ImageUrl alt="Currency Icon" height=40 width=40 />*@
+        <img src= "@Url.Content(Model.ImageUrl)" alt = "@Model.Name" height=40 width=40 />
         <header> <b>@Model.Name</b> </header>
         <div>Description: @Model.Description </div>        
         <div>Day Volume : @Model.DayVolume </div>

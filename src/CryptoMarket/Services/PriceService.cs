@@ -12,7 +12,7 @@ using CryptoMarket.Models;
 
 namespace CryptoMarket.Services
 {
-    public class PriceService
+    public class PriceService : IPriceService
     {
         private ILogger<PriceService> _logger;
 

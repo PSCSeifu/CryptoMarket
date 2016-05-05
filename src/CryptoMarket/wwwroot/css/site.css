@@ -28,6 +28,25 @@ bottom:0;
     border: 1px solid #222;
     padding: 3px;
 }
+#currentuser {
+    border: 1px solid #a5b17a;
+    border-radius:8px;
+    padding:5px ;
+    margin:5px;
+    background-color:#5e7ca5;
+    color:#000000;
+    display:inline-block;
+}
+.userinfo{
+    margin:5px;
+    padding:3px;
+}
+.pic-banner-large{
+    opacity:0.6;
+    margin:50px;
+    padding:20px;
+    position: relative;
+}
 
  #shadedlist div:nth-of-type(2n){
      background-color: #beb7b7;
@@ -98,5 +117,11 @@ margin:10px;
  #currrencydataprice{
      background-color:#e8c936;
      font-size: large;
+ }
+
+ .cryptoicondetail{
+     height:100px;
+     width:100px;
+   
  }
  

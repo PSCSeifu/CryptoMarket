@@ -44,11 +44,28 @@
                 <input type="text" id="DayChange" name="DayChange" class="form-control" value="@Model.DayChange"/>
             </div>
             <span asp-validation-for="DayChange"></span>
-
-
-
             <div>
-             @*  <a asp-contoller="App" asp-action="CurrencyEdit" asp-route-id="@Model" class="btn btn-success"> Save</a>*@
+
+
+                <div>
+                    @*<label class="col-sm-2 control-label"> ImageUrl</label>
+                    <div class="col-sm-10">
+                        <input type="text"  class="form-control"  />
+                    </div>
+                    <span asp-validation-for="ImageUrl"></span>*@
+
+                    <label asp-for="ImageUrl" class="col-sm-2 control-label">ImageUrl</label>
+                    <div class="col-sm-10">
+            <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" value="@Model.ImageUrl" />
+        </div>
+        <span asp-validation-for="ImageUrl"></span>
+                </div>
+                   
+                
+
+
+
+                @*  <a asp-contoller="App" asp-action="CurrencyEdit" asp-route-id="@Model" class="btn btn-success"> Save</a>*@
                 <input type="submit" value="Save" class="btn btn-success" />
                 <input type="submit" value="Delete" class="btn btn-danger" />
                 @*<a asp-controller="App" asp-action="CurrencyDelete" asp-route-id="@Model" class="btn btn-danger">Delete</a>*@

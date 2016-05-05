@@ -11,20 +11,36 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    
+
 
     <div id="wrapper">
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <ul class="nav navbar-nav navbar-left">
                     <li class="active"> <a asp-controller="App" asp-action="Index">Home</a> </li>
-                    <li><a asp-controller="App" asp-action="Currency">Currency</a></li>
                     <li><a asp-controller="App" asp-action="About">About</a></li>
                     <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">                   
                     @if (User.IsSignedIn())
                     {
-                        <li><a asp-controller="Auth" asp-action="Logout">LogOut</a></li>
+                        <li><a asp-controller="App" asp-action="Currency">Currency</a></li>
+                        <li><a asp-controller="App" asp-action="Clinet">Client</a></li>
+                    }                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.IsSignedIn())
+                    {
+                        <li>                           
+                            <form method="post" asp-controller="Auth" asp-action="Logout">
+                                <input type="submit" value="Logout" />
+                                <a asp-controller="Auth" asp-action="Logout">
+                                    Logout
+                                </a>
+                            </form>
+                            @*<a  asp-controller="Auth" asp-action="Logout">
+                                Logout
+                            </a>*@
+                        </li>
                     }
                     else
                     {
@@ -35,16 +51,19 @@
             </div>
         </nav>
 
+        <div class="userinfo">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span id="currentuser"><b>User : @User.Identity.Name </b></span>              
+            }
+        </div>
+
         <div id="main" class="container-fluid">
-            <div class="container-fluid">
-                @if (User.Identity.IsAuthenticated)
-                    {
-                        <span id="Username">@User.Identity.Name</span>
-                    }               
-            </div>
+            
             <div>
-                @RenderBody()             
-            </div>            
+                
+                @RenderBody()
+            </div>
         </div>
 
         <div id="footer">
@@ -61,5 +80,6 @@
     @RenderSection("Scripts", false)
 
 </body>
+
 </html>
 

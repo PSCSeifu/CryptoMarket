@@ -133,6 +133,7 @@ namespace CryptoMarket.Controllers.Web
             return View(model);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult CurrencyEdit(int id)
         {
@@ -146,6 +147,7 @@ namespace CryptoMarket.Controllers.Web
             return View(vm);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CurrencyEdit(int id, CurrencyCreateViewModel vm)
         {
@@ -196,6 +198,7 @@ namespace CryptoMarket.Controllers.Web
     
         public IActionResult CurrencyDelete(CurrencyCreateViewModel vm)
         {
+            int id = 0;
             var currency = _repository.GetCurrency(id);
 
             if (currency == null)

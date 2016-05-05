@@ -12,7 +12,8 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <h3>Login</h3>
-        <form method="post" novalidate>
+        <form method="post" asp-controller="Auth" asp-action="Login" 
+              asp-route-returnurl="@Model.ReturnUrl">
             <div asp-validation-summary ="ValidationSummary.ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="Username"></label>
@@ -24,6 +25,13 @@
                 <input type="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="RememberMe"></label>
+                <input asp-for="RememberMe" class="form-control" />
+                <span asp-validation-for="RememberMe"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-success" />
             </div>

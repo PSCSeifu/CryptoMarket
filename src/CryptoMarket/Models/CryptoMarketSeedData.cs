@@ -1,3 +1,4 @@
+using CryptoMarket.Entities;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace CryptoMarket.Models
     public class CryptoMarketSeedData
     {
         private CryptoMarketContext _context;
-        private UserManager<CryptoMarketUser> _userManager;
+        private UserManager<User> _userManager;
 
-        public CryptoMarketSeedData(CryptoMarketContext context,UserManager<CryptoMarketUser> userManager)
+        public CryptoMarketSeedData(CryptoMarketContext context,UserManager<User> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -23,7 +24,7 @@ namespace CryptoMarket.Models
             if (await _userManager.FindByEmailAsync("customer1@gmail.com") == null)
             {
                 //Add the user.
-                var newUser = new CryptoMarketUser()
+                var newUser = new User()
                 {
                     UserName = "xUser234",
                     Email = "customer1@gmail.com"
