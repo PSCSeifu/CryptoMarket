@@ -1,15 +1,19 @@
 ﻿@model CryptoMarket.Models.Currency
+@*id="productlist"*@
+<section class="panel panel-default">
 
-<section id="productlist">
-    <div>
-        <img src= "@Url.Content(Model.ImageUrl)" alt = "@Model.Name" height=40 width=40 />
-        <header> <b>@Model.Name</b> </header>
-        <div>Description: @Model.Description </div>        
+  
+    <div class="panel-heading">
+        <img src="@Url.Content(Model.ImageUrl)" class="img-rounded" alt="@Model.Name" width="50" height="50" />
+        <b>@Model.Name</b>
+    </div>
+    <div class="panel-body" >       
         <div>Day Volume : @Model.DayVolume </div>
+        <div>Day Change : @Model.DayChange </div>
         <div>Created : @Model.BirthDate.ToString("MMM yyyy")</div>
         <div>
-            <a asp-contoller="App" asp-action="CurrencyDetail" asp-route-id="@Model.Id" class="btn btn-link"> View</a>
-            <a asp-contoller="App" asp-action="CurrencyEdit" asp-route-id="@Model.Id" class="btn btn-link"> Edit</a>           
+            <a class="btn btn-info" asp-contoller="App" asp-action="CurrencyDetail" asp-route-id="@Model.Id"> View</a>
+            <a class="btn btn-info" asp-contoller="App" asp-action="CurrencyEdit" asp-route-id="@Model.Id"> Edit</a>
         </div>
     </div>
 </section>

@@ -13,17 +13,19 @@ namespace CryptoMarket.Models
         public int Id { get; set; }      
         [Required,MaxLength(50)]  
         public string Name { get; set; }
-        [Required,RegularExpression("([A-Z)]"),MaxLength(6)]
+        [Required,MaxLength(6)]
         public string CurrencyCode { get; set; }
         public int TypeId { get; set; }
         [MaxLength(1000)]
         public string Description { get; set; }
         public int LinkId { get; set; }
-        [ RegularExpression("[(0-9)]")]
+     
         public double DayVolume { get; set; }
         [RegularExpression("[(0-9)]")]
         public double DayChange { get; set; }
+
         public double HourChange { get; set; }
+
         [RegularExpression("[(0-9)]")]
         public double  AvailableSupply { get; set; }
         public int ImageId { get; set; }

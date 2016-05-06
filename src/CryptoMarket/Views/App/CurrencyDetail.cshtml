@@ -5,8 +5,8 @@
 
 <div>
     <section class="currencyDetail">
-        <div id="currency">
-            <div id="cryptoicondetail"><img  src="@Model.Currency.ImageUrl" /></div>
+        <div class="panel-default">
+            <div id="cryptoicondetail"><img  src="@Model.Currency.ImageUrl" class="img-thumbnail" height="50" width="50" /></div>
             <div id="currencydata"> <b>NAME : @Model.Currency.Name.ToUpper()</b></div>
             <div id="currencydata"> @Model.Currency.CurrencyCode</div>
             <div id="currencydata">DESCRIPTION : @Model.Currency.Description </div>

@@ -13,6 +13,7 @@ using PagedList;
 
 namespace CryptoMarket.Controllers.Web
 {
+    [Authorize]
     public class AppController : Controller
     {
         private ICryptoMarketRepository _repository;
@@ -22,6 +23,7 @@ namespace CryptoMarket.Controllers.Web
             _repository = repository;
         }
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult Index()
         {
             
@@ -29,6 +31,7 @@ namespace CryptoMarket.Controllers.Web
         }
 
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult About()
         {
             return View();
@@ -41,6 +44,7 @@ namespace CryptoMarket.Controllers.Web
         }
 
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             return View();

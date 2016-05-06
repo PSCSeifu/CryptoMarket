@@ -57,14 +57,11 @@ namespace CryptoMarket.Controllers
             return View();
         }
 
-        
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Client", "App");
-            }
-            return View();
+            var model = new LoginViewModel { ReturnUrl = returnUrl };
+            return View(model);           
         } 
 
         [HttpPost]
@@ -77,48 +74,20 @@ namespace CryptoMarket.Controllers
                 {
                     if (String.IsNullOrEmpty(model.ReturnUrl) &&
                         Url.IsLocalUrl(model.ReturnUrl))
+                        //second check, if there is a url,check the url is local to prevent phising attacks.
                     {
-                        return Redirect(model.ReturnUrl);
+                        return Redirect(model.ReturnUrl); //Redirect to the url the user was attempting to access.
                     }
                     else
                     {
-                        return RedirectToAction("Index", "App");
+                        return RedirectToAction("Index", "App"); //Redirect to home.
                     }
                 }
             }
             ModelState.AddModelError("", "Invalid login Attempt");
             return View(model);
         }
-
-        [HttpPost]
-        public async Task<ActionResult> Logina(LoginViewModel vm,string returnUrl)
-        {
-            if (ModelState.IsValid)
-            {
-                var signInResult = await _signInManager.PasswordSignInAsync(vm.Username,
-                    vm.Password,
-                    false, false);
-
-                if (signInResult.Succeeded)
-                {
-                    if (string.IsNullOrWhiteSpace(returnUrl))
-                    {
-                        //Redirect to result page
-                        return RedirectToAction("Client", "App");
-                    }
-                    else
-                    {
-                        return RedirectToAction(returnUrl);
-                    }
-                }
-                else
-                {
-                    ModelState.TryAddModelError("", "Username or password incorrect");
-                }  
-            }
-
-            return View();
-        }
+              
                 
         [HttpPost]
         public async Task<IActionResult> Logout()

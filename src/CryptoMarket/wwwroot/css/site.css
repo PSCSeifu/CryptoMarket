@@ -18,8 +18,7 @@
     }
 
 #footer{
-background:#7d94c4;
-position :fixed;
+position :static;
 bottom:0;
 }
 
