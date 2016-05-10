@@ -33,34 +33,74 @@ namespace CryptoMarket.Models
             }
         }
 
+      
         public void EnsureClientSeedData()
         {
             if (!_context.Clients.Any())
-            {
-                var user1 = new Client()
+            {   
+                _context.Clients.Add(new Client()
                 {
-                    ClientType = "Customer",
-                    Email = "customer1@gmail.com",
-                    UserName = "xUser234",
-                    Password = "P@ssw0rd123",
-                    PasswordHash = "jdgf87st",
-                    DateCreated =  DateTime.UtcNow,
-                    DateModified= DateTime.UtcNow
-            };
+                    UserId = "",
+                    NickName = "Cust123",
+                    ClientType = Enums.Enums.ClientType.customer,
+                    PublicRating = 8.5,
+                    AdminRating = 9.2,
+                    Address1 = "101 Newmarrket Road",
+                    Address2 = "Cambridge",
+                    Address3 =  "CambridgeShire",
+                    MailCode = "CB1 1AB",
+                    Title= "Mr",
+                    FirstName = "Thomas",
+                    LastName ="Anderson",
+                    CustomerTypeId = 4
+                });
 
-                var vendor1 = new Client()
+                _context.Clients.Add(new Client()
                 {
-                    ClientType = "Vendor",
-                    Email = "bittradingllc@bittrader.com",
-                    UserName = "BitTraders",
-                    Password = "trading345rft6y",
-                    PasswordHash = "99jjjuu8",
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                    UserId = "",
+                    NickName = "pp34",
+                    ClientType = Enums.Enums.ClientType.customer,
+                    PublicRating = 4.5,
+                    AdminRating = 6.2,
+                    Address1 = "102 Random Road",
+                    Address2 = "Bristol",
+                    Address3 = "Bristol",
+                    MailCode = "BR4 1AB",
+                    Title = "Mr",
+                    FirstName = "James",
+                    LastName = "Simon",
+                    CustomerTypeId = 2
+                });
 
-                _context.Clients.Add(user1);
-                _context.Clients.Add(vendor1);
+                _context.Clients.Add(new Client()
+                {
+                    UserId = "",
+                    NickName = "Vend123",
+                    ClientType = Enums.Enums.ClientType.vendor,
+                    PublicRating = 9.5,
+                    AdminRating = 9.8,
+                    Address1 = "101 Ocean Road",
+                    Address2 = "London",
+                    Address3 = "Middlesex",
+                    MailCode = "TW1 1AB",
+                    VendorName = "Bit Trading LLC",
+                    VendorTypeId= 2
+                });
+
+                _context.Clients.Add(new Client()
+                {
+                    UserId = "",
+                    NickName = "Own23",
+                    ClientType = Enums.Enums.ClientType.vendor,
+                    PublicRating = 8.5,
+                    AdminRating = 7.8,
+                    Address1 = "101 Teaxs Close",
+                    Address2 = "London",
+                    Address3 = "Middlesex",
+                    MailCode = "SW11 1AB",
+                    VendorName = "TheCryptpCompany",
+                    VendorTypeId = 1
+                });
                 _context.SaveChanges();
             }
         }
@@ -248,87 +288,68 @@ namespace CryptoMarket.Models
             //Add new wallet data
             if (!_context.Wallets.Any())
             {
-                var bitwallet = new Wallet() {
-                    Balance = 1.96,
-                    ClientId = 1,
-                    CurrencyId = 1,
-                    Description = "My default Bitcoin wallet",
-                    FiatAccountId = 1,
-                    Name = "BitCoinMain",
+                var bitwallet = new Wallet()
+                {
+                    Balance = 1.96, ClientId = 3,CurrencyId = 1, Description = "My default Bitcoin wallet",
+                    FiatAccountId = 1,  Name = "BitCoinMain",
                     PublicKey = "044322e2d4493111d73244c9c0ba8868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
-                    Password = "",
-                    TypeId=0   ,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    Password = "", TypeId = 0
                 };
 
                 var bitwallet2 = new Wallet()
                 {
-                    Balance = 3.96,
-                    ClientId = 1,
-                    CurrencyId = 1,
-                    Description = "My second Bitcoin wallet",
-                    FiatAccountId = 1,
-                    Name = "BitLong",
+                    Balance = 3.96,  ClientId = 3, CurrencyId = 1,
+                    Description = "My second Bitcoin wallet", FiatAccountId = 1, Name = "BitLong",
                     PublicKey = "03111d73244c9c0ba844322e2d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
-                    Password = "",
-                    TypeId = 0,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    Password = "", TypeId = 0,
+                    
                 };
 
                 var ethereum = new Wallet()
                 {
-                    Balance = 3.96,
-                    ClientId = 1,
-                    CurrencyId = 1,
-                    Description = "My Eth wallet",
-                    FiatAccountId = 1,
-                    Name = "ETH_Main",
+                    Balance = 3.96,ClientId = 3,CurrencyId = 1,  Description = "My Eth wallet",
+                    FiatAccountId = 1, Name = "ETH_Main",
                     PublicKey = "02e2111d73244d4493c9c0ba844328683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
-                    Password = "",
-                    TypeId = 0
+                    Password = "",TypeId = 0
                 };
 
                 var bitwallet3 = new Wallet()
                 {
-                    Balance = 3.96,
-                    ClientId = 2,
-                    CurrencyId = 1,
-                    Description = "Company wallet One - BitCoin",
-                    FiatAccountId = 1,
-                    Name = "Trading-1-BitCoin",
+                    Balance = 3.96, ClientId = 4,CurrencyId = 1, Description = "Company wallet One - BitCoin",
+                    FiatAccountId = 1, Name = "Trading-1-BitCoin",
                     PublicKey = "03c9c0ba844322e2111d73244d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
-                    Password = "",
-                    TypeId = 0,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    Password = "",TypeId = 0,                   
                 };
 
                 var ethereum2 = new Wallet()
                 {
-                    Balance = 3.96,
-                    ClientId = 2,
-                    CurrencyId = 1,
-                    Description = "Company wallet One - Ethereum",
-                    FiatAccountId = 1,
-                    Name = "Trading-1-Ethereum",                    
+                    Balance = 3.96,ClientId = 4, CurrencyId = 1,   Description = "Company wallet One - Ethereum",  FiatAccountId = 1,Name = "Trading-1-Ethereum",
                     PublicKey = "03c9c0ba844322e2111d73244d4498683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
-                    Password = "",
-                    TypeId = 0,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    Password = "",TypeId = 0,
                 };
 
+                var dash1 = new Wallet()
+                {
+                    Balance = 3.96,  ClientId = 5, CurrencyId = 5, Description = "CC One - Dash",FiatAccountId = 1, Name = "Main-Dash-v1.0",
+                    PublicKey = "03c9c0b111d73244d449868cba844322e217d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
+                    Password = "", TypeId = 0,
+                };
+
+                var dodge1 = new Wallet()
+                {
+                    Balance = 3.96,  ClientId = 6,  CurrencyId = 7, Description = "Much Dodge", FiatAccountId = 1,
+                    Name = "SuchWallet",  PublicKey = "244c9c0ba844221803111d735ad30a6756d0fa201573668f8322e2d449868cb17d64dccac79ecc7 ",
+                    Password = "",TypeId = 0,
+                };
                 _context.Wallets.Add(bitwallet);
                 _context.Wallets.Add(bitwallet2);
                 _context.Wallets.Add(bitwallet3);
                 _context.Wallets.Add(ethereum);
                 _context.Wallets.Add(ethereum2);
+                _context.Wallets.Add(dash1);
+                _context.Wallets.Add(dodge1);
 
                 _context.SaveChanges();
-                    
-
             }
         }
 

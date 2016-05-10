@@ -19,11 +19,58 @@ namespace CryptoMarket.Models
             _logger = logger;
         }
 
+        #region " COMMON "
+
+        public bool SaveAll()
+        {
+            return _context.SaveChanges() > 0;
+        }
+
+        public int Commit()
+        {
+            return _context.SaveChanges();
+        }
+
+        #endregion
+
+        #region " CLIENT "
+        public Client GetClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddClient(Client newClient)
+        {
+            _context.Add(newClient);
+        }
+
+
+
+        public Client GetClientById(int clientId)
+        {
+            try
+            {
+                return _context.Clients
+                    .Include(w => w.Wallets)
+                     .Where(c => c.Id == clientId)
+                     .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Could not get Client with Id {clientId}", ex);
+                return null;
+            }
+        }
+        
         public IEnumerable<Client> GetAllClients()
         {
             try
             {
-                return _context.Clients.OrderBy(c => c.ClientType).ToList();
+                return _context.Clients
+                    .Include( w => w.Wallets)
+                    .Include( t => t.Transactions)
+                    .Include( o => o.Offers)
+                    .OrderBy(c => c.ClientType).ToList();
             }
             catch(Exception ex)
             {
@@ -46,20 +93,7 @@ namespace CryptoMarket.Models
                 return null;
             }
         }
-
-        public IEnumerable<Customer> GetAllCustomers()
-        {
-            try
-            {
-                return _context.Customers.OrderBy(c => c.LastName).ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Could not get Customers from data base.", ex);
-                return null;
-            }
-        }
-
+               
         public IEnumerable<Client> GetAllClientsWithWallets()
         {
             try
@@ -75,6 +109,35 @@ namespace CryptoMarket.Models
                 return null;
             }
         }
+
+        #endregion
+
+        #region " WALLET "  
+        public void AddWallet(int clientId, Wallet newWallet)
+        {
+            //Add ordering information
+            //E.g. if there was an int order property, 
+            //var theClient = GetClientByClientId(clientId);
+            //newWallet.Order = theClient.Wallets.Max( s => s.order) + 1;
+            _context.Wallets.Add(newWallet);
+        }
+
+        public IEnumerable<Wallet> GetAllWallets()
+        {
+            try
+            {
+                return _context.Wallets.OrderBy(w => w.ClientId).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not getWallets from Database.", ex);
+                return null;
+            }
+
+        }
+        #endregion
+        
+        #region     " CURRENCY "
 
         public IEnumerable<Currency> GetAllCurrencies()
         {
@@ -97,74 +160,14 @@ namespace CryptoMarket.Models
             }
             
         }
-
-        public IEnumerable<Wallet> GetAllWallets()
-        {
-            try
-            {
-                return _context.Wallets.OrderBy(w => w.ClientId).ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Could not getWallets from Database.", ex);
-                return null;
-            }
-            
-        }
-
-        public Client GetClient()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddClient(Client newClient)
-        {           
-            _context.Add(newClient);
-        }
-
-        public bool SaveAll()
-        {
-            return _context.SaveChanges() > 0;
-        }
-
-        public Client GetClientById(int clientId)
-        {
-            try
-            {                
-                return _context.Clients
-                    .Include( w => w.Wallets)
-                     .Where(c => c.Id == clientId)
-                     .FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Could not get Client with Id {clientId}", ex);
-                return null;
-            }
-        }
-
-        public void AddWallet(int clientId,Wallet newWallet)
-        {
-            //Add ordering information
-            //E.g. if there was an int order property, 
-            //var theClient = GetClientByClientId(clientId);
-            //newWallet.Order = theClient.Wallets.Max( s => s.order) + 1;
-            _context.Wallets.Add(newWallet);
-        }
-
-        
+                
         public void AddCurrency(Currency newCurrency)
         {
            // newCurrency.Id = _context.Currencies.Max(c => c.Id) + 1;
             _context.Currencies.Add(newCurrency);
             _context.SaveChanges();
         }
-
-        public int Commit()
-        {
-            return _context.SaveChanges();
-        }
-
+        
         public int CurrencyData(CurrencyData newBaseCurrency)
         {
             try
@@ -229,5 +232,7 @@ namespace CryptoMarket.Models
             _context.SaveChanges();
 
         }
+
+        #endregion
     }
 }

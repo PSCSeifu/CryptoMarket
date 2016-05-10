@@ -14,5 +14,12 @@ namespace CryptoMarket.Enums
             gbp,
             eur
         }
+
+        public enum ClientType
+        {
+            customer,
+            vendor
+        }
+            
     }
 }

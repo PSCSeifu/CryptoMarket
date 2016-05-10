@@ -8,7 +8,7 @@ using CryptoMarket.Models;
 namespace CryptoMarket.Migrations
 {
     [DbContext(typeof(CryptoMarketContext))]
-    [Migration("20160505150854_v0")]
+    [Migration("20160510102818_v0")]
     partial class v0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,30 +70,47 @@ namespace CryptoMarket.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClientType");
+                    b.Property<string>("Address1");
+
+                    b.Property<string>("Address2");
+
+                    b.Property<string>("Address3");
+
+                    b.Property<double>("AdminRating");
+
+                    b.Property<int>("ClientType");
+
+                    b.Property<string>("Country");
+
+                    b.Property<int>("CustomerTypeId");
 
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateModified");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
+                    b.Property<int>("EmailId");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("FirstName");
 
                     b.Property<int>("ImageId");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("LastName");
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<string>("MailCode");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("NickName");
+
+                    b.Property<double>("PublicRating");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("VendorName");
+
+                    b.Property<int>("VendorTypeId");
 
                     b.HasKey("Id");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "Client");
                 });
 
             modelBuilder.Entity("CryptoMarket.Models.Currency", b =>
@@ -425,50 +442,6 @@ namespace CryptoMarket.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("CryptoMarket.Models.Customer", b =>
-                {
-                    b.HasBaseType("CryptoMarket.Models.Client");
-
-                    b.Property<string>("Address1");
-
-                    b.Property<string>("Address2");
-
-                    b.Property<string>("Address3");
-
-                    b.Property<string>("Country");
-
-                    b.Property<int>("CustomerTypeId");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("MailCode");
-
-                    b.Property<string>("Title");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "Customer");
-                });
-
-            modelBuilder.Entity("CryptoMarket.Models.Vendor", b =>
-                {
-                    b.HasBaseType("CryptoMarket.Models.Client");
-
-                    b.Property<int>("CustomerCount");
-
-                    b.Property<string>("Name");
-
-                    b.Property<double>("PublicRating");
-
-                    b.Property<double>("Rating");
-
-                    b.Property<int>("TransactionCount");
-
-                    b.Property<int>("VendorTypeId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "Vendor");
                 });
 
             modelBuilder.Entity("CryptoMarket.Models.CurrencyData", b =>

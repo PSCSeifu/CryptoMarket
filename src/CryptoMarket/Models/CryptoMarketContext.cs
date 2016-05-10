@@ -15,8 +15,8 @@ namespace CryptoMarket.Models
 
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Vendor> Vendors { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }

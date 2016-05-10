@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CryptoMarket.Models
 {
-    public class Vendor : Client
-    {            
+    public class Vendor
+    {
         public string Name { get; set; }       
         public int CustomerCount { get; set; }
         public int TransactionCount { get; set; }

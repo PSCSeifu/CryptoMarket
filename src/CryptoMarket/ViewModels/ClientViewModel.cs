@@ -1,3 +1,4 @@
+using CryptoMarket.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,13 +10,20 @@ namespace CryptoMarket.ViewModels
 {
     public class ClientViewModel
     {
-        public int Id { get; set; }
-
+        public string UserId { get; set; }
+        [Required,MaxLength(20),MinLength(2)]
+        public string NickName { get; set; } = "";
+        public Enums.Enums.ClientType ClientType { get; set; } = Enums.Enums.ClientType.customer;
         [Required]
-        [StringLength(255,MinimumLength = 5)]
-        public string UserName { get; set; }
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public double PublicRating { get; set; } = 0;
+        [Required]
+        public double AdminRating { get; set; } = 0;//for admin only =0;
+        public string Title { get; set; } = "";
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
 
-        public IEnumerable<WalletViewModel> Wallets { get; set; }
+        public string VendorName { get; set; } = "";
+        public int VendorTypeId { get; set; }
+
     }
 }

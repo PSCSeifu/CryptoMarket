@@ -11,17 +11,35 @@ namespace CryptoMarket.Models
     {
         [Key]
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string PasswordHash { get; set; }        
-        public string Email { get; set; }
-        public string ClientType { get; set; }
+        public string UserId { get; set; }
+
+        public string NickName { get; set; } = "";
+        public Enums.Enums.ClientType ClientType { get; set; } = Enums.Enums.ClientType.customer;
+        public double PublicRating { get; set; } = 0;
+        public double AdminRating { get; set; } = 0;//for admin only =0;
         public int ImageId { get; set; }
+        public string Address1 { get; set; } = "";
+        public string Address2 { get; set; } = "";
+        public string Address3 { get; set; } = "";
+        public string MailCode { get; set; } = "";
+        public string Country { get; set; } = "";
+        public int EmailId { get; set; } //Main/trading,forum etc        
 
-        public DateTime DateCreated { get; set; }
-        public DateTime DateModified { get; set; }
+        #region Customer
+        public string Title { get; set; } = "";
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public int CustomerTypeId { get; set; }
+        #endregion
 
-        
+        #region Vedor
+        public string VendorName { get; set; } = "";
+        public int VendorTypeId { get; set; }
+        #endregion 
+
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public DateTime DateModified { get; set; } = DateTime.UtcNow;
+
         public virtual ICollection<Offer> Offers { get; set; }
         public virtual ICollection<Wallet> Wallets { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }

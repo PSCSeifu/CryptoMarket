@@ -1,17 +1,52 @@
 @model IEnumerable<CryptoMarket.Models.Client>
+@using CryptoMarket.Enums
 
 @{
     ViewBag.Title = "Crypto Currencies";
 }
+<script src="~/lib/angular/angular.min.js"></script>
 
 <div>
     <div>
         <h4>Client DashBoard</h4>
     </div>
-    <ul>
+
+    <table class="table table-responsive table-striped">
+        <tr>
+            <td>NickName</td>
+            <td>ClientType</td>
+            <td>Name</td>
+            <td>PublicRating</td>
+            <td>Wallets</td>
+        </tr>
         @foreach (var curr in Model)
         {
-            <li>@curr.UserName (@curr.DateCreated.ToShortDateString())</li>
+
+            <tr>
+                <td>@curr.NickName</td>
+                <td>@curr.ClientType</td>
+                @if (@curr.ClientType == Enums.ClientType.customer)
+                {
+                    <td>@curr.FirstName</td>
+                }
+                else
+                {
+                    <td>@curr.VendorName</td>
+                }               
+                <td>@curr.PublicRating</td>
+                <td>@curr.Wallets.Count()</td>
+                <td href="#" class="btn btn-sm btn-link">Manage</td>
+            </tr>
+        }
+            
+    </table>
+
+
+
+    @*<ul>
+        @foreach (var curr in Model)
+        {
+            <li>@curr.NickName (@curr.DateCreated.ToShortDateString())</li>
             
             <li>
                 @foreach (var wallet in @curr.Wallets)
@@ -20,5 +55,5 @@
                 }
             </li>
         }
-    </ul>
+    </ul>*@
 </div>

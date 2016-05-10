@@ -54,8 +54,8 @@ namespace CryptoMarket.Controllers.Web
         [Authorize]
         public IActionResult Client()
         {
-            var wallets = _repository.GetAllClientsWithWallets();
-            return View(wallets);            
+            var allClients = _repository.GetAllClients();
+            return View(allClients);            
         }
 
 

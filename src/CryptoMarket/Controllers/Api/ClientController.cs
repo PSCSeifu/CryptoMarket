@@ -34,7 +34,7 @@ namespace CryptoMarket.Controllers.Api
                 {
                     return Json(null);
                 }
-                return Json(Mapper.Map<IEnumerable<ClientViewModel>>(results.OrderBy(c => c.DateCreated)));
+                return Json(Mapper.Map<IEnumerable<ClientViewModel>>(results.OrderBy(c => c.NickName)));
             }
             catch (Exception ex)
             {

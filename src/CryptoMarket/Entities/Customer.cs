@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryptoMarket.Models
 {
-    public class Customer : Client
+    public class Customer 
     {       
         public string Title { get; set; }
         public string FirstName { get; set; }
