@@ -34,7 +34,11 @@ namespace CryptoMarket.Controllers.Api
                 {
                     return Json(null);
                 }
+
+                //simulate delay
+                System.Threading.Thread.Sleep(3000);
                 return Json(Mapper.Map<IEnumerable<ClientViewModel>>(results.OrderBy(c => c.NickName)));
+              
             }
             catch (Exception ex)
             {

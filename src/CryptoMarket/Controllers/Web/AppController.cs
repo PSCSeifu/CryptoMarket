@@ -58,6 +58,17 @@ namespace CryptoMarket.Controllers.Web
             return View(allClients);            
         }
 
+        public IActionResult ClientDetail(int id)
+        {
+            var model = new ClientViewModel();
+            model = _repository.GetClient(id);
+            if(model == null)
+            {
+
+            }
+            return View(model);
+        }
+
 
         #region " CURRENCY "
         // GET: /<controller>/

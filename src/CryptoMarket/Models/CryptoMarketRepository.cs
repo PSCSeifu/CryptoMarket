@@ -1,3 +1,4 @@
+using CryptoMarket.ViewModels;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
 using System;
@@ -43,9 +44,7 @@ namespace CryptoMarket.Models
         {
             _context.Add(newClient);
         }
-
-
-
+        
         public Client GetClientById(int clientId)
         {
             try
@@ -79,13 +78,14 @@ namespace CryptoMarket.Models
             }
         }
 
-        public Client GetClient(int clientId)
+        public ClientViewModel GetClient(int clientId)
         {
             try
             {
-                return _context.Clients
+                var client =  _context.Clients
                                 .Where(c => c.Id == clientId)
                                 .FirstOrDefault();
+                return AutoMapper.Mapper.Map<ClientViewModel>(client);
             }
             catch (Exception ex)
             {

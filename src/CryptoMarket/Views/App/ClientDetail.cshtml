@@ -1,0 +1,26 @@
+@model CryptoMarket.Models.Client
+
+@{ 
+    ViewBag.Title = Model.NickName;
+}
+
+<div>
+    <div class="panel panel-default">
+        <div class= "panel panel-primary">
+             <div> <b>Nickname :</b>@Model.NickName</div>
+            <div>Public Rating : @Model.PublicRating</div>
+            <div>Admin Rating : @Model.AdminRating</div>
+            <div>Address 1 : @Model.Address1</div>
+            <div>Address 2 : @Model.Address2</div>
+            <div>Address 3 : @Model.Address3</div>
+            <div>Country : @Model.Country</div>
+            <div>Mail Code : @Model.MailCode</div>
+        </div>
+        <div class="panel panel-group">
+            @foreach (var wallet in @Model.Wallets)
+            {
+                <div> NAME : @wallet.Name</div>               
+            }
+        </div>
+    </div>
+</div>

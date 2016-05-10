@@ -25,5 +25,12 @@ namespace CryptoMarket.ViewModels
         public string VendorName { get; set; } = "";
         public int VendorTypeId { get; set; }
 
+        public string Address1 { get; set; } = "";
+        public string Address2 { get; set; } = "";
+        public string Address3 { get; set; } = "";
+        public string MailCode { get; set; } = "";
+        public string Country { get; set; } = "";
+
+        public virtual ICollection<Wallet> Wallets { get; set; }
     }
 }

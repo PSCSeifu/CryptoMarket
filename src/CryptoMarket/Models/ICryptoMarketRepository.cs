@@ -9,11 +9,12 @@ namespace CryptoMarket.Models
         bool SaveAll();
 
         IEnumerable<Client> GetAllClients();
-        Client GetClient();              
+        
+        Client GetClient();
         IEnumerable<Client> GetAllClientsWithWallets();
         void AddClient(Client newClient);
+        ClientViewModel GetClient(int clientId);
         Client GetClientById(int clientId);
-
 
         void AddWallet(int clientId, Wallet newWallet);
         IEnumerable<Wallet> GetAllWallets();
