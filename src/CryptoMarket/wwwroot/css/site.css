@@ -13,12 +13,11 @@
 #main{
     background:#eee;
     height:100%;
-    color: #000000;
-    
+    color: #000000;    
     }
 
 #footer{
-position :fixed;
+position :relative;
 bottom:0;
 }
 

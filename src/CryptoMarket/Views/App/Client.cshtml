@@ -6,54 +6,41 @@
     ViewBag.Title = "Admin - Clients";
 }
 <script src="~/lib/angular/angular.min.js"></script>
+<script src="~/lib/angular-route/angular-route.min.js"></script>
 <script src="~/js/app-clients.js"></script>
 <script src="~/js/ClientController.js"></script>
 
+<div>
 
-<div class="row" ng-app="app-clients">
-    <div ng-controller="ClientController as vm" class="col-md-10">       
-        <div class="text-danger" ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>              
-        <div ng-show="vm.isBusy" class="text-center">
-            <i class="fa fa-spinner fa-spin"></i>Loading...
-        </div>
-        <table class="table table-responsive table-striped">           
-            <tr ng-repeat="client in vm.clients">
-                <td>{{client.nickName}}</td>
-                <td>{{client.clientType}}</td>                              
-                <td>{{client.vendorName}}</td>
-                <td>{{client.firstName}}</td>
-                <td>{{client.address1}}</td>
-                <td>{{client.address2}}</td>
-                <td>{{client.address3}}</td>
-                <td>{{client.mailCode}}</td>
-                <td>{{client.country}}</td>                
-                <td>{{client.publicRating}}</td>
-                <td>{{client.adminRating}}</td>
-                <td><a href="#" class="btn btn-sm btn-link">Manage</a></td>
-            </tr>
-        </table>
-    </div>
-
-
-
-    @*<div>
+    <div>
         <h4>Client DashBoard</h4>
     </div>
-
-    <table class="table table-responsive table-striped">
-        <tr>
-            <td>NickName</td>
-            <td>ClientType</td>
-            <td>Name</td>
-            <td>PublicRating</td>
-            <td>Wallets</td>
-        </tr>
-        @foreach (var curr in Model)
-        {
-
+    <div class="panel panel-info">
+        <div class="panel-heading"> Admin DashBoard</div>
+        <div class="panel-body">
+            <a asp-controller="App" asp-action ="ClientCreate" class="btn btn-primary">Add</a>
+        </div>
+     </div>  
+        <div class="panel panel-info">
+            <div class="panel-heading"> Client List</div>
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th>NickName</th>
+                    <th>ClientType</th>
+                    <th>Name</th>
+                    <th>PublicRating</th>
+                    <th>AdminRating</th>
+                   
+                    <th>Wallets</th>
+                    <th>Transactions</th>
+                    <th>Offers</th>
+                    
+                </tr>
+                @foreach (var curr in Model)
+            {
             <tr>
                 <td>@curr.NickName</td>
-                <td>@curr.ClientType</td>
+                <td>@curr.ClientType.ToString().ToUpper()</td>
                 @if (@curr.ClientType == Enums.ClientType.customer)
                 {
                     <td>@curr.FirstName</td>
@@ -61,14 +48,50 @@
                 else
                 {
                     <td>@curr.VendorName</td>
-                }               
+                }
                 <td>@curr.PublicRating</td>
+                <td>@curr.AdminRating</td>
+                
                 <td>@curr.Wallets.Count()</td>
+                <td>@curr.Transactions.Count()</td>
+                <td>@curr.Offers.Count()</td>
+              
                 <td>
-                    <input type="submit" asp-controller="App" asp-action="ClientDetail" class="btn btn-sm btn-link" value="Manage">
+                    <a class="btn btn-info" asp-contoller="App" asp-action="ClientDetail" asp-route-id="@curr.Id"> View</a>
                 </td>
             </tr>
-        }            
-    </table>*@
+        }
+            </table>
+        </div>
 
-</div>
+
+        @*<div class="row" ng-app="app-clients">
+            @*<div ng-controller="ClientController as vm" class="col-md-10">
+                <div class="text-danger" ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
+                <div ng-show="vm.isBusy" class="text-center">
+                    <i class="fa fa-spinner fa-spin"></i>Loading...
+                </div>
+                <table class="table table-responsive table-striped">
+                    <tr ng-repeat="client in vm.clients">
+                        <td>{{client.nickName}}</td>
+                        <td>{{client.clientType}}</td>
+                        <td>{{client.vendorName}}</td>
+                        <td>{{client.firstName}}</td>
+                        <td>{{client.address1}}</td>
+                        <td>{{client.address2}}</td>
+                        <td>{{client.address3}}</td>
+                        <td>{{client.mailCode}}</td>
+                        <td>{{client.country}}</td>
+                        <td>{{client.publicRating}}</td>
+                        <td>{{client.adminRating}}</td>
+                        <td><a  href="#/app/ClientDetail/{{client.id}}"  class="btn btn-sm btn-link">Manage</a></td>
+                        <td><a class="btn btn-info" asp-contoller="App" asp-action="ClientDetail" asp-route-id={{client.id}}> View</a></td>
+                    </tr>
+                </table>
+            </div>*@
+
+
+
+
+
+    </div>

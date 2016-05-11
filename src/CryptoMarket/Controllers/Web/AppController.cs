@@ -38,6 +38,7 @@ namespace CryptoMarket.Controllers.Web
         }
 
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -50,6 +51,39 @@ namespace CryptoMarket.Controllers.Web
             return View();
         }
 
+        [AllowAnonymous]
+        public IActionResult Transaction()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Offer()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Realtion()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Wallet()
+        {
+            var wallet = _repository.GetAllWallets();
+            return View(wallet);
+        }
+
+        [AllowAnonymous]
+        public IActionResult FiatAccount()
+        {
+            return View();
+        }
+
+
+        #region " CLIENT "
         // GET: /<controller>/
         [Authorize]
         public IActionResult Client()
@@ -58,22 +92,47 @@ namespace CryptoMarket.Controllers.Web
             return View(allClients);            
         }
 
+        [Authorize]
         public IActionResult ClientDetail(int id)
         {
-            var model = new ClientViewModel();
-            model = _repository.GetClient(id);
+            var model = new Client();
+            model = _repository.GetClientById(id);
             if(model == null)
             {
-
+                return RedirectToAction("Client", "App");
             }
             return View(model);
         }
 
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult ClientCreate()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ClientCreate(ClientViewModel vm)
+        {
+            if (ModelState.IsValid && ModelState != null)
+            {
+                var model = Mapper.Map<ClientViewModel, Client>(vm);
+                _repository.AddClient(model);
+
+                //Implementing the post-redirect-get pattern
+                return RedirectToAction("ClientDetail", "App", new  { id = model.Id });
+            }
+            return RedirectToAction("ClientCreate", "App");
+        }
+
+        #endregion
+
         #region " CURRENCY "
         // GET: /<controller>/
 
-        public IActionResult Currency(string sortOrder,string searchString, int?page )
+        public IActionResult Currency(string sortOrder,string searchString, int? page, int? pageSize )
         {
             ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.DateSortParam = sortOrder == "Date" ? "BirthDate_desc" : "BirthDate";
@@ -129,11 +188,17 @@ namespace CryptoMarket.Controllers.Web
             }
 
             //Alternative paginiation uses linq .Take & .Skip methods.
+            
 
-            int pageSize = currencyList.Count();
+            int itemsPerPage = (pageSize < 1 ? 3: (int)pageSize) ;
             int pageNumber = page ?? 1;
 
-            return View(currencyList.ToPagedList(pageNumber,pageSize));
+            currencyList = currencyList.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+            var paginatedCurrencies = new PagedList<Currency>(currencyList, pageNumber, itemsPerPage);
+
+            //return View(currencyList.ToPagedList(pageNumber, itemsPerPage));
+
+            return View(paginatedCurrencies);
         }
 
         public IActionResult CurrencyDetail(int id)
@@ -207,7 +272,8 @@ namespace CryptoMarket.Controllers.Web
                 return RedirectToAction("CurrencyDetail", "App", new { id = model.Id });
                
             }
-            return   RedirectToAction("CurrencyCreate","App");          
+            //return   RedirectToAction("CurrencyCreate","App");
+            return View();
         }
          
     
@@ -227,10 +293,6 @@ namespace CryptoMarket.Controllers.Web
         }
         #endregion " CURRENCY "
 
-        // GET: /<controller>/
-        public IActionResult UserProfile()
-        {
-            return View();
-        }
+        
     }
 }

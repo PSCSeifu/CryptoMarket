@@ -43,6 +43,6 @@ namespace CryptoMarket.Models
         public virtual ICollection<Offer> Offers { get; set; }
         public virtual ICollection<Wallet> Wallets { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<Relationship> Relationship { get; set; }
+        public virtual ICollection<Relationship> Relationships { get; set; }
     }
 }

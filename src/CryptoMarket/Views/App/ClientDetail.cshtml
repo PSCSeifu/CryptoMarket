@@ -1,26 +1,44 @@
 @model CryptoMarket.Models.Client
 
-@{ 
+@{
     ViewBag.Title = Model.NickName;
 }
 
 <div>
     <div class="panel panel-default">
-        <div class= "panel panel-primary">
-             <div> <b>Nickname :</b>@Model.NickName</div>
-            <div>Public Rating : @Model.PublicRating</div>
-            <div>Admin Rating : @Model.AdminRating</div>
-            <div>Address 1 : @Model.Address1</div>
-            <div>Address 2 : @Model.Address2</div>
-            <div>Address 3 : @Model.Address3</div>
-            <div>Country : @Model.Country</div>
-            <div>Mail Code : @Model.MailCode</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">CLIENT - DETAILS</div>
+            <div class="panel-body">
+                <div> <b>Nickname :@Model.NickName </b></div>
+
+                <div>Public Rating : @Model.PublicRating</div>
+                <div>Admin Rating : @Model.AdminRating</div>
+
+                <div>Address 1 : @Model.Address1</div>
+                <div>Address 2 : @Model.Address2</div>
+                <div>Address 3 : @Model.Address3</div>
+                <div>Mail Code : @Model.MailCode</div>
+                <div>Country : @Model.Country</div>
+            </div>
         </div>
-        <div class="panel panel-group">
-            @foreach (var wallet in @Model.Wallets)
-            {
-                <div> NAME : @wallet.Name</div>               
-            }
+        <div class="panel panel-collapse">
+            <div class="panel-body">
+                @foreach (var wallet in @Model.Wallets)
+                {
+
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">@wallet.Name</h4>
+                            <div class="card-text"> @wallet.Description</div>
+                            <div>BALANCE : <b>@wallet.Balance</b></div>
+                            <div>Withdraw Limit : @wallet.WithdrawLimit</div>
+                            <div class="panel-footer">Created : <i>@wallet.DateCreated</i></div>
+                            <a class="btn btn-link" asp-contoller="App" asp-action="WalletDetail" asp-route-id="@wallet.Id"> View</a>
+                        </div>
+                    </div>
+
+                }
+            </div>
         </div>
     </div>
 </div>

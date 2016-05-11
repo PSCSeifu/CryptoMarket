@@ -43,6 +43,7 @@ namespace CryptoMarket.Models
         public void AddClient(Client newClient)
         {
             _context.Add(newClient);
+            _context.SaveChanges();
         }
         
         public Client GetClientById(int clientId)

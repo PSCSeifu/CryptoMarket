@@ -86,6 +86,7 @@ namespace CryptoMarket
             /*this allows us to specify all the configuration between the different types */
             Mapper.Initialize(config =>
            {
+               config.CreateMap<Wallet,WalletViewModel>().ReverseMap();
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
                config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
@@ -104,7 +105,7 @@ namespace CryptoMarket
               routes.MapRoute(
                   name: "Default",
                   template: "{controller}/{action}/{id?}",
-                  defaults: new { controller = "App", action = "Index" ,startIndex = 0, pageSize=5}
+                  defaults: new { controller = "App", action = "Index" ,startIndex = 0, pageSize = 0}
                   );
           });
 

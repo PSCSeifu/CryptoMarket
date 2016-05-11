@@ -1,11 +1,14 @@
-@model PagedList.IPagedList<CryptoMarket.Models.Currency>
+@*@model PagedList.IPagedList<CryptoMarket.Models.Currency>*@
+@model IEnumerable<CryptoMarket.Models.Currency>
+@*@model CryptoMarket.Common.PagedList<CryptoMarket.Models.Currency>*@
 
 @{
     ViewBag.Title = "Crypto Currencies";
 }
 
-@using PagedList.Mvc
-@using PagedList
+@*@using PagedList.Mvc
+@using PagedList*@
+
 <link href="~/css/PagedList.css" rel="stylesheet" />
 
 
@@ -49,6 +52,7 @@
             {
                 @Html.Partial("_currencySummary", curr)                                   
             }
+         
         </section>
     </div>
 </div>

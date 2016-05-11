@@ -4,6 +4,8 @@
     "use strict";
 
     //Creating the module
-    angular.module("app-clients", []);
+    angular.module("app-clients", [])
+    
+    
     
 })();

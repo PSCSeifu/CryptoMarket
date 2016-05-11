@@ -1,0 +1,19 @@
+@model CryptoMarket.ViewModels.WalletViewModel
+
+@{ 
+    ViewBag.Title = "Wallet";
+}
+
+<div>
+    <div>@Model.ClientId</div>
+    <div>@Model.Name</div>
+
+    <div>@Model.Description</div>
+    <div>@Model.PublicKey</div>
+    <div>@Model.Balance</div>
+    <div>@Model.WithdrawLimit</div>
+    <div>@Model.FiatAccountId</div>
+
+    <div>@Model.DateCreated</div>
+    <div>@Model.DateModified</div>
+</div>

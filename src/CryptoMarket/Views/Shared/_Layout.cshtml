@@ -25,6 +25,12 @@
                     <li><a asp-controller="App" asp-action="About">About</a></li>
                     <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
                     <li><a asp-controller="App" asp-action="Currency">Currency</a></li>
+                    <li><a asp-controller="App" asp-action="Transaction">Transaction</a></li>
+                    <li><a asp-controller="App" asp-action="Wallet">Wallet</a></li>
+                    <li><a asp-controller="App" asp-action="Offer">Offer</a></li>
+                    <li><a asp-controller="App" asp-action="Relation">Relation</a></li>
+                    <li><a asp-controller="App" asp-action="FiatAccount">FiatAccount</a></li>
+                    
                     @if (User.IsSignedIn())                    {
 
                         <li><a asp-controller="App" asp-action="Client">Client</a></li>
@@ -57,14 +63,15 @@
         </div>
 
         <div id="main" class="container">
-            @RenderBody()
-            <footer id="footer"> 
-               <h4>&copy; 2016 CryptoCurrency Ltd</h4>              
-             </footer>           
+            @RenderBody()                    
         </div>
-
-      
+        <div>
+            <footer id="footer">
+                <h4>&copy; 2016 CryptoCurrency Ltd</h4>
+            </footer>
+        </div>
     </div>
+    
 
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
