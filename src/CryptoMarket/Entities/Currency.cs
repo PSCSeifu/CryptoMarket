@@ -21,17 +21,17 @@ namespace CryptoMarket.Models
         public int LinkId { get; set; }
      
         public double DayVolume { get; set; }
-        [RegularExpression("[(0-9)]")]
+       
         public double DayChange { get; set; }
 
         public double HourChange { get; set; }
 
-        [RegularExpression("[(0-9)]")]
+       
         public double  AvailableSupply { get; set; }
         public int ImageId { get; set; }
         public string ImageUrl { get; set; }
 
-        [RegularExpression("[(0-9)]")]
+       
         public double MarketCap { get; set; }
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }

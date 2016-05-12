@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,8 +33,7 @@ namespace CryptoMarket.Models
                 await _userManager.CreateAsync(newUser, "password1");
             }
         }
-
-      
+        
         public void EnsureClientSeedData()
         {
             if (!_context.Clients.Any())
@@ -156,7 +156,7 @@ namespace CryptoMarket.Models
                     DayVolume = 631567,
                     Description = "Private block chain",
                     ImageId = 3,
-                    ImageUrl= "~/~/img/icon/ripple.png",
+                    ImageUrl= "~/img/icon/ripple.png",
                     LinkId = 0,
                     MarketCap = 245540010,
                     Name = "Ripple",
@@ -252,32 +252,48 @@ namespace CryptoMarket.Models
             //Add new Base Currency data
             if (!_context.CurrencyData.Any())
             {
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "BTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", FiatCodeSymbol = WebUtility.HtmlEncode("€"),Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "ETH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", FiatCodeSymbol = WebUtility.HtmlEncode("€"), Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DASH", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", FiatCodeSymbol = WebUtility.HtmlEncode("€"), Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "XRP", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", FiatCodeSymbol = WebUtility.HtmlEncode("€"), Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "LTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "LTC", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "MAID", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
-                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "USD", FiatCode = "usd", FiatCodeSymbol = WebUtility.HtmlEncode("$"), Price = 0, FiatDescription = "United States of America Dollars", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "GBP", FiatCode = "gbp", FiatCodeSymbol = WebUtility.HtmlEncode("£"), Price = 0, FiatDescription = "United Kingdom Pound Sterling", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
+                _context.CurrencyData.Add(new CurrencyData() { CryptoCode = "DOGE", DayChange = 0, Volume = 0, OneHourChange = 0, FiatPublicCode = "EUR", FiatCode = "eur", FiatCodeSymbol = WebUtility.HtmlEncode("€"), Price = 0, FiatDescription = "European Union Euro", DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow });
 
+
+                _context.SaveChanges();
+            }
+        }
+
+        public void EnsureOfferSeedData()
+        {
+            if (!_context.Offers.Any())
+            {
+                _context.Offers.Add(new Offer() { ClientId=3,TypeId =1,Status= 2,FirstCurrency="BTC",SecondCurrency="ETH",MarketRate=2.3,MiningSpeed=12,Fee=2,Rate=2.3,Amount=0,MinLimit=0.3,MaxLimit=2.5,ParentId=0,TtlSeconds=3600 });
+                _context.Offers.Add(new Offer() { ClientId = 3, TypeId = 1, Status = 3, FirstCurrency = "BTC", SecondCurrency = "ETH", MarketRate = 2.3, MiningSpeed = 12, Fee = 2, Rate = 2.3, Amount = 0, MinLimit = 0.3, MaxLimit = 2.5, ParentId = 0, TtlSeconds = 3600 });
+                _context.Offers.Add(new Offer() { ClientId = 3, TypeId = 1, Status = 2, FirstCurrency = "DASH", SecondCurrency = "ETH", MarketRate = 2.3, MiningSpeed = 12, Fee = 2, Rate = 15.3, Amount = 0, MinLimit = 260, MaxLimit =10000, ParentId = 0, TtlSeconds = 3600 });
+                _context.Offers.Add(new Offer() { ClientId = 4, TypeId = 1, Status = 1, FirstCurrency = "XRP", SecondCurrency = "DODGE", MarketRate = 2.3, MiningSpeed = 12, Fee = 8, Rate = 8.3, Amount = 0, MinLimit = 500, MaxLimit = 1500, ParentId = 0, TtlSeconds = 3600 });
+                _context.Offers.Add(new Offer() { ClientId = 4, TypeId = 1, Status = 1, FirstCurrency = "BTC", SecondCurrency = "MAID", MarketRate = 2.3, MiningSpeed = 12, Fee = 7, Rate = 2.3, Amount = 0, MinLimit = 0.3, MaxLimit = 2.5, ParentId = 0, TtlSeconds = 3600 });
+                _context.Offers.Add(new Offer() { ClientId = 3, TypeId = 1, Status = 5, FirstCurrency = "BTC", SecondCurrency = "DASH", MarketRate = 2.3, MiningSpeed = 12, Fee = 3, Rate = 0.3, Amount = 0, MinLimit = 0.3, MaxLimit = 2.5, ParentId = 0, TtlSeconds = 3600 });
+                _context.Offers.Add(new Offer() { ClientId = 4, TypeId = 1, Status = 4, FirstCurrency = "ETH", SecondCurrency = "BTC", MarketRate = 2.3, MiningSpeed = 12, Fee = 2, Rate = 253, Amount = 0, MinLimit = 50, MaxLimit = 250, ParentId = 0, TtlSeconds = 3600 });
 
                 _context.SaveChanges();
             }
@@ -290,7 +306,7 @@ namespace CryptoMarket.Models
             {
                 var bitwallet = new Wallet()
                 {
-                    Balance = 1.96, ClientId = 3,CurrencyId = 1, Description = "My default Bitcoin wallet",
+                    Balance = 1.96, ClientId = 1,CurrencyId = 1, Description = "My default Bitcoin wallet",
                     FiatAccountId = 1,  Name = "BitCoinMain",
                     PublicKey = "044322e2d4493111d73244c9c0ba8868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "", TypeId = 0
@@ -298,7 +314,7 @@ namespace CryptoMarket.Models
 
                 var bitwallet2 = new Wallet()
                 {
-                    Balance = 3.96,  ClientId = 3, CurrencyId = 1,
+                    Balance = 3.96,  ClientId = 1, CurrencyId = 1,
                     Description = "My second Bitcoin wallet", FiatAccountId = 1, Name = "BitLong",
                     PublicKey = "03111d73244c9c0ba844322e2d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "", TypeId = 0,
@@ -307,7 +323,7 @@ namespace CryptoMarket.Models
 
                 var ethereum = new Wallet()
                 {
-                    Balance = 3.96,ClientId = 3,CurrencyId = 1,  Description = "My Eth wallet",
+                    Balance = 3.96,ClientId = 1,CurrencyId = 1,  Description = "My Eth wallet",
                     FiatAccountId = 1, Name = "ETH_Main",
                     PublicKey = "02e2111d73244d4493c9c0ba844328683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "",TypeId = 0
@@ -315,7 +331,7 @@ namespace CryptoMarket.Models
 
                 var bitwallet3 = new Wallet()
                 {
-                    Balance = 3.96, ClientId = 4,CurrencyId = 1, Description = "Company wallet One - BitCoin",
+                    Balance = 3.96, ClientId = 2,CurrencyId = 1, Description = "Company wallet One - BitCoin",
                     FiatAccountId = 1, Name = "Trading-1-BitCoin",
                     PublicKey = "03c9c0ba844322e2111d73244d449868cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "",TypeId = 0,                   
@@ -323,21 +339,21 @@ namespace CryptoMarket.Models
 
                 var ethereum2 = new Wallet()
                 {
-                    Balance = 3.96,ClientId = 4, CurrencyId = 1,   Description = "Company wallet One - Ethereum",  FiatAccountId = 1,Name = "Trading-1-Ethereum",
+                    Balance = 3.96,ClientId = 2, CurrencyId = 1,   Description = "Company wallet One - Ethereum",  FiatAccountId = 1,Name = "Trading-1-Ethereum",
                     PublicKey = "03c9c0ba844322e2111d73244d4498683c9c0ba84cb17d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "",TypeId = 0,
                 };
 
                 var dash1 = new Wallet()
                 {
-                    Balance = 3.96,  ClientId = 5, CurrencyId = 5, Description = "CC One - Dash",FiatAccountId = 1, Name = "Main-Dash-v1.0",
+                    Balance = 3.96,  ClientId = 3, CurrencyId = 5, Description = "CC One - Dash",FiatAccountId = 1, Name = "Main-Dash-v1.0",
                     PublicKey = "03c9c0b111d73244d449868cba844322e217d64dcc22185ad30a6756d0fa201573668f8ac79ecc7 ",
                     Password = "", TypeId = 0,
                 };
 
                 var dodge1 = new Wallet()
                 {
-                    Balance = 3.96,  ClientId = 6,  CurrencyId = 7, Description = "Much Dodge", FiatAccountId = 1,
+                    Balance = 3.96,  ClientId = 4,  CurrencyId = 7, Description = "Much Dodge", FiatAccountId = 1,
                     Name = "SuchWallet",  PublicKey = "244c9c0ba844221803111d735ad30a6756d0fa201573668f8322e2d449868cb17d64dccac79ecc7 ",
                     Password = "",TypeId = 0,
                 };

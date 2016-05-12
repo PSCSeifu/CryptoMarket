@@ -1,3 +1,4 @@
+using AutoMapper;
 using CryptoMarket.ViewModels;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
@@ -234,6 +235,42 @@ namespace CryptoMarket.Models
 
         }
 
+
+
         #endregion
+
+        #region " OFFER "
+        public IEnumerable<OfferViewModel> GetAllOffers()
+        {
+            try
+            {
+                var result = _context.Offers;
+                return Mapper.Map <IEnumerable<OfferViewModel>>(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get Offers from database.", ex);
+                return null;
+            }
+        }
+
+        public IEnumerable<OfferViewModel> GetOfferByClientId(int clientId)
+        {
+            try
+            {
+                var result = _context.Offers
+                    .Where(o => o.ClientId == clientId)
+                    .Select(o => 0);
+
+               return  Mapper.Map <IEnumerable<OfferViewModel>>(result);                    
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get Offers from database.", ex);
+                return null;
+            }
+        }
+        #endregion
+
     }
 }

@@ -15,9 +15,9 @@ namespace CryptoMarket.Models
         public int ClientId { get; set; }
         
         public int TypeId { get; set; }
-        public int Status { get; set; }
-        public string FirstCurrency { get; set; }
-        public string SecondCurrency { get; set; }
+        public int Status { get; set; } = 0;
+        public string FirstCurrency { get; set; } = "";
+        public string SecondCurrency { get; set; } = "";
         public double MarketRate { get; set; }
         /// <summary>
         /// Fast,Medium,Normal,Basic
@@ -46,11 +46,11 @@ namespace CryptoMarket.Models
         /// <summary>
         /// Time in seconds from DateCreated, after which a counter offer expires.
         /// </summary>
-        public int TtlSeconds { get; set; }
+        public int TtlSeconds { get; set; } 
 
 
-        public DateTime DateCreated { get; set; }
-        public DateTime DateModified { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public DateTime DateModified { get; set; } = DateTime.UtcNow;
 
         public Image Image { get; set; }
 

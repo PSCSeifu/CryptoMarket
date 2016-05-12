@@ -106,12 +106,33 @@ margin:10px;
         margin:5px;
     }
 
- .currencyDetail > #data {
+ /*.currencyDetail {
+     background-color: #beb7b7;
+     padding: 2px;
+     margin:9px;
+     display:inline-block;
+ }*/
+
+ #currencyticker {
      background-color: #beb7b7;
      padding: 2px;
      margin:9px;
      display:inline-block;
  }
+
+ .priceticker{
+     background-color: #e8c936;
+     display:inline-block;
+ }
+
+ #tickerPrice{
+     font-size:larger;
+ }
+#tickerchangedown {background-color:red;color:black;}
+#tickerchangeup {background-color:green; color:black;}
+#tickerchangesame{background-color:white; color:black;}
+ 
+
  #currrencydataprice{
      background-color:#e8c936;
      font-size: large;

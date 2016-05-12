@@ -14,10 +14,12 @@ namespace CryptoMarket.Models
       
         public string CryptoCode { get; set; } = "";
         public string FiatCode { get; set; } = "";
+        public string FiatCodeSymbol { get; set; } = "";
         public double Price { get; set; } = 0;
         public double Volume { get; set; } = 0;
         public double OneHourChange { get; set; } = 0;
 
+        public DateTime UnixTimeStamp { get; set; } = DateTime.UtcNow;
         public double DayChange { get; set; } = 0;
         public string FiatPublicCode { get; set; } = "";
         public string FiatDescription { get; set; } = "";
@@ -28,6 +30,8 @@ namespace CryptoMarket.Models
         public CurrencyData()
         {
         }
+
+        
         
     }
 }

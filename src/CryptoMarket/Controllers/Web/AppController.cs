@@ -8,6 +8,7 @@ using Microsoft.AspNet.Authorization;
 using CryptoMarket.ViewModels;
 using AutoMapper;
 using PagedList;
+using CryptoMarket.Services;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,10 +18,12 @@ namespace CryptoMarket.Controllers.Web
     public class AppController : Controller
     {
         private ICryptoMarketRepository _repository;
+        private PriceService _priceService;
 
-        public AppController(ICryptoMarketRepository repository)
+        public AppController(ICryptoMarketRepository repository,PriceService priceService)
         {
             _repository = repository;
+            _priceService = priceService;
         }
         // GET: /<controller>/
         [AllowAnonymous]
@@ -57,11 +60,7 @@ namespace CryptoMarket.Controllers.Web
             return View();
         }
 
-        [AllowAnonymous]
-        public IActionResult Offer()
-        {
-            return View();
-        }
+        
 
         [AllowAnonymous]
         public IActionResult Realtion()
@@ -77,22 +76,33 @@ namespace CryptoMarket.Controllers.Web
         }
 
         [AllowAnonymous]
+        [Authorize]
         public IActionResult FiatAccount()
         {
             return View();
         }
 
+        #region "  OFFER "
+       
+        [Authorize(Roles = "VendorRole")]
+        public IActionResult Offer()
+        {
+            var offers = _repository.GetAllOffers();
+
+            return View(offers);
+        }
+        #endregion
 
         #region " CLIENT "
         // GET: /<controller>/
-        [Authorize]
+        [Authorize(Roles = "AdminstratorOnlyRole")]
         public IActionResult Client()
         {
             var allClients = _repository.GetAllClients();
             return View(allClients);            
         }
 
-        [Authorize]
+        [Authorize(Roles = "AdminstratorOnlyRole")]
         public IActionResult ClientDetail(int id)
         {
             var model = new Client();
@@ -105,14 +115,14 @@ namespace CryptoMarket.Controllers.Web
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "AdminstratorOnlyRole")]
         [HttpGet]
         public IActionResult ClientCreate()
         {
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "AdminstratorOnlyRole")]
         [HttpPost]
         public IActionResult ClientCreate(ClientViewModel vm)
         {
@@ -203,7 +213,7 @@ namespace CryptoMarket.Controllers.Web
 
         public IActionResult CurrencyDetail(int id)
         {
-            var model = new CurrencyViewModel();
+            var model = new CurrencyViewModel(_priceService);
             model.Currency = _repository.GetCurrency(id);
             model.CurrencyData = _repository.GetCurrencyDataList(id);
             if( model.Currency == null)
@@ -213,7 +223,7 @@ namespace CryptoMarket.Controllers.Web
             return View(model);
         }
 
-        [Authorize]
+       
         [HttpGet]
         public IActionResult CurrencyEdit(int id)
         {
@@ -227,7 +237,7 @@ namespace CryptoMarket.Controllers.Web
             return View(vm);
         }
 
-        [Authorize]
+       
         [HttpPost]
         public IActionResult CurrencyEdit(int id, CurrencyCreateViewModel vm)
         {
@@ -250,12 +260,14 @@ namespace CryptoMarket.Controllers.Web
             return View(vm);
         }
 
+        [Authorize(Roles = "Adminstrator")]
         [HttpGet]
         public IActionResult CurrencyCreate()
         {
             return View();
         }
 
+        [Authorize(Roles = "Adminstrator")]
         [HttpPost]
         public IActionResult CurrencyCreate(CurrencyCreateViewModel vm)
         {
@@ -275,8 +287,8 @@ namespace CryptoMarket.Controllers.Web
             //return   RedirectToAction("CurrencyCreate","App");
             return View();
         }
-         
-    
+
+        [Authorize(Roles = "Adminstrator")]
         public IActionResult CurrencyDelete(CurrencyCreateViewModel vm)
         {
             int id = 0;
@@ -293,6 +305,10 @@ namespace CryptoMarket.Controllers.Web
         }
         #endregion " CURRENCY "
 
-        
+        [AllowAnonymous]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

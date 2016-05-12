@@ -21,5 +21,12 @@ namespace CryptoMarket.Enums
             vendor
         }
             
+
+        public enum WebUserType
+        {
+            Adminstrator,
+            Customer,
+            Vendor
+        }
     }
 }

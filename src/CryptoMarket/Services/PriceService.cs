@@ -66,6 +66,71 @@ namespace CryptoMarket.Services
             }
         }
 
-        
+        public PriceServicesResult LookupSync(string currency, string baseCurrency = null)
+        {
+            if (baseCurrency == null)
+            {
+                baseCurrency = Startup.Configuration["PriceService:DefaultBaseCurrency"];
+            }
+
+            var priceServiceRresult = new PriceServicesResult();
+
+
+            //Lookup prices
+            var encodedCurrency = WebUtility.UrlEncode(currency);
+            var encodedBaseCurrency = WebUtility.UrlEncode(baseCurrency);
+            var url = $"https://www.cryptonator.com/api/ticker/{encodedCurrency}-{encodedBaseCurrency}";
+
+            var results = GetJsonSync(url);
+
+
+            if (results == null || !(bool)results["success"])
+            {
+                priceServiceRresult.Success = (bool)results["success"];
+                priceServiceRresult.Error = "Unknown Error while looking for Price Service.";
+                return priceServiceRresult;
+            }
+            else
+            {
+                if ((bool)results["success"])
+                {
+                    priceServiceRresult.TimeStamp = (int)results["timestamp"];
+                    priceServiceRresult.Success = (bool)results["success"];
+                    var inner = JsonConvert.SerializeObject(results["ticker"]);
+                    var innerResult = JObject.Parse(inner);
+
+                    priceServiceRresult.FiatCode = (string)innerResult["target"]; 
+                    priceServiceRresult.CryptoCode = (string)innerResult["base"];
+
+                    priceServiceRresult.Price =String.IsNullOrWhiteSpace((string)innerResult["price"]) ? 0 :
+                        (double)innerResult["price"];                    
+
+                    priceServiceRresult.Volume = String.IsNullOrWhiteSpace ((string)innerResult["volume"]) ? 0:
+                        (double)innerResult["volume"] ;
+
+                    priceServiceRresult.OneHourChange = String.IsNullOrWhiteSpace((string)innerResult["change"]) ? 0 :
+                        (double)innerResult["change"];
+                }
+
+                return priceServiceRresult;
+            }
+        }
+
+        public async Task<JObject> GetJsonAsync(string url)
+        {
+            var client = new HttpClient();
+            string json = await client.GetStringAsync(url);
+            var results = JObject.Parse(json);
+
+            return results;
+        }
+
+        public  JObject GetJsonSync(string url)
+        {
+            var client = new HttpClient();
+            var task =  client.GetStringAsync(url);
+            task.Wait();             
+            return  JObject.Parse(task.Result);            
+        }
     }
 }

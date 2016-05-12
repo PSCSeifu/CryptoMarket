@@ -1,0 +1,24 @@
+@model IEnumerable< CryptoMarket.Models.CurrencyData>
+
+<div>
+    @foreach (var data in Model)
+    {
+        <div id="tickerPrice">@string.Concat( @data.FiatCodeSymbol, ' ', @data.Price) </div>
+        <div> VOL : @data.Volume.ToString()</div>
+
+        @if (@data.OneHourChange < 0)
+        {
+            <div id="tickerchangedown">&darr; @data.OneHourChange</div>
+        }
+        else if (@data.OneHourChange > 0)
+        {
+            <div id="tickerchangeup"> &uarr; @data.OneHourChange</div>
+        }
+        else
+        {
+            <div id="tickerchangesame">  @data.OneHourChange</div>
+        }
+        <div>@data.UnixTimeStamp</div>
+    }
+
+</div>

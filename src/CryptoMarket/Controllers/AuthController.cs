@@ -74,8 +74,13 @@ namespace CryptoMarket.Controllers
                 {
                     if (String.IsNullOrEmpty(model.ReturnUrl) &&
                         Url.IsLocalUrl(model.ReturnUrl))
-                        //second check, if there is a url,check the url is local to prevent phising attacks.
+                    //second check, if there is a url,check the url is local to prevent phising attacks.
                     {
+                        //User user = await _userManager.FindByNameAsync(model.Username);
+                        //user.Id
+
+                        //var x = _userManager.GetUserIdAsync();
+                        //HttpContext.Session.Set("ClientId", model.user);
                         return Redirect(model.ReturnUrl); //Redirect to the url the user was attempting to access.
                     }
                     else

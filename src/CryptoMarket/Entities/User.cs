@@ -10,6 +10,6 @@ namespace CryptoMarket.Entities
 {
     public class User : IdentityUser
     {
-        
+       
     }
 }

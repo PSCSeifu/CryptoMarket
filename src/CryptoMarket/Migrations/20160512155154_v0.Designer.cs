@@ -8,7 +8,7 @@ using CryptoMarket.Models;
 namespace CryptoMarket.Migrations
 {
     [DbContext(typeof(CryptoMarketContext))]
-    [Migration("20160510102818_v0")]
+    [Migration("20160512155154_v0")]
     partial class v0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,8 @@ namespace CryptoMarket.Migrations
 
                     b.Property<string>("FiatCode");
 
+                    b.Property<string>("FiatCodeSymbol");
+
                     b.Property<string>("FiatDescription");
 
                     b.Property<string>("FiatPublicCode");
@@ -180,6 +182,8 @@ namespace CryptoMarket.Migrations
                     b.Property<double>("OneHourChange");
 
                     b.Property<double>("Price");
+
+                    b.Property<DateTime>("UnixTimeStamp");
 
                     b.Property<double>("Volume");
 

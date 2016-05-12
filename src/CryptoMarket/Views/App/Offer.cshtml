@@ -1,0 +1,49 @@
+@model IEnumerable<CryptoMarket.ViewModels.OfferViewModel>
+
+@{
+    ViewBag.Title = "Offer";
+}
+
+
+<div>
+    <div class="panel panel-info">
+        <div class="panel-heading"> Offer List </div>
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>TypeId</th>
+                <th>Status</th>
+                <th>FromCurrency</th>
+                <th>ToCurrency</th>
+                <th>MarketRate</th>
+
+                <th>Rate</th>
+                <th>MinLimit</th>
+                <th>MaxLimit</th>
+                <th>Expires</th>
+                <th>Created</th>
+                <th>Modified</th>
+
+            </tr>
+            @foreach (var offer in Model)
+            {
+                <tr>
+                    <td>@offer.TypeId</td>
+                    <td>@offer.Status.ToString().ToUpper()</td>                   
+                    <td>@offer.FirstCurrency</td>
+                    <td>@offer.SecondCurrency</td>
+                    <td>@offer.MarketRate</td>
+                    <td>@offer.Rate</td>
+                    <td>@offer.MinLimit</td>
+                    <td>@offer.MaxLimit</td>
+                    <td>@offer.TtlSeconds</td>
+                    <td>@offer.DateCreated</td>
+                    <td>@offer.DateModified</td>
+
+                    <td>
+                        <a class="btn btn-info" asp-contoller="App" asp-action="Offer" asp-route-id="@offer.Id"> View</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

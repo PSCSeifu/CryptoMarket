@@ -17,16 +17,18 @@
             <div id="currencydata">CREATED: @Model.Currency.DateCreated.ToString("dd/MM/yyyy")</div>
             <div id="currencydata">MODIFIED: @Model.Currency.DateModified.ToString("dd/MM/yyyy")</div>            
         </div>
-        @foreach (var data in Model.CurrencyData)
-        {
-            <div id="data">
-                <div id="currencydata"> <b>FIAT CODE :  @data.FiatCode.ToUpper()</b></div>
-                <div id="currrencydataprice">PRICE : @data.Price</div>
-                <div>VOLUME : @data.Volume</div>
-                <div>DAY CHANGE : @data.DayChange </div>
-                <div>HOUR CHANGE : @data.OneHourChange</div>
-            </div>
-        }        
+       
+        @Html.Partial("_currencyTicker", @Model.GetLiveCurrencyData())
+        @*@foreach (var data in @Model.GetLiveCurrencyData())
+        {           
+                <div id="currencyticker">
+                    <div id="data"> <b> @data.FiatCode.ToUpper()</b></div>
+                    <div id="currrencydataprice">PRICE : @data.Price.ToString()</div>
+                    <div id="data">VOLUME : @String.Concat(@data.Volume, ' ', @data.FiatCode.ToUpper())</div>                    
+                    <div id="data">HOUR CHANGE :@String.Concat(@data.OneHourChange, ' ', @data.FiatCode.ToUpper())</div>
+                    <div id="data">TIME STAMP : @data.UnixTimeStamp </div>
+                </div>           
+        }*@        
         
     </section>
     <div class="btn btn-success">

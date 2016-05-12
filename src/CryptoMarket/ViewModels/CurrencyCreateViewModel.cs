@@ -16,22 +16,22 @@ namespace CryptoMarket.ViewModels
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        [Required, RegularExpression("[(A-Z)]"), MaxLength(6)]
+        [Required, MaxLength(6)]
         public string CurrencyCode { get; set; }
 
         [Required, MaxLength(1000)]
         public string Description { get; set; }
 
-        [Required, RegularExpression("[(0-9)]")]
+        [Required]
         public double DayVolume { get; set; }
 
-        [Required, RegularExpression("[(0-9)]")]
+        [Required]
         public double DayChange { get; set; }
 
-        [Required, RegularExpression("[(0-9)]")]
+        [Required]
         public double AvailableSupply { get; set; }
 
-        [Required, RegularExpression("[(0-9)]")]
+        [Required]
         public double MarketCap { get; set; }
 
         [Required]

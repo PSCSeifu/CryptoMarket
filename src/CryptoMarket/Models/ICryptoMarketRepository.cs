@@ -26,5 +26,7 @@ namespace CryptoMarket.Models
         Currency GetCurrency(int currencyId);
         IEnumerable<CurrencyData> GetCurrencyDataList(int? currencyId);
         void DeleteCurrency(int id);
+        IEnumerable<OfferViewModel> GetAllOffers();
+        IEnumerable<OfferViewModel> GetOfferByClientId(int clientId);
     }
 }

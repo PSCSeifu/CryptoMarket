@@ -172,6 +172,8 @@ namespace CryptoMarket.Migrations
 
                     b.Property<string>("FiatCode");
 
+                    b.Property<string>("FiatCodeSymbol");
+
                     b.Property<string>("FiatDescription");
 
                     b.Property<string>("FiatPublicCode");
@@ -179,6 +181,8 @@ namespace CryptoMarket.Migrations
                     b.Property<double>("OneHourChange");
 
                     b.Property<double>("Price");
+
+                    b.Property<DateTime>("UnixTimeStamp");
 
                     b.Property<double>("Volume");
 

@@ -273,10 +273,12 @@ namespace CryptoMarket.Migrations
                     DateModified = table.Column<DateTime>(nullable: false),
                     DayChange = table.Column<double>(nullable: false),
                     FiatCode = table.Column<string>(nullable: true),
+                    FiatCodeSymbol = table.Column<string>(nullable: true),
                     FiatDescription = table.Column<string>(nullable: true),
                     FiatPublicCode = table.Column<string>(nullable: true),
                     OneHourChange = table.Column<double>(nullable: false),
                     Price = table.Column<double>(nullable: false),
+                    UnixTimeStamp = table.Column<DateTime>(nullable: false),
                     Volume = table.Column<double>(nullable: false)
                 },
                 constraints: table =>

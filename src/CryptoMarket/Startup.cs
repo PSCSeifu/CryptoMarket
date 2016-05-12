@@ -41,6 +41,14 @@ namespace CryptoMarket
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(38);
+                options.CookieName = ".CryptoMarket";
+            });
+
+            services.AddCaching();
+
             services.AddMvc(config => 
             {
 #if !DEBUG
@@ -59,8 +67,16 @@ namespace CryptoMarket
                 config.Password.RequiredLength = 8;
                 /*The redirect when users are not authenticated.*/
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                config.Cookies.ApplicationCookie.LogoutPath = "/Auth/Logout";                
             })
             .AddEntityFrameworkStores<CryptoMarketContext>();
+
+            services.AddAuthorization(options =>
+           {
+               options.AddPolicy("AdminstratorOnlyRole", policy => policy.RequireRole("Adminstrator"));
+               options.AddPolicy("VendorRole", policy => policy.RequireRole("Adminstrator","Vendor"));
+               options.AddPolicy("CustomerRole", policy => policy.RequireRole("Adminstrator","Customer"));
+           });
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -75,10 +91,20 @@ namespace CryptoMarket
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory,IHostingEnvironment env)
         {
             loggerFactory.AddDebug(LogLevel.Warning);
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                
+            }
+            else
+            {
+                app.UseExceptionHandler("/App/Error");
+            }
 
+            
             app.UseStaticFiles(); //1. First check for static files
 
             app.UseIdentity(); //Second use identity before the MVC to ensure cookies,401 errors are processed.
@@ -86,6 +112,7 @@ namespace CryptoMarket
             /*this allows us to specify all the configuration between the different types */
             Mapper.Initialize(config =>
            {
+               config.CreateMap<Offer, OfferViewModel>().ReverseMap();
                config.CreateMap<Wallet,WalletViewModel>().ReverseMap();
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
@@ -99,6 +126,10 @@ namespace CryptoMarket
                 .ForMember(dest => dest.OneHourChange, opt => opt.MapFrom(src => src.OneHourChange));
 
            });
+
+            // IMPORTANT: This session call MUST go before UseMvc()
+            app.UseSession();
+            
             //listen and expect requests in the style of Mvc
             app.UseMvc(routes =>
           {
@@ -108,13 +139,14 @@ namespace CryptoMarket
                   defaults: new { controller = "App", action = "Index" ,startIndex = 0, pageSize = 0}
                   );
           });
-
+            
             //Configure/Add  the seeding service here.
             seeder.EnsureClientSeedData();
             seeder.EnsureCurrencySeedData();
             seeder.EnsureWalletSeedData();
             seeder.EnsureImageSeedData();
             seeder.EnsureCurrencyDataSeedData();
+            seeder.EnsureOfferSeedData();
             await seeder.EnsureUserManagerSeedData();
         }
 
