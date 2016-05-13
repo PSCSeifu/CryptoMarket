@@ -19,14 +19,13 @@ namespace CryptoMarket.Enums
         {
             customer,
             vendor
-        }
-            
+        }            
 
         public enum WebUserType
         {
-            Adminstrator,
-            Customer,
-            Vendor
+            adminstrator,
+            customer,
+            vendor
         }
     }
 }

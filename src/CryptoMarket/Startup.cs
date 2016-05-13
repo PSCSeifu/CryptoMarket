@@ -18,6 +18,8 @@ using CryptoMarket.Services;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Mvc;
 using CryptoMarket.Entities;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc.Filters;
 
 namespace CryptoMarket
 {
@@ -49,8 +51,21 @@ namespace CryptoMarket
 
             services.AddCaching();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminstratorOnlyRole", policy => policy.RequireRole("adminstrator", "vendor", "customer"));
+                options.AddPolicy("VendorRole", policy => policy.RequireRole("vendor"));
+                options.AddPolicy("CustomerRole", policy => policy.RequireRole("customer"));
+            });
+
+            services.AddAuthentication();
+
             services.AddMvc(config => 
             {
+                var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
 #if !DEBUG
                 config.Filters.Add(new RequireHttpsAttribute()); //Authentication
 #endif
@@ -65,18 +80,12 @@ namespace CryptoMarket
             {
                 config.User.RequireUniqueEmail = true;
                 config.Password.RequiredLength = 8;
-                /*The redirect when users are not authenticated.*/
+                /*The redirect when users are not authenticated.*/                
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
                 config.Cookies.ApplicationCookie.LogoutPath = "/Auth/Logout";                
             })
             .AddEntityFrameworkStores<CryptoMarketContext>();
-
-            services.AddAuthorization(options =>
-           {
-               options.AddPolicy("AdminstratorOnlyRole", policy => policy.RequireRole("Adminstrator"));
-               options.AddPolicy("VendorRole", policy => policy.RequireRole("Adminstrator","Vendor"));
-               options.AddPolicy("CustomerRole", policy => policy.RequireRole("Adminstrator","Customer"));
-           });
+                                  
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -104,7 +113,17 @@ namespace CryptoMarket
                 app.UseExceptionHandler("/App/Error");
             }
 
+            app.UseCookieAuthentication(options =>
+            {
+                options.AuthenticationScheme = "Cookie";
+                options.LoginPath = new PathString("/Account/Unauthorized/");
+                options.AccessDeniedPath = new PathString("/Account/Forbidden/");
+                options.AutomaticAuthenticate = true;
+                options.AutomaticChallenge = true;
+            });
+
             
+
             app.UseStaticFiles(); //1. First check for static files
 
             app.UseIdentity(); //Second use identity before the MVC to ensure cookies,401 errors are processed.
@@ -139,15 +158,21 @@ namespace CryptoMarket
                   defaults: new { controller = "App", action = "Index" ,startIndex = 0, pageSize = 0}
                   );
           });
-            
+
             //Configure/Add  the seeding service here.
+            
             seeder.EnsureClientSeedData();
             seeder.EnsureCurrencySeedData();
             seeder.EnsureWalletSeedData();
             seeder.EnsureImageSeedData();
             seeder.EnsureCurrencyDataSeedData();
             seeder.EnsureOfferSeedData();
-            await seeder.EnsureUserManagerSeedData();
+            seeder.EnsureFiatCurrencySeedData();
+
+            seeder.EnsureRolesSeedData();
+            await seeder.EnsureUserSeedData();
+            seeder.EnsureUserRolesSeedData();
+            //await seeder.EnsureUserManagerSeedData();
         }
 
                 // Entry point for the application.

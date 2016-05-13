@@ -1,0 +1,17 @@
+﻿@model List<CryptoMarket.Services.PriceServicesResult>
+
+<div class="pricebannerwrapper">
+    <div class="pricebanner">
+        @foreach (var tick in Model)
+        {
+           <div class="pricetick">
+               @string.Concat(@tick.CryptoCode.ToUpper()
+              ,'/'
+              ,@tick.FiatCode.ToUpper()
+              , "  "
+              ,@tick.Price.ToString("N2")
+              )
+            </div>
+        }
+    </div>
+</div>

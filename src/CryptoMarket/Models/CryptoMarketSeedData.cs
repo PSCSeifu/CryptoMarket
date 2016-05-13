@@ -1,5 +1,6 @@
 using CryptoMarket.Entities;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +21,83 @@ namespace CryptoMarket.Models
             _userManager = userManager;
         }
 
-        public async Task EnsureUserManagerSeedData()
+        public void EnsureUserRolesSeedData()
         {
-            if (await _userManager.FindByEmailAsync("customer1@gmail.com") == null)
+            if (_context.Users.Any())
             {
-                //Add the user.
-                var newUser = new User()
+                //Assign custom roles to the three seeded users.
+                List<User> existingUsers = _context.Users.ToList();
+                string defaultRole = "";
+                var admin = existingUsers.Where(u => u.UserName == "admin").Select(u => u).FirstOrDefault();
+                var customer = existingUsers.Where(u => u.UserName == "cust1").Select(u => u).FirstOrDefault();
+                var vendor = existingUsers.Where(u => u.UserName == "vendor1").Select(u => u).FirstOrDefault();
+
+                if (_context.Roles.Any())
                 {
-                    UserName = "xUser234",
-                    Email = "customer1@gmail.com"
-                };
-                await _userManager.CreateAsync(newUser, "password1");
+                    //Get Role Id (Primary keys)
+                    List<IdentityRole> existingIdentityRoles = _context.Roles.ToList();
+                    string adminRoleId = existingIdentityRoles.Where(r => r.Name == "adminstrator").Select(r => r.Id).FirstOrDefault() ?? defaultRole;
+                    string customerRoleId = existingIdentityRoles.Where(r => r.Name == "customer").Select(r => r.Id).FirstOrDefault() ?? defaultRole;
+                    string vendorRoleId = existingIdentityRoles.Where(r => r.Name == "vendor").Select(r => r.Id).FirstOrDefault() ?? defaultRole;
+
+                    if (!_context.UserRoles.Any())
+                    {
+                        //Add admin Role                      
+                        if (admin != null)
+                        {
+                            _context.UserRoles.Add(new IdentityUserRole<string> { UserId = admin.Id, RoleId = adminRoleId });                           
+                        }
+
+                        //Add cusotmer Role                    
+                        if (admin != null)
+                        {
+                            _context.UserRoles.Add(new IdentityUserRole<string> { UserId = customer.Id, RoleId = customerRoleId });
+                        }
+
+                        //Add vendor Role                      
+                        if (admin != null)
+                        {
+                            _context.UserRoles.Add(new IdentityUserRole<string> { UserId = vendor.Id, RoleId = vendorRoleId });
+                        }
+                    }
+                    _context.SaveChanges();
+                }
+            }                
+        }
+        
+        public void EnsureRolesSeedData()
+        {
+            if (!_context.Roles.Any())
+            {   
+                _context.Roles.Add(new IdentityRole() { Name = "adminstrator", NormalizedName = "adminstrator" });
+                _context.Roles.Add(new IdentityRole() { Name = "customer", NormalizedName = "customer" });
+                _context.Roles.Add(new IdentityRole() { Name = "vendor", NormalizedName = "vendor" });
+
+                _context.SaveChanges();
+            }
+        }
+
+        public async Task  EnsureUserSeedData()
+        {
+            if (! _context.Users.Any())
+            {
+                var admin = new User(){ UserName = "admin", Email = "admin@foo.com" };
+                //await _userManager.AddToRoleAsync(admin, "Adminstrator");
+                //await _userManager.AddToRoleAsync(admin, "customer");
+                //await _userManager.AddToRoleAsync(admin, "vendor");
+                await _userManager.CreateAsync(admin, "foobarNone1!");                
+
+                var cust1 = new User() { UserName = "cust1", Email = "cust1@foo.com" };
+                
+                await _userManager.CreateAsync(cust1, "custNone1!");
+
+                var vendor1 = new User() { UserName = "vendor1", Email = "vendor@foo.com" };               
+                await _userManager.CreateAsync(vendor1, "vendorNone1!");
+
+                _context.Users.Add(admin);
+                _context.Users.Add(cust1);
+                _context.Users.Add(vendor1);
+                _context.SaveChanges();
             }
         }
         
@@ -381,6 +448,19 @@ namespace CryptoMarket.Models
                     DateCreated = DateTime.UtcNow,
                     DateModified=DateTime.UtcNow
                 };
+            }
+        }
+
+        public void EnsureFiatCurrencySeedData()
+        {
+            if (!_context.FiatCurrency.Any())
+            {
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "usd", PublicCode ="USD",  ImageUrl = "~/img/icon/usd.png", Description = "United States of America Fedral Notes"});
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "gbp", PublicCode = "GBP", ImageUrl = "~/img/icon/gbp.png", Description = "United Kingdom Sterling Pound" });
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "eur", PublicCode = "EUR", ImageUrl = "~/img/icon/eur.png", Description = "European Union Euro" });
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "aud", PublicCode = "AUD", ImageUrl = "~/img/icon/aud.png", Description = "Australian Dollar" });                
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "rur", PublicCode = "RUR", ImageUrl = "~/img/icon/rur.png", Description = "Russian Federation Ruble" });
+                _context.FiatCurrency.Add(new FiatCurrency() { Code = "cny", PublicCode = "CNY", ImageUrl = "~/img/icon/cny.png", Description = "People's Republic oF China Yuan" });
             }
         }
     }

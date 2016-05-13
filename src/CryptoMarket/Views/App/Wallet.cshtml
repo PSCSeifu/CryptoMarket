@@ -1,19 +1,40 @@
-@model CryptoMarket.ViewModels.WalletViewModel
+@model IEnumerable<CryptoMarket.ViewModels.WalletViewModel>
 
 @{ 
     ViewBag.Title = "Wallet";
 }
 
 <div>
-    <div>@Model.ClientId</div>
-    <div>@Model.Name</div>
+    <table class="table table-responsive table-hover">
+    <tr>
+            <th>ClientId</th>
+            <th>Name</th>
 
-    <div>@Model.Description</div>
-    <div>@Model.PublicKey</div>
-    <div>@Model.Balance</div>
-    <div>@Model.WithdrawLimit</div>
-    <div>@Model.FiatAccountId</div>
+            <th>Description</th>
+            
+            <th>Balance</th>
+            <th>WithdrawLimit</th>
+            <th>FiatAccountId</th>
 
-    <div>@Model.DateCreated</div>
-    <div>@Model.DateModified</div>
-</div>
+            <th>DateCreated</th>
+            <th>DateModified</th>       
+    </tr>
+
+    @foreach (var wallet in Model)
+    {
+    <tr>
+        <td>@wallet.ClientId</td>
+        <td>@wallet.Name</td>
+
+        <td>@wallet.Description</td>
+      
+        <td>@wallet.Balance</td>
+        <td>@wallet.WithdrawLimit</td>
+        <td>@wallet.FiatAccountId</td>
+
+        <td>@wallet.DateCreated</td>
+        <td>@wallet.DateModified</td>
+    </tr>
+    }
+        </table>
+    </div>

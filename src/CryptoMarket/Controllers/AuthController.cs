@@ -3,6 +3,7 @@ using CryptoMarket.Controllers.Web;
 using CryptoMarket.Entities;
 using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace CryptoMarket.Controllers
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private SignInManager<User> _signInManager;
@@ -36,13 +38,19 @@ namespace CryptoMarket.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Set user credentials
                 var user = new User { UserName = model.Username, Email = model.Email };
 
+                //Create the user
                 var result = await _userManager.CreateAsync(user, model.Password);
 
+                //Get the Role from view model, add to user role
+                var userRole = model.WebUserType.ToString();
+                await _userManager.AddToRoleAsync(user, userRole);
+                                    
                 if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                {                    
+                    await _signInManager.SignInAsync(user, isPersistent: false);                  
                     return RedirectToAction(nameof(AppController.Index), "App");
                 }
                 else
@@ -102,6 +110,16 @@ namespace CryptoMarket.Controllers
             return RedirectToAction("Index", "App");
         }
 
+
+        public IActionResult Unauthorized()
+        {
+            return View();
+        }
+
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
 
     }
 }

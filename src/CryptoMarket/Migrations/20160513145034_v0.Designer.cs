@@ -8,7 +8,7 @@ using CryptoMarket.Models;
 namespace CryptoMarket.Migrations
 {
     [DbContext(typeof(CryptoMarketContext))]
-    [Migration("20160512155154_v0")]
+    [Migration("20160513145034_v0")]
     partial class v0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,26 @@ namespace CryptoMarket.Migrations
                     b.Property<string>("Description");
 
                     b.Property<double>("WithDrawLimit");
+
+                    b.HasKey("Id");
+                });
+
+            modelBuilder.Entity("CryptoMarket.Models.FiatCurrency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("PublicCode");
 
                     b.HasKey("Id");
                 });

@@ -3,10 +3,12 @@ using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -79,10 +81,11 @@ namespace CryptoMarket.Controllers.Api
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
 
-        [HttpGet("api/Client/{id?}")]
-        public JsonResult GetClient(string name)
-        {
-            var results = _repository.GetClient();
+        [HttpGet("api/client/{id}")]
+        //[HttpGet("{id}")]
+        public JsonResult Get(int id)
+        {   
+            var results = _repository.GetClient(id);
             return Json(results);
         }
     }

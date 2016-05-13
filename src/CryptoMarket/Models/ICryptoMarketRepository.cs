@@ -1,4 +1,5 @@
 ﻿using CryptoMarket.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace CryptoMarket.Models
@@ -17,7 +18,7 @@ namespace CryptoMarket.Models
         Client GetClientById(int clientId);
 
         void AddWallet(int clientId, Wallet newWallet);
-        IEnumerable<Wallet> GetAllWallets();
+        IEnumerable<WalletViewModel> GetAllWallets();
 
         IEnumerable<Currency> GetAllCurrencies();
         void AddCurrency(Currency newCurrency);
@@ -28,5 +29,7 @@ namespace CryptoMarket.Models
         void DeleteCurrency(int id);
         IEnumerable<OfferViewModel> GetAllOffers();
         IEnumerable<OfferViewModel> GetOfferByClientId(int clientId);
+
+        List<Tuple<string, string>> GetCryptoFiatPairs();
     }
 }

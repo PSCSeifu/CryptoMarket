@@ -138,9 +138,22 @@ margin:10px;
      font-size: large;
  }
 
+ .pricebannerwrapper{
+     width:100%;
+     height:30px;
+     background-color:#101011;
+     padding:2px;
+     margin:2px;
+ }
+ .pricetick{
+     display:inline-block;
+     color: white;
+     font-size:15px;
+ }
+
+
  .cryptoicondetail{
      height:100px;
-     width:100px;
-   
+     width:100px;   
  }
  

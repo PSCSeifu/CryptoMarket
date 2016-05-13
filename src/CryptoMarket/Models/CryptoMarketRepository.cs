@@ -124,11 +124,12 @@ namespace CryptoMarket.Models
             _context.Wallets.Add(newWallet);
         }
 
-        public IEnumerable<Wallet> GetAllWallets()
+        public IEnumerable<WalletViewModel> GetAllWallets()
         {
             try
             {
-                return _context.Wallets.OrderBy(w => w.ClientId).ToList();
+               var allWallets = _context.Wallets.OrderBy(w => w.ClientId).ToList();
+                return Mapper.Map<IEnumerable<WalletViewModel>>(allWallets);
             }
             catch (Exception ex)
             {
@@ -138,7 +139,22 @@ namespace CryptoMarket.Models
 
         }
         #endregion
-        
+
+        #region " FIAT CURRENCY " 
+        public IEnumerable <FiatCurrency> GetAllFiatCurrencies()
+        {
+            try
+            {
+               return  _context.FiatCurrency;                 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get Fiat Currencies from database.", ex);
+                return null;
+            }
+        }
+        #endregion
+
         #region     " CURRENCY "
 
         public IEnumerable<Currency> GetAllCurrencies()
@@ -272,5 +288,34 @@ namespace CryptoMarket.Models
         }
         #endregion
 
+
+        #region " CUSTOM QUERIES "
+        public List<Tuple<string,string>> GetCryptoFiatPairs()
+        {
+            List<Tuple<string, string>> result = new List<Tuple<string, string>>();
+
+            try
+            {
+                var cryptoCodeList = _context.Currencies.Select(c => c.CurrencyCode).ToList();
+                var fiatCodeList = _context.FiatCurrency.Select(f => f.Code).ToList();
+
+
+                foreach (string crypto in cryptoCodeList)
+                {
+                    foreach (string fiat in fiatCodeList)
+                    {
+                        result.Add(new Tuple<string, string>(crypto, fiat));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
+                return null;
+            }
+
+            return result;
+        }
+        #endregion
     }
 }

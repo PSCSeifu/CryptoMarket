@@ -84,7 +84,7 @@ namespace CryptoMarket.Controllers.Web
 
         #region "  OFFER "
        
-        [Authorize(Roles = "VendorRole")]
+        [Authorize(Policy = "VendorRole")]        
         public IActionResult Offer()
         {
             var offers = _repository.GetAllOffers();

@@ -109,6 +109,23 @@ namespace CryptoMarket.Migrations
                     table.PrimaryKey("PK_FiatAccount", x => x.Id);
                 });
             migrationBuilder.CreateTable(
+                name: "FiatCurrency",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    PublicCode = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FiatCurrency", x => x.Id);
+                });
+            migrationBuilder.CreateTable(
                 name: "Image",
                 columns: table => new
                 {
@@ -393,6 +410,7 @@ namespace CryptoMarket.Migrations
         {
             migrationBuilder.DropTable("CurrencyData");
             migrationBuilder.DropTable("FiatAccount");
+            migrationBuilder.DropTable("FiatCurrency");
             migrationBuilder.DropTable("Offer");
             migrationBuilder.DropTable("Relationship");
             migrationBuilder.DropTable("Transaction");

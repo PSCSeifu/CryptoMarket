@@ -1,4 +1,6 @@
 @model CryptoMarket.ViewModels.RegisterViewModel
+@using CryptoMarket.Enums
+
     @{
         ViewBag.Title = "Register";
     }
@@ -40,6 +42,21 @@
                     </div>
                     <span asp-validation-for="ConfirmPassword"></span>
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="WebUserType" class="col-sm-2 control-label"></label>
+                    <select asp-for="WebUserType" class="dropdown col-sm-2">
+                        @foreach (Enums.WebUserType webUserType in Enum.GetValues(typeof(Enums.WebUserType)))
+                        {
+                            @if (!@webUserType.ToString().Contains("admin"))
+                            {
+                                <option>@webUserType.ToString()</option>
+                            }
+                        }
+                    </select>                    
+                    <span asp-validation-for="WebUserType"></span>
+                </div>
+
                 <div>
                     <input type="submit" value="Register" />
                 </div>

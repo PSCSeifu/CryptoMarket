@@ -211,6 +211,26 @@ namespace CryptoMarket.Migrations
                     b.HasKey("Id");
                 });
 
+            modelBuilder.Entity("CryptoMarket.Models.FiatCurrency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("PublicCode");
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("CryptoMarket.Models.Image", b =>
                 {
                     b.Property<int>("Id")

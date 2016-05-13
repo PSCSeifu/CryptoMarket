@@ -15,5 +15,8 @@ namespace CryptoMarket.ViewModels
 
         [Required, DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public Enums.Enums.WebUserType WebUserType { get; set; }
     }
 }

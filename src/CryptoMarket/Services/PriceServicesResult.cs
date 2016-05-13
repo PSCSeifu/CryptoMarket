@@ -11,6 +11,5 @@
         public double Price { get; set; }
         public double Volume { get; set; }
         public double OneHourChange { get; set; }
-        
     }
 }
