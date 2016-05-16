@@ -316,6 +316,40 @@ namespace CryptoMarket.Models
 
             return result;
         }
+
+
+        public List<Tuple<string, string>> GetRandomCryptoAndFiatPair()
+        {
+            Random random = new Random();
+            List<Tuple<string, string>> result = new List<Tuple<string, string>>();
+
+            try
+            {               
+                var randomCryptoCode = _context.Currencies                    
+                    .OrderBy(r => random.Next())
+                    .Select(c => c.CurrencyCode)
+                    .Take(1)
+                    .FirstOrDefault();
+                //var cryptoCode= _context.Currencies
+                //    .Where(c => c.Id == randomId)
+                //    .Select(c => c.CurrencyCode)
+                //    .FirstOrDefault();
+                var fiatCodeList = _context.FiatCurrency.Select(f => f.Code).ToList();
+
+                foreach (string fiat in fiatCodeList)
+                {
+                    result.Add(new Tuple<string, string>(randomCryptoCode, fiat));
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
+                return null;
+            }
+
+            return result;
+        }
         #endregion
     }
 }

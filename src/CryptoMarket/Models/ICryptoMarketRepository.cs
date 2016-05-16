@@ -31,5 +31,6 @@ namespace CryptoMarket.Models
         IEnumerable<OfferViewModel> GetOfferByClientId(int clientId);
 
         List<Tuple<string, string>> GetCryptoFiatPairs();
+        List<Tuple<string, string>> GetRandomCryptoAndFiatPair();
     }
 }

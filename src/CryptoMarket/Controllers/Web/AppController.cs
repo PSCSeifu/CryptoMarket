@@ -84,7 +84,7 @@ namespace CryptoMarket.Controllers.Web
 
         #region "  OFFER "
        
-        [Authorize(Policy = "VendorRole")]        
+        [Authorize(Roles = "vendor,adminstrator")]        
         public IActionResult Offer()
         {
             var offers = _repository.GetAllOffers();
@@ -95,14 +95,14 @@ namespace CryptoMarket.Controllers.Web
 
         #region " CLIENT "
         // GET: /<controller>/
-        [Authorize(Roles = "AdminstratorOnlyRole")]
+        [Authorize(Roles = "adminstrator")]
         public IActionResult Client()
         {
             var allClients = _repository.GetAllClients();
             return View(allClients);            
         }
 
-        [Authorize(Roles = "AdminstratorOnlyRole")]
+        [Authorize(Roles = "adminstrator")]
         public IActionResult ClientDetail(int id)
         {
             var model = new Client();
@@ -115,14 +115,14 @@ namespace CryptoMarket.Controllers.Web
         }
 
 
-        [Authorize(Roles = "AdminstratorOnlyRole")]
+        [Authorize(Roles = "adminstrator")]
         [HttpGet]
         public IActionResult ClientCreate()
         {
             return View();
         }
 
-        [Authorize(Roles = "AdminstratorOnlyRole")]
+        [Authorize(Roles = "adminstrator")]
         [HttpPost]
         public IActionResult ClientCreate(ClientViewModel vm)
         {
@@ -260,14 +260,14 @@ namespace CryptoMarket.Controllers.Web
             return View(vm);
         }
 
-        [Authorize(Roles = "Adminstrator")]
+        [Authorize(Roles = "adminstrator")]
         [HttpGet]
         public IActionResult CurrencyCreate()
         {
             return View();
         }
 
-        [Authorize(Roles = "Adminstrator")]
+        [Authorize(Roles = "adminstrator")]
         [HttpPost]
         public IActionResult CurrencyCreate(CurrencyCreateViewModel vm)
         {
@@ -288,7 +288,7 @@ namespace CryptoMarket.Controllers.Web
             return View();
         }
 
-        [Authorize(Roles = "Adminstrator")]
+        [Authorize(Roles = "adminstrator")]
         public IActionResult CurrencyDelete(CurrencyCreateViewModel vm)
         {
             int id = 0;

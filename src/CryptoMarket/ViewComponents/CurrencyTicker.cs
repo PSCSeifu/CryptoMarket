@@ -18,7 +18,7 @@ namespace CryptoMarket.ViewComponents
 
         public IViewComponentResult Invoke(string currency)
         {
-            var model = _priceService.Lookup(currency);
+            var model = _priceService.LookupSync(currency);
             return View("Default",model);
         }
     }

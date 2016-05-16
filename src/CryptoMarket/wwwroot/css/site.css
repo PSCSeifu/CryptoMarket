@@ -140,16 +140,21 @@ margin:10px;
 
  .pricebannerwrapper{
      width:100%;
-     height:30px;
-     background-color:#101011;
-     padding:2px;
-     margin:2px;
+     height:30px;    
+    
  }
  .pricetick{
      display:inline-block;
-     color: white;
-     font-size:15px;
+     color: #000000;
+     background-color:white;
+     opacity:0.8;
+     font-size:large;
+     margin:2px;
+     padding:3px;     
  }
+ #pricetickvalueup{  color:green; }
+ #pricetickvaluedown{  color: red; }
+ #pricetickvaluesame{  color: blue; }
 
 
  .cryptoicondetail{

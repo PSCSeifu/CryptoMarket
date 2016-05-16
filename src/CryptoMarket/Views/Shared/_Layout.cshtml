@@ -15,9 +15,7 @@
 
 
     <div id="wrapper">
-        <div>
-            @Component.Invoke("PriceBanner");
-        </div>
+       
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar navbar-header">
@@ -57,14 +55,16 @@
                 </ul>
             </div>
         </nav>
-
+        <div>
+            @Component.Invoke("PriceBanner")
+        </div>
         <div class="userinfo">
             @if (User.Identity.IsAuthenticated)
             {
                 <span id="currentuser"><b>User : @User.Identity.Name </b></span>
             }
         </div>
-
+       
         <div id="main" class="container">
             @RenderBody()                    
         </div>

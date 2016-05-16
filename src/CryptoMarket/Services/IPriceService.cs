@@ -8,6 +8,8 @@ namespace CryptoMarket.Services
 {
     public interface IPriceService
     {
-         Task<PriceServicesResult> Lookup(string currency, string baseCurrency);
+         //Task<PriceServicesResult> Lookup(string currency, string baseCurrency);
+         PriceServicesResult LookupSync(string currency, string baseCurrency);
+        IEnumerable<PriceServicesResult> GetBanner();
     }
 }

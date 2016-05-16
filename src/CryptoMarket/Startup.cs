@@ -91,12 +91,17 @@ namespace CryptoMarket
                 .AddSqlServer()
                 .AddDbContext<CryptoMarketContext>();
 
-            services.AddScoped<PriceService>();
+           
+           // services.AddScoped<IPriceService>();
+           
 
             //Register the seeder here.
             services.AddScoped<CryptoMarketSeedData>();
             services.AddScoped<ICryptoMarketRepository, CryptoMarketRepository>();
             services.AddLogging();
+
+            //A CryptoMarket custom service
+            services.AddScoped<PriceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
