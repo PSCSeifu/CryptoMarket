@@ -61,9 +61,12 @@ namespace CryptoMarket
 
             services.AddAuthentication();
 
-            //PriceService - A CryptoMarket custom service that leverages an exernal API
+
+
+            //PriceService - A CryptoMarket custom service that leverages an exernal API            
             services.AddScoped<PriceService>();
             services.AddTransient<IPriceService, PriceService>();
+            
 
             services.AddMvc(config => 
             {
@@ -101,12 +104,11 @@ namespace CryptoMarket
            
 
             //Register the seeder here.
-            services.AddScoped<CryptoMarketSeedData>();
-            
+            services.AddScoped<CryptoMarketSeedData>();            
             services.AddScoped<ICryptoMarketRepository, CryptoMarketRepository>();
-           
-            
+
             services.AddLogging();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

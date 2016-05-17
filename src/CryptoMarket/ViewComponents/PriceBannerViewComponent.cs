@@ -14,15 +14,14 @@ namespace CryptoMarket.ViewComponents
     [ViewComponent(Name = "PriceBanner")]
     public class PriceBannerViewComponent : ViewComponent
     {
-        private  ILogger _logger;
         private  PriceService _priceService;
         private  ICryptoMarketRepository _repository;
 
-        public PriceBannerViewComponent(PriceService priceService,ICryptoMarketRepository repository,ILogger logger)
+        public PriceBannerViewComponent(PriceService priceService,ICryptoMarketRepository repository)
         {
             _priceService = priceService;
             _repository = repository;
-            _logger = logger;
+          
         }
 
         //public async Task <IViewComponentResult> InvokeAsync()
@@ -85,9 +84,9 @@ namespace CryptoMarket.ViewComponents
                 vmi.ToBannerDisplay(vm);
                 return View("PriceBanner", vm);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not Invoke PriceBannerViewComponent (Sync).", ex);               
+                //_logger.LogError("Could not Invoke PriceBannerViewComponent (Sync).", ex);               
                 return null;
             }
         }
@@ -103,9 +102,9 @@ namespace CryptoMarket.ViewComponents
                 vmi.ToBannerDisplay(vm);
                 return View("PriceBanner", vm);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not InvokeAsync PriceBannerViewComponent.", ex);
+               // _logger.LogError("Could not InvokeAsync PriceBannerViewComponent.", ex);
                 return null;
             }            
         }
