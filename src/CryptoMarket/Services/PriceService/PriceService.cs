@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using CryptoMarket.Models;
 using CryptoMarket.ViewComponents;
+using CryptoMarket.ViewModels;
 
 namespace CryptoMarket.Services
 {
@@ -120,65 +121,81 @@ namespace CryptoMarket.Services
         }
 
 
+        //public IEnumerable<PriceBannerViewModel> GetBanner()
+        //{
+        //    List<PriceBannerViewModel> model = new List<PriceBannerViewModel>();
+        //    try
+        //    {
+        //        List<Tuple<string, string>> CryptoFiatPairs = _repository.GetRandomCryptoAndFiatPair();
+
+        //        foreach (var tuple in CryptoFiatPairs)
+        //        {
+        //            var serviceResult = LookupSync(tuple.Item1, tuple.Item2);
+        //            model.Add(AutoMapper.Mapper.Map<PriceBannerViewModel>(serviceResult));                   
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("Could not construct price service result for fiat and Crypto pairs", ex);
+        //        return null;
+        //    }
+
+        //    return model;
+        //}
+
         public IEnumerable<PriceServicesResult> GetBanner()
         {
             List<PriceServicesResult> model = new List<PriceServicesResult>();
             try
             {
-                //List<Tuple<string, string>> CryptoFiatPairs = _repository.GetCryptoFiatPairs();
                 List<Tuple<string, string>> CryptoFiatPairs = _repository.GetRandomCryptoAndFiatPair();
 
                 foreach (var tuple in CryptoFiatPairs)
                 {
                     var serviceResult = LookupSync(tuple.Item1, tuple.Item2);
-
-                    // model.Add(await AutoMapper.Mapper.Map<PriceBannerViewComponent,PriceServicesResult>(serviceResult));
-                    model.Add(serviceResult);
+                    if (serviceResult != null) { model.Add(serviceResult); }
+                   // model.Add(AutoMapper.Mapper.Map<PriceServicesResult>(serviceResult));
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("Could not construct price service result for fiat and Crypto pairs", ex);
+                _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBanner.", ex);
                 return null;
             }
 
             return model;
         }
-
 
         public async Task<IEnumerable<PriceServicesResult>> GetBannerAsync()
         {
             List<PriceServicesResult> model = new List<PriceServicesResult>();
             try
             {
-                //List<Tuple<string, string>> CryptoFiatPairs = _repository.GetCryptoFiatPairs();
-                List<Tuple<string, string>> CryptoFiatPairs = _repository.GetRandomCryptoAndFiatPair();
+                List<Tuple<string, string>> cryptoFiatPairs = _repository.GetRandomCryptoAndFiatPair();
 
-                foreach (var tuple in CryptoFiatPairs)
+                foreach (var tuple in cryptoFiatPairs)
                 {
                     var serviceResult = await Lookup(tuple.Item1, tuple.Item2);
-
-                    // model.Add(await AutoMapper.Mapper.Map<PriceBannerViewComponent,PriceServicesResult>(serviceResult));
-                    model.Add(serviceResult);
+                    if (serviceResult != null) { model.Add(serviceResult); }
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("Could not construct price service result for fiat and Crypto pairs", ex);
+                _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBannerAsync()", ex);
                 return null;
             }
 
             return model;
         }
 
-        //private async Task<JObject> GetJsonAsync(string url)
-        //{
-        //    var client = new HttpClient();
-        //    string json = await client.GetStringAsync(url);
-        //    var results = JObject.Parse(json);
+        private async Task<JObject> GetJsonAsync(string url)
+        {
+            var client = new HttpClient();
+            string json = await client.GetStringAsync(url);
+            var results = JObject.Parse(json);
 
-        //    return results;
-        //}
+            return results;
+        }
 
         private  JObject GetJsonSync(string url)
         {

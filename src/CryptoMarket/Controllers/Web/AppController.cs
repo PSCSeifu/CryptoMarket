@@ -18,9 +18,9 @@ namespace CryptoMarket.Controllers.Web
     public class AppController : Controller
     {
         private ICryptoMarketRepository _repository;
-        private PriceService _priceService;
+        private IPriceService _priceService;
 
-        public AppController(ICryptoMarketRepository repository,PriceService priceService)
+        public AppController(ICryptoMarketRepository repository,IPriceService priceService)
         {
             _repository = repository;
             _priceService = priceService;

@@ -156,6 +156,10 @@ margin:10px;
  #pricetickvaluedown{  color: red; }
  #pricetickvaluesame{  color: blue; }
 
+#pricechangedown {background-color:red;color:black;font-size:large ;font-weight:300;}
+#pricechangedup {background-color:green; color:black;;font-size:large ;font-weight:300;}
+#pricechangesame{background-color:white; color:black;;font-size:large ;font-weight:300;}
+
 
  .cryptoicondetail{
      height:100px;

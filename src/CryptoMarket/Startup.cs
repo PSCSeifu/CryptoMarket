@@ -20,6 +20,7 @@ using Microsoft.AspNet.Mvc;
 using CryptoMarket.Entities;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc.Filters;
+using CryptoMarket.ViewComponents;
 
 namespace CryptoMarket
 {
@@ -60,6 +61,10 @@ namespace CryptoMarket
 
             services.AddAuthentication();
 
+            //PriceService - A CryptoMarket custom service that leverages an exernal API
+            services.AddScoped<PriceService>();
+            services.AddTransient<IPriceService, PriceService>();
+
             services.AddMvc(config => 
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -97,11 +102,11 @@ namespace CryptoMarket
 
             //Register the seeder here.
             services.AddScoped<CryptoMarketSeedData>();
+            
             services.AddScoped<ICryptoMarketRepository, CryptoMarketRepository>();
+           
+            
             services.AddLogging();
-
-            //A CryptoMarket custom service
-            services.AddScoped<PriceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -136,13 +141,15 @@ namespace CryptoMarket
             /*this allows us to specify all the configuration between the different types */
             Mapper.Initialize(config =>
            {
+               config.CreateMap<PriceServicesResult, PriceBannerViewModel>().ReverseMap();
                config.CreateMap<Offer, OfferViewModel>().ReverseMap();
                config.CreateMap<Wallet,WalletViewModel>().ReverseMap();
                config.CreateMap<Client, ClientViewModel>().ReverseMap();
                config.CreateMap<Wallet, WalletViewModel>().ReverseMap();
                config.CreateMap<Currency, CurrencyViewModel>().ReverseMap();
                config.CreateMap<Currency, CurrencyCreateViewModel>().ReverseMap();
-               config.CreateMap<PriceServicesResult, CurrencyData>()
+
+               config.CreateMap<PriceServicesResult, CurrencyData>()               
                 .ForMember(dest => dest.Volume, opt => opt.MapFrom(src => src.Volume))
                .ForMember(dest => dest.CryptoCode, opt => opt.MapFrom(src => src.CryptoCode))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))

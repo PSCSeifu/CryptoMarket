@@ -1,5 +1,6 @@
 using CryptoMarket.Models;
 using CryptoMarket.Services;
+using CryptoMarket.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,15 +14,15 @@ namespace CryptoMarket.ViewComponents
     [ViewComponent(Name = "PriceBanner")]
     public class PriceBannerViewComponent : ViewComponent
     {
-        //private  ILogger _logger;
+        private  ILogger _logger;
         private  PriceService _priceService;
         private  ICryptoMarketRepository _repository;
 
-        public PriceBannerViewComponent(PriceService priceService,ICryptoMarketRepository repository)
+        public PriceBannerViewComponent(PriceService priceService,ICryptoMarketRepository repository,ILogger logger)
         {
             _priceService = priceService;
             _repository = repository;
-            //_logger = logger;
+            _logger = logger;
         }
 
         //public async Task <IViewComponentResult> InvokeAsync()
@@ -77,13 +78,36 @@ namespace CryptoMarket.ViewComponents
         public IViewComponentResult Invoke()
         {
             var model = _priceService.GetBanner();
-            return View("PriceBanner",model);
+            try
+            {
+                var vm = AutoMapper.Mapper.Map<IEnumerable<PriceBannerViewModel>>(model);
+                PriceBannerViewModel vmi = new PriceBannerViewModel();
+                vmi.ToBannerDisplay(vm);
+                return View("PriceBanner", vm);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not Invoke PriceBannerViewComponent (Sync).", ex);               
+                return null;
+            }
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = await _priceService.GetBannerAsync();
-            return View("PriceBanner", model);
+
+            try
+            {
+                var vm = AutoMapper.Mapper.Map<IEnumerable<PriceBannerViewModel>>(model);
+                PriceBannerViewModel vmi = new PriceBannerViewModel();
+                vmi.ToBannerDisplay(vm);
+                return View("PriceBanner", vm);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not InvokeAsync PriceBannerViewComponent.", ex);
+                return null;
+            }            
         }
     }
 }

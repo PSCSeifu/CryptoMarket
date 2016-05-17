@@ -11,12 +11,12 @@ namespace CryptoMarket.ViewModels
 {
     public class CurrencyViewModel
     {
-        private PriceService _priceService;
+        private IPriceService _priceService;
 
         public Currency Currency { get; set; }
         public IEnumerable<CurrencyData> CurrencyData { get; set; } 
 
-        public CurrencyViewModel(PriceService priceService)
+        public CurrencyViewModel(IPriceService priceService)
         {
             _priceService = priceService;
         }

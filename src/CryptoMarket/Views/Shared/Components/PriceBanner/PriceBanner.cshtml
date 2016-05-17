@@ -1,55 +1,19 @@
-﻿@model IEnumerable<CryptoMarket.Services.PriceServicesResult>
+﻿@*@model IEnumerable<CryptoMarket.Services.PriceServicesResult>*@
+@model IEnumerable<CryptoMarket.ViewModels.PriceBannerViewModel>
 
 <div class="pricebannerwrapper">
     <div class="pricebanner">
         @foreach (var tick in Model)
         {
-            <div class="pricetick">
+            <div class="pricetick">               
+                @if (tick.OneHourChange > 0) {  <span id="pricechangedup">&uarr;</span>  }
+                @if (tick.OneHourChange < 0) {  <span id="pricechangedown">&darr;</span>  }
 
-                @if (@tick.Price > 1)
-                {
-                    @string.Concat(@tick.FiatCode.ToUpper()
-                      , '/'
-                      , @tick.CryptoCode.ToUpper()
-                      , "  "
-                      )                    
-                        @if (@tick.OneHourChange == 0)
-                        {
-                             <span id="pricetickvaluesame">@tick.Price.ToString("N2")</span>
-                        }
-                        else if (@tick.OneHourChange > 0)
-                        {
-                            <span id="pricetickvalueup">@tick.Price.ToString("N2")</span>
-                        }
-                        else
-                        {
-                            <span id="pricetickvaluedown">@tick.Price.ToString("N2")</span>
-                        }
-
-
-                }
-                else
-                {
-                    @string.Concat(@tick.CryptoCode.ToUpper()
-                      , '/'
-                      , @tick.FiatCode.ToUpper()
-                      , "  "                     
-                    )
-
-                    @if (@tick.OneHourChange == 0)
-                    {
-                        <span id="pricetickvaluesame">@tick.Price.ToString("N9")</span>
-                    }
-                    else if (@tick.OneHourChange > 0)
-                    {
-                        <span id="pricetickvalueup">@tick.Price.ToString("N9")</span>
-                    }
-                    else
-                    {
-                        <span id="pricetickvaluedown">@tick.Price.ToString("N9")</span>
-                    }
-                }
-
+                <span>@tick.FiatCryptoCombo </span>
+                @*<span id="@(tick.OneHourChange >= 0 ? "pricetickvalueup" : "pricetickvaluedown")" >*@
+                <span id="@(tick.OneHourChange > 0 ? "pricetickvalueup" :(tick.OneHourChange < 0 ? "pricetickvaluedown":"pricetickvaluesame"))">
+                    @tick.DisplayPrice
+                </span>
             </div>
         }
     </div>
