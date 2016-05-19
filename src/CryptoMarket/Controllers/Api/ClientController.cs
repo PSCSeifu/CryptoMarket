@@ -1,9 +1,6 @@
 using AutoMapper;
 using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +8,7 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoMarket.Controllers.Api
 {
@@ -18,12 +16,12 @@ namespace CryptoMarket.Controllers.Api
     public class ClientController : Controller
     {
         private ICryptoMarketRepository _repository;
-        private ILogger<ClientController> _logger;
+       // private ILogger<ClientController> _logger;
 
-        public ClientController(ICryptoMarketRepository repository,ILogger<ClientController> logger)
+        public ClientController(ICryptoMarketRepository repository)
         {
             _repository = repository;
-            _logger = logger;
+           // _logger = logger;
         }
 
         [HttpGet("")]
@@ -42,10 +40,10 @@ namespace CryptoMarket.Controllers.Api
                 return Json(Mapper.Map<IEnumerable<ClientViewModel>>(results.OrderBy(c => c.NickName)));
               
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                _logger.LogError("Failed to get Clients from database.", ex);
+               //_logger.LogError("Failed to get Clients from database.", ex);
                 return Json("Error occured finding Clients");
             }            
         }              
@@ -60,7 +58,7 @@ namespace CryptoMarket.Controllers.Api
                     var newClient = Mapper.Map<Client>(vm);
 
                     //Save to the data base 
-                    _logger.LogInformation("Attempting to save a new Client");
+                   //_logger.LogInformation("Attempting to save a new Client");
                     _repository.AddClient(newClient);
 
                     if (_repository.SaveAll())
@@ -70,11 +68,11 @@ namespace CryptoMarket.Controllers.Api
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Failed to save new Client", ex);
+               //_logger.LogError("Failed to save new Client", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { Message = ex.Message});
+                return Json(new { Message = ""});
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;

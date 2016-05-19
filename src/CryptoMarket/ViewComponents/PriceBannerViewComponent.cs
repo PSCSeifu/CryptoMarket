@@ -1,7 +1,7 @@
 using CryptoMarket.Models;
 using CryptoMarket.Services;
 using CryptoMarket.ViewModels;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,10 @@ namespace CryptoMarket.ViewComponents
     [ViewComponent(Name = "PriceBanner")]
     public class PriceBannerViewComponent : ViewComponent
     {
-        private  PriceService _priceService;
+        private  IPriceService _priceService;
         private  ICryptoMarketRepository _repository;
 
-        public PriceBannerViewComponent(PriceService priceService,ICryptoMarketRepository repository)
+        public PriceBannerViewComponent(IPriceService priceService,ICryptoMarketRepository repository)
         {
             _priceService = priceService;
             _repository = repository;
@@ -74,39 +74,41 @@ namespace CryptoMarket.ViewComponents
         //    return View("PriceBanner", model);
         //}
 
-        public IViewComponentResult Invoke()
-        {
-            var model = _priceService.GetBanner();
-            try
-            {
-                var vm = AutoMapper.Mapper.Map<IEnumerable<PriceBannerViewModel>>(model);
-                PriceBannerViewModel vmi = new PriceBannerViewModel();
-                vmi.ToBannerDisplay(vm);
-                return View("PriceBanner", vm);
-            }
-            catch (Exception)
-            {
-                //_logger.LogError("Could not Invoke PriceBannerViewComponent (Sync).", ex);               
-                return null;
-            }
-        }
+        //public IViewComponentResult Invoke()
+        //{
+        //    var model = _priceService.GetBanner();
+        //    try
+        //    {
+        //        var vm = AutoMapper.Mapper.Map<IEnumerable<PriceBannerViewModel>>(model);
+        //        PriceBannerViewModel vmi = new PriceBannerViewModel();
+        //        vmi.ToBannerDisplay(vm);
+        //        return View("PriceBanner", vm);
+        //    }
+        //    catch (Exception)
+        //    {
+        //       // _logger.LogError("Could not Invoke PriceBannerViewComponent (Sync).", ex);
+        //        return null;
+        //    }
+        //}
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = await _priceService.GetBannerAsync();
-
+            var model = await _priceService.GetBannerAsync();          
             try
             {
                 var vm = AutoMapper.Mapper.Map<IEnumerable<PriceBannerViewModel>>(model);
                 PriceBannerViewModel vmi = new PriceBannerViewModel();
-                vmi.ToBannerDisplay(vm);
+                 vmi.ToBannerDisplay(vm);
                 return View("PriceBanner", vm);
             }
             catch (Exception)
             {
-               // _logger.LogError("Could not InvokeAsync PriceBannerViewComponent.", ex);
+                // _logger.LogError("Could not InvokeAsync PriceBannerViewComponent.", ex);
                 return null;
-            }            
+            }
         }
+      
+
+
     }
 }

@@ -2,7 +2,7 @@ using AutoMapper;
 using CryptoMarket.Models;
 using CryptoMarket.Services;
 using CryptoMarket.ViewModels;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace CryptoMarket.Controllers.Api
     [Route("api/currencies")]
     public class CurrencyController : Controller
     {
-        private ILogger<CurrencyController> _logger;
+       // private ILogger<CurrencyController> _logger;
         private PriceService _priceService;
         private ICryptoMarketRepository _repository;
 
-        public CurrencyController(ICryptoMarketRepository repository, ILogger<CurrencyController> logger, PriceService priceService)
+        public CurrencyController(ICryptoMarketRepository repository, PriceService priceService)
         {
             _repository = repository;
-            _logger = logger;
+           // _logger = logger;
             _priceService = priceService;
         }
 
@@ -46,10 +46,10 @@ namespace CryptoMarket.Controllers.Api
                 //            ));
                 return Json(Mapper.Map<IEnumerable<CurrencyViewModel>>(results));
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                _logger.LogError($"Failed to get Currecies from database.", ex);
+               // _logger.LogError($"Failed to get Currecies from database.", ex);
                 return Json("Error occured finding currency");
             }
         }
@@ -100,10 +100,10 @@ namespace CryptoMarket.Controllers.Api
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                _logger.LogError("Failed to new Currency", ex);
+                //_logger.LogError("Failed to new Currency", ex);
                 return Json(null);
             }
 

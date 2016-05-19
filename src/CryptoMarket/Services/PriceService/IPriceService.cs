@@ -13,5 +13,6 @@ namespace CryptoMarket.Services
          PriceServicesResult LookupSync(string currency, string baseCurrency);
         //IEnumerable<PriceBannerViewModel> GetBanner();
         IEnumerable<PriceServicesResult> GetBanner();
+        Task<IEnumerable<PriceServicesResult>> GetBannerAsync();
     }
 }

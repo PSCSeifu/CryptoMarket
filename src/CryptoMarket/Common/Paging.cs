@@ -13,15 +13,15 @@ namespace CryptoMarket.Common
         public int TotalCount { get; private set; }
         public int TotalPages { get; private set; }
 
-        public PagedList(IQueryable<T> source, int pageIndex, int pageSize)
+        public PagedList(IEnumerable<T> source, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
             PageSize = pageSize;
             TotalCount = source.Count();
             TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
 
-            
-             AddRange((source.Skip(PageIndex * PageSize).Take(PageSize)));
+
+            this.AddRange((source.Skip(PageIndex * PageSize).Take(PageSize)));
         }
                
 

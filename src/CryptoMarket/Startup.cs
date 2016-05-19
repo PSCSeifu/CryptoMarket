@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 
 using CryptoMarket.Models;
-using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using CryptoMarket.ViewModels;
 using CryptoMarket.Services;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Mvc;
+
 using CryptoMarket.Entities;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc.Filters;
-using CryptoMarket.ViewComponents;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace CryptoMarket
 {
@@ -29,16 +25,32 @@ namespace CryptoMarket
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public static IConfigurationRoot Configuration;
-        public Startup(IApplicationEnvironment appEnv)
+        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                //Get base directory of the application,defined as the path to the directory containing the project.json file.
-                .SetBasePath(appEnv.ApplicationBasePath)
-                //Add the JSON Configuraiton provider at path to configuration builder
-                .AddJsonFile("config.json")
-                //Read configuration vaibles from PC environment e.g. api key set on one pc only for security reasons.
-                .AddEnvironmentVariables();
+            //var builder = new ConfigurationBuilder()
+            //    //Get base directory of the application,defined as the path to the directory containing the project.json file.
+            //    .SetBasePath(appEnv.c)
+            //    //Add the JSON Configuraiton provider at path to configuration builder
+            //    .AddJsonFile("config.json")
+            //    //Read configuration vaibles from PC environment e.g. api key set on one pc only for security reasons.
+            //    .AddEnvironmentVariables();
 
+            //Configuration = builder.Build();
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               //Add the JSON Configuraiton provider at path to configuration builder
+               .AddJsonFile("config.json")
+               //Read configuration vaibles from PC environment e.g. api key set on one pc only for security reasons.
+               .AddEnvironmentVariables();
+               
+
+            //if (env.IsDevelopment())
+            //{
+            //    // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+            //    builder.AddUserSecrets();
+            //}
+
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -50,7 +62,7 @@ namespace CryptoMarket
                 options.CookieName = ".CryptoMarket";
             });
 
-            services.AddCaching();
+            services.AddMemoryCache();
 
             services.AddAuthorization(options =>
             {
@@ -95,13 +107,12 @@ namespace CryptoMarket
             .AddEntityFrameworkStores<CryptoMarketContext>();
                                   
 
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<CryptoMarketContext>();
+            services.AddDbContext<CryptoMarketContext>(options =>
+                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
-           
-           // services.AddScoped<IPriceService>();
-           
+
+            // services.AddScoped<IPriceService>();
+
 
             //Register the seeder here.
             services.AddScoped<CryptoMarketSeedData>();            
@@ -112,9 +123,9 @@ namespace CryptoMarket
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder,ILoggerFactory loggerFactory,IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app,CryptoMarketSeedData seeder, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
-            loggerFactory.AddDebug(LogLevel.Warning);
+            //loggerFactory.AddDebug(LogLevel.Warning);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -125,16 +136,17 @@ namespace CryptoMarket
                 app.UseExceptionHandler("/App/Error");
             }
 
-            app.UseCookieAuthentication(options =>
-            {
-                options.AuthenticationScheme = "Cookie";
-                options.LoginPath = new PathString("/Account/Unauthorized/");
-                options.AccessDeniedPath = new PathString("/Account/Forbidden/");
-                options.AutomaticAuthenticate = true;
-                options.AutomaticChallenge = true;
-            });
+            app.UseCookieAuthentication();
+            //app.UseCookieAuthentication(options =>
+            //{
+            //    options.AuthenticationScheme = "Cookie";
+            //    options.LoginPath = new PathString("/Account/Unauthorized/");
+            //    options.AccessDeniedPath = new PathString("/Account/Forbidden/");
+            //    options.AutomaticAuthenticate = true;
+            //    options.AutomaticChallenge = true;
+            //});
 
-            
+
 
             app.UseStaticFiles(); //1. First check for static files
 
@@ -189,7 +201,17 @@ namespace CryptoMarket
             //await seeder.EnsureUserManagerSeedData();
         }
 
-                // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+        // Entry point for the application.
+        // public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+        //public static void Main(string[] args)
+        //{
+        //    var host = new Microsoft.AspNetCore.Hosting.WebHostBuilder()
+        //        .UseContentRoot(Directory.GetCurrentDirectory())
+        //        .UseIISIntegration()
+        //        .UseStartup<Startup>()
+        //        .Build();
+
+        //    host.Run();
+        //}
     }
 }

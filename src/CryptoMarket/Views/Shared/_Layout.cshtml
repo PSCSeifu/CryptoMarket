@@ -1,4 +1,7 @@
 ﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CryptoMarket.Models.User> SignInManager
+@inject UserManager<CryptoMarket.Models.User> UserManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +14,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-
-
-
-    <div id="wrapper">
-       
+    <div id="wrapper">       
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar navbar-header">
@@ -31,18 +30,19 @@
                     <li><a asp-controller="App" asp-action="Offer">Offer</a></li>
                     <li><a asp-controller="App" asp-action="Relation">Relation</a></li>
                     <li><a asp-controller="App" asp-action="FiatAccount">FiatAccount</a></li>
-                    
-                    @if (User.IsSignedIn())                    {
+
+                    @if (@SignInManager.IsSignedIn(User))
+                    {
 
                         <li><a asp-controller="App" asp-action="Client">Client</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User.IsSignedIn())
+                    @if (@SignInManager.IsSignedIn(User))
                     {
                         <li>
                             <form method="post" asp-controller="Auth" asp-action="Logout" class="navbar-form">
-                                @User.GetUserName()
+                               Hello  @UserManager.GetUserName(User)!                                
                                 <input type="submit" value="Logout" class="btn btn-danger" />
                             </form>
                         </li>
@@ -56,7 +56,7 @@
             </div>
         </nav>
         <div>
-            @Component.Invoke("PriceBanner")
+           @* @Component.InvokeAsync("PriceBanner")*@
         </div>
         <div class="userinfo">
             @if (User.Identity.IsAuthenticated)

@@ -16,12 +16,12 @@ namespace CryptoMarket.Services
 {
     public class PriceService : IPriceService
     {
-        private ILogger<PriceService> _logger;
+        //private ILogger<PriceService> _logger;
         private ICryptoMarketRepository _repository;
 
-        public PriceService(ILogger<PriceService> logger,ICryptoMarketRepository repository)
+        public PriceService(ICryptoMarketRepository repository)
         {
-            _logger = logger;
+            //_logger = logger;
             _repository = repository;
         }
 
@@ -157,9 +157,9 @@ namespace CryptoMarket.Services
                    // model.Add(AutoMapper.Mapper.Map<PriceServicesResult>(serviceResult));
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBanner.", ex);
+               // _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBanner.", ex);
                 return null;
             }
 
@@ -179,9 +179,9 @@ namespace CryptoMarket.Services
                     if (serviceResult != null) { model.Add(serviceResult); }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBannerAsync()", ex);
+               // _logger.LogError("Could not construct price service result for fiat and Crypto pairs in GetBannerAsync()", ex);
                 return null;
             }
 

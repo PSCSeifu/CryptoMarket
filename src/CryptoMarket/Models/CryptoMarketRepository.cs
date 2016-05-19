@@ -1,6 +1,7 @@
 using AutoMapper;
 using CryptoMarket.ViewModels;
-using Microsoft.Data.Entity;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace CryptoMarket.Models
     public class CryptoMarketRepository : ICryptoMarketRepository
     {
         private CryptoMarketContext _context;
-        private ILogger<CryptoMarketRepository> _logger;
+       // private ILogger<CryptoMarketRepository> _logger;
 
-        public CryptoMarketRepository(CryptoMarketContext context,ILogger<CryptoMarketRepository> logger)
+        public CryptoMarketRepository(CryptoMarketContext context)
         {
             _context = context;
-            _logger = logger;
+           //_logger = logger;
         }
 
         #region " COMMON "
@@ -56,9 +57,9 @@ namespace CryptoMarket.Models
                      .Where(c => c.Id == clientId)
                      .FirstOrDefault();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError($"Could not get Client with Id {clientId}", ex);
+               //_logger.LogError($"Could not get Client with Id {clientId}", ex);
                 return null;
             }
         }
@@ -73,9 +74,9 @@ namespace CryptoMarket.Models
                     .Include( o => o.Offers)
                     .OrderBy(c => c.ClientType).ToList();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                _logger.LogError("Could not get Clients from database.",ex);
+               //_logger.LogError("Could not get Clients from database.",ex);
                 return null;
             }
         }
@@ -89,9 +90,9 @@ namespace CryptoMarket.Models
                                 .FirstOrDefault();
                 return AutoMapper.Mapper.Map<ClientViewModel>(client);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not find the Clinet in data base", ex);
+               //_logger.LogError("Could not find the Clinet in data base", ex);
                 return null;
             }
         }
@@ -105,9 +106,9 @@ namespace CryptoMarket.Models
                     .OrderBy(c => c.ClientType)
                     .ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get Clients with Wallets from Database.", ex);
+               //_logger.LogError("Could not get Clients with Wallets from Database.", ex);
                 return null;
             }
         }
@@ -131,9 +132,9 @@ namespace CryptoMarket.Models
                var allWallets = _context.Wallets.OrderBy(w => w.ClientId).ToList();
                 return Mapper.Map<IEnumerable<WalletViewModel>>(allWallets);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not getWallets from Database.", ex);
+               //_logger.LogError("Could not getWallets from Database.", ex);
                 return null;
             }
 
@@ -147,9 +148,9 @@ namespace CryptoMarket.Models
             {
                return  _context.FiatCurrency;                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get Fiat Currencies from database.", ex);
+               //_logger.LogError("Could not get Fiat Currencies from database.", ex);
                 return null;
             }
         }
@@ -171,9 +172,9 @@ namespace CryptoMarket.Models
                 return _context.Currencies;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get Currencies from database.", ex);
+               //_logger.LogError("Could not get Currencies from database.", ex);
                 return null;
             }
             
@@ -195,9 +196,9 @@ namespace CryptoMarket.Models
                     .Select( b => b.Id)                
                     .FirstOrDefault();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                _logger.LogError($"Could not get Base Fiat currency with ApiCode : {newBaseCurrency.FiatCode}", ex);
+               //_logger.LogError($"Could not get Base Fiat currency with ApiCode : {newBaseCurrency.FiatCode}", ex);
                 return 0;
             }
         }
@@ -215,9 +216,9 @@ namespace CryptoMarket.Models
                     .Where(c => c.Id == currencyId)
                     .FirstOrDefault();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError($"Could not get currency  with Code : {currencyId}", ex);
+               //_logger.LogError($"Could not get currency  with Code : {currencyId}", ex);
                 return null;
             }
         }
@@ -236,9 +237,9 @@ namespace CryptoMarket.Models
                     .Where(cd => cd.CryptoCode == cryptoCode)
                     .ToList();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                _logger.LogError($"Could not get currency data for currecy with Id : {currencyId}", ex);
+               //_logger.LogError($"Could not get currency data for currecy with Id : {currencyId}", ex);
                 return null;
             }
         }
@@ -263,9 +264,9 @@ namespace CryptoMarket.Models
                 var result = _context.Offers;
                 return Mapper.Map <IEnumerable<OfferViewModel>>(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get Offers from database.", ex);
+               //_logger.LogError("Could not get Offers from database.", ex);
                 return null;
             }
         }
@@ -280,9 +281,9 @@ namespace CryptoMarket.Models
 
                return  Mapper.Map <IEnumerable<OfferViewModel>>(result);                    
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get Offers from database.", ex);
+               //_logger.LogError("Could not get Offers from database.", ex);
                 return null;
             }
         }
@@ -308,9 +309,9 @@ namespace CryptoMarket.Models
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
+               //_logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
                 return null;
             }
 
@@ -342,9 +343,9 @@ namespace CryptoMarket.Models
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
+               //_logger.LogError("Could not get rypto and fiat Currency code pairs from database.", ex);
                 return null;
             }
 

@@ -1,6 +1,8 @@
+
+
 using CryptoMarket.Entities;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CryptoMarket.Models
 {
@@ -25,6 +27,7 @@ namespace CryptoMarket.Models
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<CurrencyData> CurrencyData { get; set; }
         public DbSet<FiatCurrency> FiatCurrency { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,7 +35,7 @@ namespace CryptoMarket.Models
 
             optionsBuilder.UseSqlServer(connString);
 
-             base.OnConfiguring(optionsBuilder); 
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

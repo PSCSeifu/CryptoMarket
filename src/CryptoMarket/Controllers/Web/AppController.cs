@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+
 using CryptoMarket.Models;
-using Microsoft.AspNet.Authorization;
+
 using CryptoMarket.ViewModels;
 using AutoMapper;
-using PagedList;
+
 using CryptoMarket.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using CryptoMarket.Common;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -153,7 +156,7 @@ namespace CryptoMarket.Controllers.Web
             ViewBag.CurrentSort = sortOrder;
             ViewBag.CurrentSearch = searchString;
 
-            var currencyList = from c in _repository.GetAllCurrencies() select c;
+            var currencyList = (from c in _repository.GetAllCurrencies() select c);
 
 
             if (!string.IsNullOrEmpty(searchString))
@@ -203,7 +206,8 @@ namespace CryptoMarket.Controllers.Web
             int itemsPerPage = (pageSize < 1 ? 3: (int)pageSize) ;
             int pageNumber = page ?? 1;
 
-            currencyList = currencyList.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+            //var pagedCurrencyList = currencyList.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+                    
             var paginatedCurrencies = new PagedList<Currency>(currencyList, pageNumber, itemsPerPage);
 
             //return View(currencyList.ToPagedList(pageNumber, itemsPerPage));

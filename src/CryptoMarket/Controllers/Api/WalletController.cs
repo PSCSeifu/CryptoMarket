@@ -1,7 +1,7 @@
 using AutoMapper;
 using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ namespace CryptoMarket.Controllers.Api
     [Route("api/clients/{clientId}/wallets")]
     public class WalletController : Controller
     {
-        private ILogger<WalletViewModel> _logger;
+       // private ILogger<WalletViewModel> _logger;
         private ICryptoMarketRepository _repository;
 
-        public WalletController(ICryptoMarketRepository repository,ILogger<WalletViewModel> logger)
+        public WalletController(ICryptoMarketRepository repository)
         {
             _repository = repository;
-            _logger = logger;
+           // _logger = logger;
         }
 
         [HttpGet("")]
@@ -37,11 +37,11 @@ namespace CryptoMarket.Controllers.Api
                 
                 return Json(Mapper.Map<IEnumerable<WalletViewModel>>(results.Wallets.OrderBy( w => w.DateCreated)));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 //$ C#6 interploation feature
-                _logger.LogError($"Failed to get wallets for for ClientId{clientId}", ex);
+               //_logger.LogError($"Failed to get wallets for for ClientId{clientId}", ex);
                 return Json("Error occured finding client Id");
             }           
         }
@@ -66,9 +66,9 @@ namespace CryptoMarket.Controllers.Api
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError("Failed to save new Wallet", ex);
+               //_logger.LogError("Failed to save new Wallet", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return null;
             }

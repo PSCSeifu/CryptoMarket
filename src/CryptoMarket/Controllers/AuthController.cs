@@ -3,14 +3,15 @@ using CryptoMarket.Controllers.Web;
 using CryptoMarket.Entities;
 using CryptoMarket.Models;
 using CryptoMarket.ViewModels;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Mvc;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoMarket.Controllers
 {
@@ -111,10 +112,10 @@ namespace CryptoMarket.Controllers
         }
 
 
-        public IActionResult Unauthorized()
-        {
-            return View();
-        }
+        //public IActionResult Unauthorized()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Forbidden()
         {

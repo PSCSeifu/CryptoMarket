@@ -6,8 +6,8 @@
         @foreach (var tick in Model)
         {
             <div class="pricetick">               
-                @if (tick.OneHourChange > 0) {  <span id="pricechangedup">&uarr;</span>  }
-                @if (tick.OneHourChange < 0) {  <span id="pricechangedown">&darr;</span>  }
+                @if (@tick.OneHourChange > 0) {  <span id="pricechangedup">&uarr;</span>  }
+                @if (@tick.OneHourChange < 0) {  <span id="pricechangedown">&darr;</span>  }
 
                 <span>@tick.FiatCryptoCombo </span>
                 @*<span id="@(tick.OneHourChange >= 0 ? "pricetickvalueup" : "pricetickvaluedown")" >*@
